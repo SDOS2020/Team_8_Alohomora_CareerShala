@@ -8,33 +8,33 @@ Reeshabh Kumar Ranjan (2017086)
 
 # Alohomora CareerShala
 
-**[1.0 Introduction](#10-introduction) 2**
+**[1.0 Introduction](#10-introduction)**
 
-[1.1 Purpose of the project](#11-purpose-of-the-project) 2
+[1.1 Purpose of the project](#11-purpose-of-the-project)
 
-[1.2 Scope of Project](#12-scope-of-project) 2
+[1.2 Scope of Project](#12-scope-of-project)
 
-[1.3 Glossary](#13-glossary) 3
+[1.3 Glossary](#13-glossary)
 
-[1.4 Abbreviations](#14-abbreviations6) 3
+[1.4 Abbreviations](#14-abbreviations6)
 
-[1.5 References](#15-references) 3
+[1.5 References](#15-references)
 
-**[2.0 Description](#20-description) 4**
+**[2.0 Description](#20-description)**
 
-[2.1 System Environment](21-system-environment) 4
+[2.1 System Environment](21-system-environment)
 
-[2.2 Functional Requirements Specification](#22-functional-requirements-specification) 6
+[2.2 Functional Requirements Specification](#22-functional-requirements-specification)
 
-[2.2.1 Students](#221-students) 6
+[2.2.1 Students](#221-students)
 
-[2.2.2 Industry Expert](#222-industry-expert) 7
+[2.2.2 Industry Expert](#222-industry-expert)
 
-[2.2.3 Administrator](#223-administrator) 8
+[2.2.3 Administrator](#223-administrator)
 
-[2.3 User Characteristics](#23-user-characteristics) 9
+[2.3 User Characteristics](#23-user-characteristics)
 
-[2.4 Non-Functional Requirements](#24-non-functional-requirements) 9
+[2.4 Non-Functional Requirements](#24-non-functional-requirements)
 
 #
 
