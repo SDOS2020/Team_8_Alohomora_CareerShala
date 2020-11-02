@@ -36,7 +36,7 @@ Reeshabh Kumar Ranjan (2017086)
 
 [2.4 Non-Functional Requirements](#24-non-functional-requirements)
 
-**[3.0 Architecture Design](#20-architecture-design)**
+**[3.0 Architecture Design](#30-architecture-design)**
 
 #
 
