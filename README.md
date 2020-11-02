@@ -36,6 +36,8 @@ Reeshabh Kumar Ranjan (2017086)
 
 [2.4 Non-Functional Requirements](#24-non-functional-requirements)
 
+**[3.0 Architecture Design](#20-architecture-design)**
+
 #
 
 # 1.0 Introduction
@@ -177,3 +179,15 @@ Admin should be able to do everything described above.
 The website will be hosted on a server with high internet speed. The time of accessing the website would depend on the network speed at the user&#39;s end.
 
 The platform is architecture as well as Device independent i.e. it can run on any OS as well as devices like phones, laptops etc. as long as they support browsers.
+
+# 3.0 Architecture Design
+
+![slide-1](resources/Slide1.JPG)
+![slide-2](resources/Slide2.JPG)
+![slide-3](resources/Slide3.JPG)
+![slide-4](resources/Slide4.JPG)
+![slide-5](resources/Slide5.JPG)
+![slide-6](resources/Slide6.JPG)
+![slide-7](resources/Slide7.JPG)
+![slide-8](resources/Slide8.JPG)
+![slide-9](resources/Slide9.JPG)
