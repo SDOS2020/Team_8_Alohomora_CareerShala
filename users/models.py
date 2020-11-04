@@ -1,7 +1,16 @@
+from django.conf import settings
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from django.db import models
 
 from users.methods import generate_token
+
+
+class StudentProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+class ExpertProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 # Refer: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/#a-full-example
@@ -32,6 +41,7 @@ class CustomUser(AbstractBaseUser):
     last_name = models.CharField(verbose_name='last name', max_length=255)
     phone_number = models.CharField(verbose_name='phone number', max_length=14, unique=True, blank=True, null=True)
     date_of_birth = models.DateField(verbose_name='date of birth')
+    is_expert = models.BooleanField(verbose_name='is expert', default=False)
 
     # Fields related to email verification
     email_verification_token = models.CharField(max_length=32,
