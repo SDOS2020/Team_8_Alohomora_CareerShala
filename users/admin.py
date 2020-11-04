@@ -12,7 +12,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'password', 'first_name', 'last_name', 'phone_number', 'date_of_birth', 'is_admin')
     list_filter = ('is_admin',)
     # exclude = ['verified', ]  # TODO is this required if readonly_fields is present?
-    readonly_fields = ('verified', 'is_expert')
+    readonly_fields = ('verified',)  # TODO add is_expert to readonly_fields before production
     fieldsets = (  # Fields shown when viewing an account from admin site
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'phone_number', 'date_of_birth')}),
