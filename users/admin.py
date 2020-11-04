@@ -13,10 +13,20 @@ from .models import CustomUser
 
 class CustomUserCreationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput, required=True)
+    password_confirmation = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput, required=True)
 
     class Meta:
         model = CustomUser
         fields = ('email', 'first_name', 'phone_number', 'last_name', 'date_of_birth',)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        password_confirmation = cleaned_data.get("password_confirmation")
+        if password and password_confirmation and password != password_confirmation:
+            self.add_error('password', 'Passwords do not match.')
+            self.add_error('password_confirmation', 'Passwords do not match.')
+            # raise ValidationError("Passwords do not match.")
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -53,12 +63,14 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (  # TODO why this if we have fieldsets?
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password', 'first_name', 'last_name', 'phone_number', 'date_of_birth',),
+            'fields': (
+                'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'phone_number',
+                'date_of_birth',),
         }),
     )
 
-    search_fields = ('email',)
-    ordering = ('email',)
+    search_fields = ('email', 'first_name')
+    ordering = ('email', 'first_name')
     filter_horizontal = ()
 
 
