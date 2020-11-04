@@ -9,3 +9,7 @@ def register_student(request):
 
 def register_expert(request):
     return render(request, 'registration/signup.html')
+
+
+def login(request):
+    return render(request, 'users/login.html')
