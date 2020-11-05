@@ -16,10 +16,10 @@ def register_student(request):
             messages.success(request, "Registration successful, check your email inbox to verify your email.")
         else:
             return render(request, 'registration/signup.html',
-                          {'form': user_creation_form_filled})  # TODO should contain errors
+                          {'form': user_creation_form_filled, 'is_expert': False})  # TODO should contain errors
     else:
         user_creation_form_empty = CustomUserCreationForm()
-        return render(request, 'registration/signup.html', {'form': user_creation_form_empty})
+        return render(request, 'registration/signup.html', {'form': user_creation_form_empty, 'is_expert': False})
 
 
 def register_expert(request):
