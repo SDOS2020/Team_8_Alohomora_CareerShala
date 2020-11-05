@@ -1,7 +1,11 @@
 import threading
 
+from django.contrib import messages
 from django.core.mail import send_mail
+from django.shortcuts import render
 from django.utils.crypto import get_random_string
+
+# from users.forms import CustomUserCreationForm  # do not import this! https://stackoverflow.com/a/16975976/5394180
 
 
 def generate_token():
@@ -17,3 +21,5 @@ def send_mail_async(sender: str, receivers, subject, body):
     })
     t.setDaemon(True)
     t.start()  # TODO log this
+
+

@@ -1,29 +1,33 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.http import HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 
-# Create your views here.
 from users.forms import CustomUserCreationForm
 from users.models import CustomUser
 
 
-def register_student(request):
+def registration_basic(request, is_expert: bool):
     if request.method == 'POST':
         user_creation_form_filled = CustomUserCreationForm(request.POST)
         if user_creation_form_filled.is_valid():
             user_creation_form_filled.save()
             messages.success(request, "Registration successful, check your email inbox to verify your email.")
+            # I am not refreshing upon success, just showing a message.
         else:
             return render(request, 'registration/signup.html',
-                          {'form': user_creation_form_filled, 'is_expert': False})  # TODO should contain errors
+                          {'form': user_creation_form_filled, 'is_expert': is_expert})  # should contain errors
     else:
         user_creation_form_empty = CustomUserCreationForm()
-        return render(request, 'registration/signup.html', {'form': user_creation_form_empty, 'is_expert': False})
+        return render(request, 'registration/signup.html', {'form': user_creation_form_empty, 'is_expert': is_expert})
+
+
+def register_student(request):
+    return registration_basic(request, is_expert=False)
 
 
 def register_expert(request):
-    return render(request, 'registration/signup.html')
+    return registration_basic(request, is_expert=True)
 
 
 def login(request):
