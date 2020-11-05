@@ -9,6 +9,11 @@ def generate_token():
 
 
 def send_mail_async(sender: str, receivers, subject, body):
-    t = threading.Thread(target=send_mail, args=(subject, body, sender, receivers))
+    t = threading.Thread(target=send_mail, kwargs={
+        'subject': subject,
+        'message': body,
+        'from_email': sender,
+        'recipient_list': receivers
+    })
     t.setDaemon(True)
-    t.start()
+    t.start()  # TODO log this

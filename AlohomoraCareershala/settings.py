@@ -127,7 +127,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # Custom User
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# Email backend
+# Email backend  # TODO change credentials before production release
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
