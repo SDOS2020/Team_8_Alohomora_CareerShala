@@ -1,256 +1,101 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block logincss %} 
+<link rel="stylesheet" href="{% static 'users/style.css' %}">
+{% endblock logincss%}
 
 {% block signup %}
-
-<div class="container">
-    <div class="row">
-        <div class="col-12 col-sm-8 offset-sm-2 self-align-center"> 
-            <div class="card">
-                <h3 class="card-header info-color white-text text-center py-4">
-                    <strong>Register</strong>
-                </h3>
-                <br>
-                <form>
-                    <div class="form-group">
-                        <label for="input-first-name">First Name</label>
-                        <input 
-                            type="text"
-                            class="form-control" 
-                            id="input-first-name" 
-                            aria-describedby="emailHelp"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="input-last-name">Last Name</label>
-                        <input 
-                            type="text"
-                            class="form-control" 
-                            id="input-last-name" 
-                            aria-describedby="emailHelp"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="input-email">Email address</label>
-                        <input 
-                            type="email" 
-                            class="form-control" 
-                            id="input-email" 
-                            aria-describedby="emailHelp" 
-                            placeholder="Enter email"
-                            required>
-                        <small 
-                            id="emailHelp" 
-                            class="form-text text-muted"
-                            >We'll never share your email with anyone else.
-                        </small>
-                    </div>
-                    <div class="form-group">
-                        <label for="input-password">Password</label>
-                        <input 
-                            type="password"
-                            class="form-control" 
-                            id="input-password" 
-                            aria-describedby="emailHelp"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="input-confirm-password">Confirm Password</label>
-                        <input 
-                            type="password"
-                            class="form-control" 
-                            id="input-confirm-password" 
-                            aria-describedby="emailHelp"
-                            required>
-                    </div>
-
-                    <!-- <div class="form-group">
-                        <label for="exampleFormControlSelect1">Example select</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect2">Example multiple select</label>
-                        <select multiple class="form-control" id="exampleFormControlSelect2">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Example textarea</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div> -->
-                    <button class="btn btn-primary" type="submit">Submit form</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-	<!-- <div class="container">
-	    <div class="row">
-		    <div class="col-12 col-sm-8 offset-sm-2 self-align-center"> 
-		    <b-card>
-                <h3 class="card-header info-color white-text text-center py-4">
-                <strong>Register</strong>
-                </h3>
-                <br>
-                <b-form @submit.stop.prevent @reset="onReset">
-                    <b-form-group
-                        id="input-group-first-name"
-                        label="First Name:"
-                        label-for="input-first-name"
-                    >
-                    <b-form-input
-                    id="input-first-name"
-                    v-model="form.first_name"
-                    required
-                    placeholder="First Name"
-                    ></b-form-input>
-                    <small
-                    id="first-name-required"
-                    v-if="errors.first_name.exists"
-                    :class="[errors.first_name.exists ? 'red' : 'text-muted']"> {{ errors.first_name.description }}
-                    </small>
-                </b-form-group>
-
-			  <b-form-group
-				id="input-group-last-name"
-				label="Last Name:"
-				label-for="input-last-name"
-			  >
-				<b-form-input
-				  id="input-last-name"
-				  v-model="form.last_name"
-				  required
-				  placeholder="Last Name"
-				></b-form-input>
-				<small 
-				  id="last-name-required"
-				  v-if="errors.last_name.exists"
-				  :class="[errors.last_name.exists ? 'red' : 'text-muted']"> {{ errors.last_name.description }}
-				</small>
-			  </b-form-group>
-			  
-			  <b-form-group
-				id="input-group-1"
-				label="Email address:"
-				label-for="input-1"
-				description="We'll never share your email with anyone else."
-			  >
-				<b-form-input
-				  id="input-1"
-				  v-model="form.email"
-				  type="email"
-				  required
-				  placeholder="Enter email"
-				></b-form-input>
-				<small 
-				  id="email-required"
-				  v-if="errors.email.exists"
-				  :class="[errors.email.exists ? 'red' : 'text-muted']"> {{ errors.email.description }}
-				</small>
-			  </b-form-group>
-
-			  <b-form-group id="input-group-3">
-				<label for="text-password">Password</label>
-				<b-input 
-				  type="password" 
-				  id="text-password" 
-				  v-model="form.password"
-				  aria-describedby="password-help-block"
-				  required
-				></b-input>
+<div class="wrapper fadeInDown">
+	<div id="formContent">
+		<!-- Tabs Titles -->
+	
+		<!-- Icon -->
+	  	<div class="fadeIn first container">
+		  	<div class="row info-color">
+			  	<div class="col-sm-6 offset-sm-3 ">
+					<h3 class="white-text text-center py-4">
+						<strong>Register</strong>
+					</h3>
+				</div>
+			</div>
+	  	</div>
+  
+	  	<!-- Login Form -->
+	  	<div class = "fadeIn second">
+		  	<form method="post" class="col-12">
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="input-first-name">First Name</label>
+					<input 
+						type="text"
+						class="form-control" 
+						id="input-first-name"
+						name="first_name"
+						required>
+				</div>
+				<div class="form-group">
+					<label for="input-last-name">Last Name</label>
+					<input 
+						type="text"
+						class="form-control" 
+						id="input-last-name" 
+						name="last_name"
+						required>
+				</div>
+				<div class="form-group">
+					<label for="input-email">Email address</label>
+					<input 
+						type="email" 
+						class="form-control" 
+						id="input-email" 
+						aria-describedby="emailHelp"
+						name="email"
+						required>
+					<small 
+						id="emailHelp" 
+						class="form-text text-muted"
+						>We'll never share your email with anyone else.
+					</small>
+				</div>
+				<div class="form-group">
+					<label for="input-password">Password</label>
+					<input 
+						type="password"
+						class="form-control" 
+						id="input-password" 
+						name="password"
+						required>
+				</div>
+				<div class="form-group">
+					<label for="input-confirm-password">Confirm Password</label>
+					<input 
+						type="password"
+						class="form-control" 
+						id="input-confirm-password" 
+						required>
+				</div>
+				<div class="form-group date" id="datetimepicker1" data-target-input="nearest">
+					<label for="input-date-of-birth">Date of Birth</label>
+					<input 
+						type="date"
+						class="form-control" 
+						id="input-date-of-birth"
+						name="date_of_birth" 
+						required>
+					<div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+						<div><i class="fa fa-calendar"></i></div>
+					</div>
+				</div>
 				
-				<p 
-				  id="password-match-text"
-				  class="passwordMismatch"
-				  v-show="passwordSanity===false"
-				>
-				  Please read below message.
-				</p>
-				<small class="text-muted"> Your password must satisfy folllowing: </small>
+				<input name="login" type="submit" value="Register" class="fadeIn third btn btn-success" /> &nbsp;
+				{% if error_message %}
 				<br>
-				<small 
-				  id="password-help-block"
-				  :class="[form.password.length === 0 ? 'text-muted' : 
-						  [passwordSanity===false ? 'red' : 'text-muted']]">
-				  
-				  <ul class="float-left" align="left">
-					<li :class="[errors.password.password.length === 0 ? 'red' : '']"> 8-20 characters long </li>
-					<li :class="[errors.password.password.lowerCase === 0 ? 'red' : '']"> atleast 1 small letter </li>
-					<li :class="[errors.password.password.upperCase === 0 ? 'red' : '']"> atleast 1 capital letter </li>
-					<li :class="[errors.password.password.num === 0 ? 'red' : '']"> atleast 1 number</li>
-					<li :class="[errors.password.password.specialChar === 0 ? 'red' : '']"> atleast 1 special character(@$!%*?&)</li>
-				  </ul>
-
-				</small>
-			  </b-form-group>
-
-			  <b-form-group id="input-group-4">
-				<label for="text-password">Confirm Password</label>
-				<b-input 
-				  type="password" 
-				  id="text-confirm-password" 
-				  v-model="form_extra.confirmPassword"
-				  :class="[form_extra.confirmPassword.length === 0 ? '' : 
-						  [matchPassword===true ? 'green' : 'red']]"
-				  aria-describedby="password-help-block"
-				  required
-				></b-input>
-
-				<small 
-				  id="password-match-text"
-				  v-show="form_extra.confirmPassword.length > 0 && matchPassword===false"
-				  :class="[errors.email.exists ? 'red' : 'text-muted']"> 
-				  {{ errors.email.description }}
-				</small>
-
-			  </b-form-group>
-
-			  <b-form-group id="input-group-5">
-				<label for="example-datepicker">Enter your Date of Birth</label>
-				<b-form-datepicker id="example-datepicker" v-model="form.date_of_birth"></b-form-datepicker>
-				<small 
-				  id="first-name-required"
-				  v-if="errors.date_of_birth.exists === true"
-				  :class="[errors.date_of_birth.exists ? 'red' : 'text-muted']"> {{ errors.date_of_birth.description }}
-				</small>
-			  </b-form-group>
-
-			  <b-form-group id="input-group-3" label="Food:" label-for="input-4">
-				<b-form-select
-				  id="input-3"
-				  v-model="form.food"
-				  :options="foods"
-				  required
-				></b-form-select>
-			  </b-form-group>
-
-			  <b-form-group id="input-group-4">
-				<b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-				  <b-form-checkbox value="me">Check me out</b-form-checkbox>
-				  <b-form-checkbox value="that">Check that out</b-form-checkbox>
-				</b-form-checkbox-group>
-			  </b-form-group>
-
-			  <b-button type="submit" variant="primary" v-on:click="onSubmit">Submit</b-button>
-			  <b-button type="reset" variant="danger">Reset</b-button>
-			</b-form>
-		  <b-card class="mt-3" header="Form Data Result">
-			<pre class="m-0">{{ form }}</pre>
-		  </b-card>
-		        </b-card>
-		    </div>
-	    </div>
-    </div>
-</div> -->
+				<small class="red">{{ error_message }}</small> 	
+				{% endif %}
+		  	</form>
+	 	</div>
+	</div>
+</div>
 
 {% endblock signup %}
