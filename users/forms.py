@@ -1,3 +1,5 @@
+from datetime import date
+
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
@@ -21,6 +23,14 @@ class CustomUserCreationForm(forms.ModelForm):
         if password and password_confirmation and password != password_confirmation:
             self.add_error('password', 'Passwords do not match.')
             self.add_error('password_confirmation', 'Passwords do not match.')
+
+        # date of birth check
+        date_of_birth = cleaned_data.get("date_of_birth")  # TODO is_valid is called before clean?
+        date_today = date.today()
+        age = date_today.year - date_of_birth.year - \
+              ((date_today.month, date_today.day) < (date_of_birth.month, date_of_birth.day))
+        if age <= 13:
+            self.add_error('date_of_birth', 'You are too young to join this site.')
 
     def save(self, commit=True):
         user = super().save(commit=False)
