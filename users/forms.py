@@ -3,9 +3,12 @@ from datetime import date
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.core.exceptions import ValidationError
 
 from users.models import CustomUser
 
+
+# Essential Forms
 
 class LoginForm(forms.Form):
     email = forms.EmailField(label="Email", widget=forms.EmailInput, max_length=50, required=True)
@@ -30,15 +33,16 @@ class CustomUserCreationForm(forms.ModelForm):
         age = date_today.year - date_of_birth.year - \
               ((date_today.month, date_today.day) < (date_of_birth.month, date_of_birth.day))
         if age <= 13:
-            self.add_error('date_of_birth', 'You are too young to join this site.')
+            raise ValidationError("You are too young to join this site. Only 14 years and older allowed.")
+        return date_of_birth
 
     def clean_password_confirmation(self):
         # password confirmation
         password = self.cleaned_data.get("password")
         password_confirmation = self.cleaned_data.get("password_confirmation")
         if password and password_confirmation and password != password_confirmation:
-            self.add_error('password', 'Passwords do not match.')
-            self.add_error('password_confirmation', 'Passwords do not match.')
+            raise ValidationError("Passwords do not match!")
+        return password_confirmation
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -58,3 +62,10 @@ class CustomUserChangeForm(forms.ModelForm):
 
     def clean_password(self):
         return self.initial['password']
+
+
+# Trivial Forms
+
+class ErrorForm(forms.Form):
+    title = forms.CharField(label="Title", max_length=100, required=True)
+    body = forms.CharField(label="Body", max_length=1000, required=False)
