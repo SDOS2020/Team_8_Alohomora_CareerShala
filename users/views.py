@@ -1,13 +1,25 @@
+from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
+from users.forms import CustomUserCreationForm
 from users.models import CustomUser
 
 
 def register_student(request):
-    return render(request, 'registration/signup.html')
+    if request.method == 'POST':
+        user_creation_form_filled = CustomUserCreationForm(request.POST)
+        if user_creation_form_filled.is_valid():
+            user_creation_form_filled.save()
+            messages.success(request, "Registration successful, check your email inbox to verify your email.")
+        else:
+            return render(request, 'registration/signup.html',
+                          {'form': user_creation_form_filled})  # TODO should contain errors
+    else:
+        user_creation_form_empty = CustomUserCreationForm()
+        return render(request, 'registration/signup.html', {'form': user_creation_form_empty})
 
 
 def register_expert(request):
