@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block logincss %} 
+{% block pagecss %} 
 <link rel="stylesheet" href="{% static 'users/style.css' %}">
-{% endblock logincss%}
+{% endblock pagecss %}
 
 {% block signup %}
 <div class="wrapper fadeInDown">
 	<div id="formContent">
-		<!-- Tabs Titles -->
-	
-		<!-- Icon -->
+
 	  	<div class="fadeIn first container">
 		  	<div class="row info-color">
 			  	<div class="col-sm-6 offset-sm-3 ">
 					<h3 class="white-text text-center py-4">
-						<strong>Register</strong>
+						<strong>Student Register</strong>
 					</h3>
 				</div>
 			</div>
@@ -23,66 +21,79 @@
   
 	  	<!-- Login Form -->
 	  	<div class = "fadeIn second">
-		  	<form method="post" class="col-12">
+		  	<form method="post" class="col-12" action="{% url 'users-register-student' %}">
 				{% csrf_token %}
 				<div class="form-group">
 					<label for="input-first-name">First Name</label>
 					<input 
-						type="text"
 						class="form-control" 
+						{% if form.first_name.value != None %}value="{{ form.first_name.value|stringformat:'s' }}"{% endif %}
 						id="input-first-name"
 						name="first_name"
 						required>
+						<small class="red">{{form.first_name.errors}}</small>
 				</div>
 				<div class="form-group">
 					<label for="input-last-name">Last Name</label>
 					<input 
-						type="text"
 						class="form-control" 
+						{% if form.last_name.value != None %}value="{{ form.last_name.value|stringformat:'s' }}"{% endif %}
 						id="input-last-name" 
 						name="last_name"
 						required>
+						<small class="red">{{form.last_name.errors}}</small>
 				</div>
+				
 				<div class="form-group">
 					<label for="input-email">Email address</label>
 					<input 
 						type="email" 
 						class="form-control" 
+						{% if form.email.value != None %}value="{{ form.email.value|stringformat:'s' }}"{% endif %}
 						id="input-email" 
 						aria-describedby="emailHelp"
-						name="email"
-						required>
+						name="email">
+						<small class="red">{{form.email.errors}}</small>
 					<small 
 						id="emailHelp" 
-						class="form-text text-muted"
-						>We'll never share your email with anyone else.
+						class="form-text text-muted">
+						We'll never share your email with anyone else.
 					</small>
 				</div>
-				<div class="form-group">
-					<label for="input-password">Password</label>
-					<input 
-						type="password"
-						class="form-control" 
-						id="input-password" 
-						name="password"
-						required>
+
+				<div id="passwordChecking">
+					<div class="form-group">
+						<label for="input-password">Password</label>
+						<input 
+							v-model="password"
+							type="password"
+							class="form-control" 
+							id="input-password" 
+							name="password"
+							required>
+					</div>
+					<div class="form-group">
+						<label for="input-confirm-password">Confirm Password</label>
+						<input 
+							v-model="confirmPassword"
+							type="password"
+							:class="[confirmPassword.length === 0 ? '' : [matchPassword ? 'green' : 'red']]"
+							class="form-control"
+							id="input-confirm-password" 
+							required>
+					</div>
 				</div>
-				<div class="form-group">
-					<label for="input-confirm-password">Confirm Password</label>
-					<input 
-						type="password"
-						class="form-control" 
-						id="input-confirm-password" 
-						required>
-				</div>
+				
 				<div class="form-group date" id="datetimepicker1" data-target-input="nearest">
 					<label for="input-date-of-birth">Date of Birth</label>
 					<input 
 						type="date"
 						class="form-control" 
+						{% if form.date_of_birth.value != None %}value="{{ form.date_of_birth.value|stringformat:'s' }}"{% endif %}
 						id="input-date-of-birth"
-						name="date_of_birth" 
-						required>
+						name="date_of_birth" >
+						<small class="red">{{form.date_of_birth.errors}}</small> 	
+						
 					<div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
 						<div><i class="fa fa-calendar"></i></div>
 					</div>
@@ -98,4 +109,25 @@
 	</div>
 </div>
 
+
 {% endblock signup %}
+
+
+{% block vueinstance %}
+<script>
+	new Vue({
+		delimiters: ["[[", "]]"],
+		data() {
+			return {
+				password: '',
+				confirmPassword: '',
+			}
+		},
+		computed: {
+			matchPassword() {
+				return this.password==this.confirmPassword;
+			},
+		}
+	}).$mount('#passwordChecking');
+</script>
+{% endblock vueinstance %}
