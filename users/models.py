@@ -11,6 +11,7 @@ class StudentProfile(models.Model):
 
 class ExpertProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    verified = models.BooleanField(default=False)
 
 
 # Refer: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/#a-full-example

@@ -7,6 +7,11 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from users.models import CustomUser
 
 
+class LoginForm(forms.Form):
+    email = forms.EmailField(label="Email", widget=forms.EmailInput, max_length=50, required=True)
+    password = forms.CharField(label="Password", widget=forms.PasswordInput, required=True)
+
+
 class CustomUserCreationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput, required=True)
     password_confirmation = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput, required=True)

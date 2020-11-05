@@ -9,8 +9,9 @@ from .models import CustomUser
 class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
-    list_display = ('email', 'password', 'first_name', 'last_name', 'phone_number', 'date_of_birth', 'is_admin')
-    list_filter = ('is_admin',)
+    list_display = ('email', 'password', 'first_name', 'last_name', 'phone_number', 'date_of_birth', 'is_expert',
+                    'is_admin')  # columns of users table
+    list_filter = ('is_admin', 'is_expert')
     # exclude = ['verified', ]  # TODO is this required if readonly_fields is present?
     readonly_fields = ('verified',)  # TODO add is_expert to readonly_fields before production
     fieldsets = (  # Fields shown when viewing an account from admin site

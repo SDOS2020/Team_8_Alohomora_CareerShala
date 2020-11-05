@@ -1,9 +1,9 @@
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login as builtin_login
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 
-from users.forms import CustomUserCreationForm
+from users.forms import CustomUserCreationForm, LoginForm
 from users.models import CustomUser
 
 
@@ -31,7 +31,24 @@ def register_expert(request):
 
 
 def login(request):
-    return render(request, 'users/login.html')
+    if request.method == 'POST':
+        login_form_filled = LoginForm(request.POST)
+        if login_form_filled.is_valid():
+            username = login_form_filled.cleaned_data["username"]
+            password = login_form_filled.cleaned_data["password"]
+            user: CustomUser = authenticate(request, username=username, password=password)
+            if user is not None:
+                if user.is_expert:
+                    if user.expert_profile.verified:
+                        builtin_login(request, user)
+                        # TODO redirect to student's dashboard
+                    else:
+                        pass  # fail the login
+                else:
+                    builtin_login(request, user)
+
+    else:
+        return render(request, 'users/login.html')
 
 
 def verify(request):
