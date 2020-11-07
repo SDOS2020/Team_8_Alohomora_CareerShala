@@ -6,11 +6,12 @@ from users.methods import generate_token
 
 
 class StudentProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="student_profile")
 
 
 class ExpertProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="expert_profile")
+    verified = models.BooleanField(default=False)
 
 
 # Refer: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/#a-full-example
