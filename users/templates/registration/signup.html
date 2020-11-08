@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %} 
+Student Registration
+{% endblock title %}
+
 {% block pagecss %} 
 <link rel="stylesheet" href="{% static 'css/registration/style.css' %}">
 {% endblock pagecss %}
@@ -9,7 +13,7 @@
 <div class="wrapper fadeInDown">
 	<div id="formContent">
 	  	<div class="fadeIn first container">
-		  	<div class="row info-color">
+		  	<div class="row">
 			  	<div class="col-sm-6 offset-sm-3 ">
 					<h3 class="white-text text-center py-4">
 						<strong>Student Register</strong>
@@ -22,6 +26,11 @@
 	  	<div class = "fadeIn second">
 		  	<form method="post" class="col-12" action="{% url 'users-register-student' %}">
 				{% csrf_token %}
+				
+				{form.is_expert.value}
+
+				<input type="hidden" name="is_expert" value="{{ is_expert }}">
+
 				<div class="form-group">
 					<label for="input-first-name">First Name</label>
 					<input 
@@ -81,28 +90,24 @@
 							id="input-confirm-password" 
 							required>
 					</div>
-				</div>
 				
-				<div class="form-group date" id="datetimepicker1" data-target-input="nearest">
-					<label for="input-date-of-birth">Date of Birth</label>
-					<input 
-						type="date"
-						class="form-control" 
-						{% if form.date_of_birth.value != None %}value="{{ form.date_of_birth.value|stringformat:'s' }}"{% endif %}
-						id="input-date-of-birth"
-						name="date_of_birth" >
-						<small class="red">{{form.date_of_birth.errors}}</small> 	
-						
-					<div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-						<div><i class="fa fa-calendar"></i></div>
+					<div class="form-group date" id="datetimepicker1" data-target-input="nearest">
+						<label for="input-date-of-birth">Date of Birth</label>
+						<input 
+							type="date"
+							class="form-control" 
+							{% if form.date_of_birth.value != None %}value="{{ form.date_of_birth.value|stringformat:'s' }}"{% endif %}
+							id="input-date-of-birth"
+							name="date_of_birth" >
+							<small class="red">{{form.date_of_birth.errors}}</small> 	
 					</div>
+					
+					<input name="login" type="submit" :disabled="matchPassword === false" value="Register" class="fadeIn third btn btn-success"/> &nbsp;
+					{% if error_message %}
+					<br>
+					<small class="red">{{ error_message }}</small> 	
+					{% endif %}
 				</div>
-				
-				<input name="login" type="submit" value="Register" class="fadeIn third btn btn-success" /> &nbsp;
-				{% if error_message %}
-				<br>
-				<small class="red">{{ error_message }}</small> 	
-				{% endif %}
 		  	</form>
 	 	</div>
 	</div>
