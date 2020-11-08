@@ -26,7 +26,7 @@ def send_verification_email(sender, instance: CustomUser, created=False,
 
 @receiver(post_save, sender=CustomUser)
 def create_user_profile(sender, instance: CustomUser, created=False, **kwargs):
-    if created:
+    if created and not instance.is_admin:
         if instance.is_expert:
             ExpertProfile.objects.create(user=instance)
         else:
@@ -35,7 +35,8 @@ def create_user_profile(sender, instance: CustomUser, created=False, **kwargs):
 
 @receiver(post_save, sender=CustomUser)
 def save_user_profile(sender, instance: CustomUser, created=False, **kwargs):
-    if instance.is_expert:
-        instance.expert_profile.save()
-    else:
-        instance.student_profile.save()
+    if not instance.is_admin:
+        if instance.is_expert:
+            instance.expert_profile.save()
+        else:
+            instance.student_profile.save()
