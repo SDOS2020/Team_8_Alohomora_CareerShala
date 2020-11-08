@@ -27,7 +27,6 @@ Student Registration
 		  	<form method="post" class="col-12" action="{% url 'users-register-student' %}">
 				{% csrf_token %}
 				
-				{form.is_expert.value}
 
 				<input type="hidden" name="is_expert" value="{{ is_expert }}">
 
