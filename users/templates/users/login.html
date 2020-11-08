@@ -18,34 +18,34 @@ Login
 	<!-- Tabs Titles -->
 
 	<!-- Icon -->
-	<div class="fadeIn first container">
-		<div class="row padding">
-			<div class="col-sm-6 offset-sm-3">
-	  			<img src="{% static 'images/userIcon.png' %}" id="icon" alt="User Icon" class="responsive" />
-	  		</div>
-	  	</div>
-	</div>
+      <div class="fadeIn first container">
+          <div class="row padding">
+              <div class="col-sm-6 offset-sm-3">
+                  <img src="{% static 'images/userIcon.png' %}" id="icon" alt="User Icon" class="responsive"/>
+              </div>
+          </div>
+      </div>
 
-	<!-- Login Form -->
-	<div>
-		<form method="post" class="col-12">
-			{% csrf_token %}
-			<input type="email" id="email" class="fadeIn second" name="email" placeholder="email">
-			<input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
-			<input name="login" type="submit" value="Login" class="fadeIn third btn btn-success" /> &nbsp;
-	   		{% if error_message %}
-	   		<br>
-	   		<small class="red">{{ error_message }}</small> 	
-	   		{% endif %}
-		</form>
-	</div>
+      <!-- Login Form -->
+      <div>
+          <form method="post" class="col-12" action="{% url 'users-login' %}">
+              {% csrf_token %}
+              <input type="email" id="email" class="fadeIn second" name="email" placeholder="email">
+              <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+              <input name="login" type="submit" value="Login" class="fadeIn third btn btn-success"/> &nbsp;
+              {% if form.non_field_errors %}
+                  <br>
+                  <small class="red">{{ form.non_field_errors }}</small>
+              {% endif %}
+          </form>
+      </div>
 
-	<!-- Remind Passowrd -->
-	<div id="formFooter">
-		<div class="conatiner">
-			<div class="row justify-content-center">
-				<a class="underlineHover" href="#">Forgot Password?</a>
-			</div>
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+          <div class="conatiner">
+              <div class="row justify-content-center">
+                  <a class="underlineHover" href="#">Forgot Password?</a>
+              </div>
 			<div class="row justify-content-center">
 				<div class="col-sm-6">
 					<a class="underlineHover" href="{% url 'users-register-student' %}">Register as a Student</a> 

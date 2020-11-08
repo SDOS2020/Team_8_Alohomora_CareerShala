@@ -40,24 +40,21 @@ def login(request):
         if login_form_filled.is_valid():
             email = login_form_filled.cleaned_data["email"]
             password = login_form_filled.cleaned_data["password"]
-            user: CustomUser = authenticate(request, email=email, password=password)
-            if user is not None:
-                if user.is_expert:
-                    if user.expert_profile.verified:
-                        builtin_login(request, user)
-                        # TODO redirect to expert's dashboard
-                    else:
-                        return error(request,
-                                     error_dict={'title': "Profile verification pending by admin.",
-                                                 'body': "Contact us to know more."})
-                else:
+            user: CustomUser = authenticate(request, email=email,
+                                            password=password)  # TODO duplicate in form validation
+            if user.is_expert:
+                if user.expert_profile.verified:
                     builtin_login(request, user)
-                    # TODO redirect to student's dashboard
+                    return redirect('dashboard-home')
+                else:
+                    return error(request,
+                                 error_dict={'title': "Profile verification pending by admin.",
+                                             'body': "Contact us to know more."})
             else:
-                return render(request, 'users/login.html', {'form': login_form_filled})
+                builtin_login(request, user)
+                return redirect('dashboard-home')
         else:
-            return error(request,
-                         error_dict={'title': "Bad request"})
+            return render(request, 'users/login.html', {'form': login_form_filled})
 
     else:
         login_form_empty = LoginForm()

@@ -2,6 +2,7 @@ from datetime import date
 
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
@@ -14,6 +15,13 @@ from users.models import CustomUser
 class LoginForm(forms.Form):
     email = forms.EmailField(label="Email", widget=forms.EmailInput, max_length=50, required=True)
     password = forms.CharField(label="Password", widget=forms.PasswordInput, required=True)
+
+    def clean(self):
+        cleaned_data = super(LoginForm, self).clean()
+        if authenticate(email=cleaned_data.get("email"),
+                        password=cleaned_data.get("password")) is None:
+            print("invalid credentials")
+            raise ValidationError("Incorrect credentials")
 
 
 class CustomUserCreationForm(forms.ModelForm):
