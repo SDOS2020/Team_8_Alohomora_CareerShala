@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block pagecss %} 
-<link rel="stylesheet" href="{% static 'registration/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/users/style.css' %}">
 {% endblock pagecss %}
 
 
@@ -15,7 +15,7 @@
 
 	<!-- Icon -->
 	<div class="fadeIn first container">
-		<div class="row">
+		<div class="row padding">
 			<div class="col-sm-6 offset-sm-3">
 	  			<img src="{% static 'images/userIcon.png' %}" id="icon" alt="User Icon" class="responsive" />
 	  		</div>
@@ -26,8 +26,8 @@
 	<div>
 		<form method="post" class="col-12">
 			{% csrf_token %}
-			<input type="text" id="email" class="fadeIn second" name="email" placeholder="email">
-			<input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+			<input type="email" id="email" class="fadeIn second" name="email" placeholder="email">
+			<input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
 			<input name="login" type="submit" value="Login" class="fadeIn third btn btn-success" /> &nbsp;
 	   		{% if error_message %}
 	   		<br>
