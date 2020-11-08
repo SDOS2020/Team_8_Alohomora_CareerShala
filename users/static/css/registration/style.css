@@ -30,6 +30,7 @@ h2 {
   color: #cccccc;
 }
 
+ul, li {list-style-type: none;}
 
 
 /* STRUCTURE */

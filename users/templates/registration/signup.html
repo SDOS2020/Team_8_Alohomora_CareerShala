@@ -38,7 +38,13 @@ Student Registration
 						id="input-first-name"
 						name="first_name"
 						required>
-						<small class="red">{{form.first_name.errors}}</small>
+					<small class="red">
+				        {% for error in form.first_name.errors %}
+				            <div class="alert-danger">
+				                <strong>{{ error }}</strong>
+				            </div>
+				        {% endfor %}
+					</small>
 				</div>
 				<div class="form-group">
 					<label for="input-last-name">Last Name</label>
@@ -48,7 +54,13 @@ Student Registration
 						id="input-last-name" 
 						name="last_name"
 						required>
-						<small class="red">{{form.last_name.errors}}</small>
+					<small class="red">
+				        {% for error in form.last_name.errors %}
+				            <div class="alert-danger">
+				                <strong>{{ error }}</strong>
+				            </div>
+				        {% endfor %}
+					</small>
 				</div>
 				
 				<div class="form-group">
@@ -60,7 +72,14 @@ Student Registration
 						id="input-email" 
 						aria-describedby="emailHelp"
 						name="email">
-						<small class="red">{{form.email.errors}}</small>
+
+					<small class="red">
+				        {% for error in form.email.errors %}
+				            <div class="alert-danger">
+				                <strong>{{ error }}</strong>
+				            </div>
+				        {% endfor %}
+					</small>
 					<small 
 						id="emailHelp" 
 						class="form-text text-muted">
@@ -78,7 +97,13 @@ Student Registration
 							id="input-password" 
 							name="password"
 							required>
-							<small class="red">{{form.password.errors}}</small> 
+						<small class="red">
+					        {% for error in form.password.errors %}
+					            <div class="alert-danger">
+					                <strong>{{ error }}</strong>
+					            </div>
+					        {% endfor %}
+						</small>
 					</div>
 					<div class="form-group">
 						<label for="input-confirm-password">Confirm Password</label>
@@ -99,7 +124,13 @@ Student Registration
 							{% if form.date_of_birth.value != None %}value="{{ form.date_of_birth.value|stringformat:'s' }}"{% endif %}
 							id="input-date-of-birth"
 							name="date_of_birth" >
-							<small class="red">{{form.date_of_birth.errors}}</small> 	
+						<small class="red">
+					        {% for error in form.date_of_birth.errors %}
+					            <div class="alert-danger">
+					                <strong>{{ error }}</strong>
+					            </div>
+					        {% endfor %}
+						</small>	
 					</div>
 					
 					<input name="login" type="submit" :disabled="matchPassword === false" value="Register" class="fadeIn third btn btn-success"/> &nbsp;
