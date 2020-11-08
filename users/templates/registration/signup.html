@@ -27,7 +27,6 @@ Student Registration
 		  	<form method="post" class="col-12" action="{% url 'users-register-student' %}">
 				{% csrf_token %}
 				
-				{form.is_expert.value}
 
 				<input type="hidden" name="is_expert" value="{{ is_expert }}">
 
@@ -79,6 +78,7 @@ Student Registration
 							id="input-password" 
 							name="password"
 							required>
+							<small class="red">{{form.password.errors}}</small> 
 					</div>
 					<div class="form-group">
 						<label for="input-confirm-password">Confirm Password</label>
