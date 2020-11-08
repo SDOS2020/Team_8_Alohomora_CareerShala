@@ -3,6 +3,7 @@ from datetime import date
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
 from users.models import CustomUser
@@ -17,7 +18,6 @@ class LoginForm(forms.Form):
 
 class CustomUserCreationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput, required=True)
-    password_confirmation = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput, required=True)
 
     # By default, all fields are required as in the fields below
 
@@ -28,7 +28,6 @@ class CustomUserCreationForm(forms.ModelForm):
     def clean_date_of_birth(self):
         # date of birth check TODO which code is checking for non-nullity of date-of-birth then?
         date_of_birth = self.cleaned_data.get("date_of_birth")  # TODO is_valid is called before clean?
-        print(date_of_birth, type(date_of_birth))
         date_today = date.today()
         age = date_today.year - date_of_birth.year - \
               ((date_today.month, date_today.day) < (date_of_birth.month, date_of_birth.day))
@@ -36,13 +35,10 @@ class CustomUserCreationForm(forms.ModelForm):
             raise ValidationError("You are too young to join this site. Only 14 years and older allowed.")
         return date_of_birth
 
-    def clean_password_confirmation(self):
-        # password confirmation
-        password = self.cleaned_data.get("password")
-        password_confirmation = self.cleaned_data.get("password_confirmation")
-        if password and password_confirmation and password != password_confirmation:
-            raise ValidationError("Passwords do not match!")
-        return password_confirmation
+    def clean_password(self):
+        password: str = self.cleaned_data.get("password")
+        validate_password(password=password)
+        return password
 
     def save(self, commit=True):
         user = super().save(commit=False)
