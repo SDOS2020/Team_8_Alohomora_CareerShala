@@ -1,20 +1,20 @@
-.page-holder {
+/* .page-holder {
   min-height: 100vh;
 }
 
 .bg-cover {
   background-image: url("{% static 'images/background-image.jpg' %}") !important;
-}
+} */
 
 .green {
     border-color: lightgreen;
-    border-width: 0.1rem;
+    border-width: 0.2rem;
 }
   
 .red {
 color: red;
 border-color: red;
-border-width: 0.1rem;
+border-width: 0.2rem;
 }
 
 .input {
@@ -84,10 +84,6 @@ a.nav-link.btn.btn-dark {
 }
 
 /* BASIC */
-
-html {
-  background-color: #56baed;
-}
 
 body {
   font-family: "Poppins", sans-serif;
