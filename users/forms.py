@@ -40,6 +40,22 @@ class CustomUserCreationForm(forms.ModelForm):
         validate_password(password=password)
         return password
 
+    def clean_name(self, name: str):
+        cond1 = ' ' in name
+        cond2 = any(not ch.isalpha() for ch in name)
+        if cond1 or cond2:
+            raise ValidationError("Invalid name")
+
+    def clean_first_name(self):
+        first_name: str = self.cleaned_data.get("first_name")
+        self.clean_name(first_name)
+        return first_name
+
+    def clean_last_name(self):
+        last_name: str = self.cleaned_data.get("last_name")
+        self.clean_name(last_name)
+        return last_name
+
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password'])
