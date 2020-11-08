@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login as builtin_login
 from django.http import HttpResponseBadRequest
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from users.forms import CustomUserCreationForm, LoginForm, ErrorForm
 from users.models import CustomUser
@@ -9,11 +9,15 @@ from users.models import CustomUser
 
 def registration_basic(request, is_expert: bool):
     if request.method == 'POST':
+
         user_creation_form_filled = CustomUserCreationForm(request.POST)
         if user_creation_form_filled.is_valid():
             user_creation_form_filled.save()
             messages.success(request, "Registration successful, check your email inbox to verify your email.")
-            # I am not refreshing upon success, just showing a message.
+            if is_expert:
+                return redirect('users-register-expert')
+            else:
+                return redirect('users-register-student')
         else:
             return render(request, 'registration/signup.html',
                           {'form': user_creation_form_filled, 'is_expert': is_expert})  # should contain errors
@@ -92,9 +96,7 @@ def verify(request):
 def error(request, error_dict=None):  # TODO can we make it a POST redirect?
     if error_dict is None:
         error_dict = {}
-    print(error_dict)
     error_form = ErrorForm(error_dict)
-    print(error_form)
     error_object = {}
     if error_form.is_valid():
         error_object['title'] = error_form.cleaned_data['title']

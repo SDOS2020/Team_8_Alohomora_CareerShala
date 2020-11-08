@@ -23,7 +23,7 @@ class CustomUserAdmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': (  # TODO group fields as in fieldsets
-                'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'phone_number',
+                'email', 'password', 'first_name', 'last_name', 'phone_number',
                 'date_of_birth', 'is_expert'),
         }),
     )
