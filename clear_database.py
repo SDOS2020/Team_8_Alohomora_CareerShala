@@ -1,3 +1,8 @@
+"""
+WARNING:    THIS WILL DELETE ALL MIGRATION FILES AND THE SQLITE DATABASE.
+            To be used as a utility script.
+            No main function so that user doesn't delete files by mistake.
+"""
 import os
 from glob import glob
 
