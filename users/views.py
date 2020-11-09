@@ -7,31 +7,20 @@ from users.forms import CustomUserCreationForm, LoginForm, ErrorForm
 from users.models import CustomUser
 
 
-def registration_basic(request, is_expert: bool):
+def register(request):
     if request.method == 'POST':
 
         user_creation_form_filled = CustomUserCreationForm(request.POST)
         if user_creation_form_filled.is_valid():
             user_creation_form_filled.save()
             messages.success(request, "Registration successful, check your email inbox to verify your email.")
-            if is_expert:
-                return redirect('users-register-expert')
-            else:
-                return redirect('users-register-student')
+            return redirect('users-register')
         else:
             return render(request, 'registration/signup.html',
-                          {'form': user_creation_form_filled, 'is_expert': is_expert})  # should contain errors
+                          {'form': user_creation_form_filled})  # should contain errors
     else:
         user_creation_form_empty = CustomUserCreationForm()
-        return render(request, 'registration/signup.html', {'form': user_creation_form_empty, 'is_expert': is_expert})
-
-
-def register_student(request):
-    return registration_basic(request, is_expert=False)
-
-
-def register_expert(request):
-    return registration_basic(request, is_expert=True)
+        return render(request, 'registration/signup.html', {'form': user_creation_form_empty})
 
 
 def login(request):
