@@ -1,18 +1,40 @@
+from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login as builtin_login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.http import is_safe_url
 
-from users.forms import CustomUserCreationForm, LoginForm, ErrorForm
+from errors.views import error
+from users.decorators import user_verification_required
+from users.forms import CustomUserCreationForm, LoginForm, ExpertProfileForm, StudentProfileForm
 from users.models import CustomUser
 
 
 @login_required
+@user_verification_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    if request.method == 'POST':
+        if request.user.is_expert:
+            profile_form = ExpertProfileForm(request.POST, instance=request.user.expert_profile)
+        else:
+            profile_form = StudentProfileForm(request.POST, instance=request.user.student_profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            request.user.profile_completed = True
+            request.user.save()
+            success_message = "Profile successfully updated!"
+            if request.user.is_expert:
+                success_message += " Please wait for expert-profile verification by admin."
+            messages.success(request, "Profile successfully updated!")
+    else:
+        if request.user.is_expert:
+            profile_form = ExpertProfileForm(instance=request.user.expert_profile)
+        else:
+            profile_form = StudentProfileForm(instance=request.user.student_profile)
+    return render(request, 'users/profile.html', {'form': profile_form})
 
 
 def register(request):
@@ -32,6 +54,8 @@ def register(request):
 
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard-home')
     if request.method == 'POST':
         login_form_filled = LoginForm(request.POST)
         if login_form_filled.is_valid():
@@ -45,17 +69,13 @@ def login(request):
             password = login_form_filled.cleaned_data["password"]
             user: CustomUser = authenticate(request, email=email,
                                             password=password)  # TODO duplicate in form validation
-            if user.is_expert:
-                if user.expert_profile.verified:
-                    builtin_login(request, user)
-                    return redirect(success_redirect_url)
-                else:
-                    return error(request,
-                                 error_dict={'title': "Profile verification pending by admin.",
-                                             'body': "Contact us to know more."})
-            else:
-                builtin_login(request, user)
-                return redirect(success_redirect_url)
+
+            if not user.verified:
+                return error(request, error_dict={'title': 'Please verify your email first!',
+                                                  'body': ''})
+
+            builtin_login(request, user)
+            return redirect(success_redirect_url)
         else:
             return render(request, 'users/login.html', {'form': login_form_filled})
 
@@ -91,17 +111,3 @@ def verify(request):
         return render(request, 'users/verify.html', context=context)
     else:
         return HttpResponseBadRequest()
-
-
-def error(request, error_dict=None):  # TODO can we make it a POST redirect?
-    if error_dict is None:
-        error_dict = {}
-    error_form = ErrorForm(error_dict)
-    error_object = {}
-    if error_form.is_valid():
-        error_object['title'] = error_form.cleaned_data['title']
-        error_object['body'] = error_form.cleaned_data['body']
-    else:
-        error_object['title'] = "Bad Request"
-        error_object['body'] = ""
-    return render(request, 'common/error.html', context={'error': error_object})

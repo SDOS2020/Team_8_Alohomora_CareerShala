@@ -7,7 +7,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
-from users.models import CustomUser
+from users.models import CustomUser, StudentProfile, ExpertProfile
 
 
 # Essential Forms
@@ -22,6 +22,18 @@ class LoginForm(forms.Form):
                         password=cleaned_data.get("password")) is None:
             print("invalid credentials")
             raise ValidationError("Incorrect credentials")
+
+
+class StudentProfileForm(forms.ModelForm):
+    class Meta:
+        model = StudentProfile
+        fields = ('interests',)
+
+
+class ExpertProfileForm(forms.ModelForm):
+    class Meta:
+        model = ExpertProfile
+        fields = ('specialisations', 'associated_institute',)
 
 
 class CustomUserCreationForm(forms.ModelForm):
@@ -82,10 +94,3 @@ class CustomUserChangeForm(forms.ModelForm):
 
     def clean_password(self):
         return self.initial['password']
-
-
-# Trivial Forms
-
-class ErrorForm(forms.Form):
-    title = forms.CharField(label="Title", max_length=100, required=True)
-    body = forms.CharField(label="Body", max_length=1000, required=False)

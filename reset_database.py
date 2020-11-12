@@ -30,7 +30,7 @@ def reset():
         superuser_first_name = "Reeshabh"
         superuser_last_name = "Admin"
         superuser_dob = date(1998, 12, 4)
-        print(f"Creating superuser with \nemail:    {superuser_email}\npassword: {superuser_password}")
+        print(f"Creating superuser with \nemail   : {superuser_email}\npassword: {superuser_password}")
 
         CustomUser.objects.create_superuser(email=superuser_email,
                                             first_name=superuser_first_name,
