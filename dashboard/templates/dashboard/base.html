@@ -5,26 +5,23 @@
 <head>
 	<!-- <meta charset="UTF-8"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+	<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	
+	{% block pagecss %} {% endblock pagecss %}
 	
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
 	<link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>	
+
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.18.1/bootstrap-vue.min.js"></script>
-	<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script> -->
-	
-	{% block pagecss %} {% endblock pagecss %}
-
-
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.18.1/bootstrap-vue.min.css"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.18.1/bootstrap-vue.min.css"></script>
 	<title>{% block title %} {% endblock title %}</title>
 </head>
 <body>
@@ -38,8 +35,11 @@
 	</ul>
 	{% endif %}
 
-	{% block signup %} {% endblock signup%}
-	{% block login %} {% endblock login%}
+    
+    {{ request.user.email }} + {{ request.user.is_expert }}
+
+    <!-- {% block dashboard %} {% endblock dashboard %} -->
+    {% include 'dashboard/dashboard.html' %}
 
 	{% include 'common/footer.html' %}
 </body>
