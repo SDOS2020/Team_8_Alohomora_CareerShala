@@ -5,13 +5,37 @@ from django.db import models
 from users.methods import generate_token
 
 
+class Interest(models.Model):
+    label = models.CharField(max_length=200, unique=True)
+    description = models.CharField(max_length=2000, null=True, blank=True)
+
+    def __str__(self):
+        return self.label
+
+
+class Specialisation(models.Model):
+    label = models.CharField(max_length=200, unique=True)
+    description = models.CharField(max_length=2000, null=True, blank=True)
+
+    def __str__(self):
+        return self.label
+
+
 class StudentProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="student_profile")
+    user = models.OneToOneField('users.CustomUser', on_delete=models.CASCADE, related_name="student_profile")
+    interests = models.ManyToManyField('users.Interest')
+
+    def __str__(self):
+        return f"{self.user.email}'s profile"
 
 
 class ExpertProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="expert_profile")
+    user = models.OneToOneField('users.CustomUser', on_delete=models.CASCADE, related_name="expert_profile")
     verified = models.BooleanField(default=False)
+    specialisations = models.ManyToManyField('users.Specialisation')
+
+    def __str__(self):
+        return f"{self.user.email}'s profile"
 
 
 # Refer: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/#a-full-example
