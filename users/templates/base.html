@@ -12,7 +12,10 @@
 	
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
 	<link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
-	
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet">
+		
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>	
@@ -28,19 +31,22 @@
 	<title>{% block title %} {% endblock title %}</title>
 </head>
 <body>
-	{% include 'common/navbar.html' %}
 	
-	{% if messages %}
-	<ul class="messages">
-		{% for message in messages %}
-		<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
+	{% block bodyContent %}
 
-	{% block signup %} {% endblock signup%}
-	{% block login %} {% endblock login%}
-	{% block dashboard %} {% endblock dashboard%}
+		{% include 'common/navbar.html' %}
+		{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+
+		{% block signup %} {% endblock signup%}
+		{% block login %} {% endblock login%}
+
+	{% endblock bodyContent %}
 
 	{% include 'common/footer.html' %}
 </body>

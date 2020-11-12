@@ -34,16 +34,8 @@ h2 {
 rem;
 } */
 
-.btn {
+.toggle-on {
   margin: 0px;
-}
-
-.toggle-input {
-  height: 1.5rem;
-  width: calc(2rem + 0.75rem);
-  border-radius: 3rem;
-  padding-left: 4rem;
-  padding-bottom: 2.5
 }
 
 /* STRUCTURE */
