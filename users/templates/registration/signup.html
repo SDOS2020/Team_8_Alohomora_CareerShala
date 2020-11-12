@@ -14,7 +14,7 @@ Student Registration
 <div class="wrapper fadeInDown">
 	<div id="formContent">
 	  	<div class="fadeIn first container">
-		  	<div class="row">
+		  	<div class="row info-color">
 			  	<div class="col-sm-6 offset-sm-3 ">
 					<h3 class="white-text text-center py-4">
 						<strong>Register</strong>
@@ -28,20 +28,22 @@ Student Registration
 		  	<form method="post" class="col-12" action="{% url 'users-register' %}">
 				{% csrf_token %}
 				
-				<div class="form-group">
-					<h4>Register as:</h4>
-
+				<div class="form-group custom-control">
+					<label for="input-toggle-user">Register as</label> <br>
 					<input 
+						id="input-toggle-user"
 						type="checkbox" 
 						name="is_expert" 
-						{% if form.is_expert.value != None %} value="{{ form.is_expert.value|stringformat:'s' }}" {% endif %}
+						class="toggle-input"
+						{% if form.is_expert.value != None %} checked {% endif %}
 						data-toggle="toggle" 
 						data-on="Expert" 
 						data-off="Student" 
-						data-onstyle="info" 
+						data-onstyle="success" 
+						aria-describedby="toggleHelp"
 						data-offstyle="warning">
 					<small 
-						id="emailHelp" 
+						id="toggleHelp" 
 						class="form-text text-muted">
 						Click on above toggle button to change the type of user.
 					</small>
