@@ -136,3 +136,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('SDOS_G8_DEV_EMAIL_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('SDOS_G8_DEV_EMAIL_PASSWORD')
 EMAIL_USE_TLS = True
+
+# Auth-related settings
+LOGIN_URL = '/users/login'

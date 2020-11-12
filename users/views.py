@@ -1,10 +1,18 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login as builtin_login
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.http import is_safe_url
 
 from users.forms import CustomUserCreationForm, LoginForm, ErrorForm
 from users.models import CustomUser
+
+
+@login_required
+def profile(request):
+    return render(request, 'users/profile.html')
 
 
 def register(request):
@@ -27,6 +35,12 @@ def login(request):
     if request.method == 'POST':
         login_form_filled = LoginForm(request.POST)
         if login_form_filled.is_valid():
+            success_redirect_url = request.GET.get('next', 'dashboard-home')
+            if not is_safe_url(url=success_redirect_url,
+                               allowed_hosts=settings.ALLOWED_HOSTS):  # TODO what is this allowed_hosts?
+                return error(request,
+                             error_dict={'title': 'Invalid Request',
+                                         'body': ''})
             email = login_form_filled.cleaned_data["email"]
             password = login_form_filled.cleaned_data["password"]
             user: CustomUser = authenticate(request, email=email,
@@ -34,14 +48,14 @@ def login(request):
             if user.is_expert:
                 if user.expert_profile.verified:
                     builtin_login(request, user)
-                    return redirect('dashboard-home')
+                    return redirect(success_redirect_url)
                 else:
                     return error(request,
                                  error_dict={'title': "Profile verification pending by admin.",
                                              'body': "Contact us to know more."})
             else:
                 builtin_login(request, user)
-                return redirect('dashboard-home')
+                return redirect(success_redirect_url)
         else:
             return render(request, 'users/login.html', {'form': login_form_filled})
 
