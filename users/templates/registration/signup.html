@@ -10,31 +10,48 @@ Student Registration
 {% endblock pagecss %}
 
 {% block signup %}
+
 <div class="wrapper fadeInDown">
 	<div id="formContent">
 	  	<div class="fadeIn first container">
 		  	<div class="row">
 			  	<div class="col-sm-6 offset-sm-3 ">
 					<h3 class="white-text text-center py-4">
-						<strong>Student Register</strong>
+						<strong>Register</strong>
 					</h3>
 				</div>
 			</div>
-	  	</div>
+		</div>
   
 	  	<!-- Login Form -->
 	  	<div class = "fadeIn second">
-		  	<form method="post" class="col-12" action="{% url 'users-register-student' %}">
+		  	<form method="post" class="col-12" action="{% url 'users-register' %}">
 				{% csrf_token %}
 				
+				<div class="form-group">
+					<h4>Register as:</h4>
 
-				<input type="hidden" name="is_expert" value="{{ is_expert }}">
+					<input 
+						type="checkbox" 
+						name="is_expert" 
+						{% if form.is_expert.value != None %} value="{{ form.is_expert.value|stringformat:'s' }}" {% endif %}
+						data-toggle="toggle" 
+						data-on="Expert" 
+						data-off="Student" 
+						data-onstyle="info" 
+						data-offstyle="warning">
+					<small 
+						id="emailHelp" 
+						class="form-text text-muted">
+						Click on above toggle button to change the type of user.
+					</small>
+				</div>
 
 				<div class="form-group">
 					<label for="input-first-name">First Name</label>
 					<input 
 						class="form-control" 
-						{% if form.first_name.value != None %}value="{{ form.first_name.value|stringformat:'s' }}"{% endif %}
+						{% if form.first_name.value != None %} value="{{ form.first_name.value|stringformat:'s' }}"{% endif %}
 						id="input-first-name"
 						name="first_name"
 						required>
@@ -46,6 +63,7 @@ Student Registration
 				        {% endfor %}
 					</small>
 				</div>
+
 				<div class="form-group">
 					<label for="input-last-name">Last Name</label>
 					<input 
@@ -150,6 +168,17 @@ Student Registration
 
 {% block vueinstance %}
 <script>
+
+	// function calc()
+	// {
+	// 	if (document.getElementById('toggle-user').checked) 
+	// {
+	// 	// send to my view ON
+	// } else {
+	// 	// send to my view OFF
+	// }
+	// }
+
 	new Vue({
 		delimiters: ["[[", "]]"],
 		data() {
