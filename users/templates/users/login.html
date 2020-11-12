@@ -30,13 +30,28 @@ Login
       <div>
           <form method="post" class="col-12" action="{% url 'users-login' %}">
               {% csrf_token %}
-              <input type="email" id="email" class="fadeIn second" name="email" placeholder="email">
-              <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
-              <input name="login" type="submit" value="Login" class="fadeIn third btn btn-success"/> &nbsp;
-              {% if form.non_field_errors %}
-                  <br>
-                  <small class="red">{{ form.non_field_errors }}</small>
-              {% endif %}
+			  <input 
+					type="email" 
+					id="email" 
+					class="fadeIn second" 
+					name="email" 
+					placeholder="email" 
+					required>
+			  <input 
+					type="password" 
+					id="password" 
+					class="fadeIn third" 
+					name="password" 
+					placeholder="password"
+					required>
+			  <input name="login" type="submit" value="Login" class="fadeIn third btn btn-success"/> &nbsp;
+			  	<small class="red">
+					{% for error in form.non_field_errors %}
+						<div class="alert-danger">
+							<strong>{{ error }}</strong>
+						</div>
+					{% endfor %}
+				</small>
           </form>
       </div>
 
