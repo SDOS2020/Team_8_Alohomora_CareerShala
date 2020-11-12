@@ -1,4 +1,21 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} 
+Welcome {{ request.user.username }} !
+{% endblock title %}
+
+{% block pagecss %} 
+<link rel="stylesheet" href="{% static 'css/users/style.css' %}">
+{% endblock pagecss %}
+
+
+{% block dashboard %}
+
+{% endblock dashboard %}	
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,4 +24,4 @@
 <body>
 {{ request.user.email }} + {{ request.user.is_expert }}
 </body>
-</html>
+</html> -->
