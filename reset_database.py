@@ -7,10 +7,10 @@ import os
 from datetime import date
 from glob import glob
 
-from users.models import CustomUser
+from users.models import CustomUser, Interest, Specialisation
 
 
-def clear():
+def reset():
     confirm = input("Are you sure to continue? (y/n)")
     if confirm.lower() == "y":
         for file in glob('*/migrations/000*.py'):
@@ -30,12 +30,24 @@ def clear():
         superuser_first_name = "Reeshabh"
         superuser_last_name = "Admin"
         superuser_dob = date(1998, 12, 4)
-        print(f"Creating superuser with \nusername: {superuser_email}\npassword: {superuser_password}")
+        print(f"Creating superuser with \nemail   : {superuser_email}\npassword: {superuser_password}")
 
         CustomUser.objects.create_superuser(email=superuser_email,
                                             first_name=superuser_first_name,
                                             last_name=superuser_last_name,
                                             password=superuser_password,
                                             date_of_birth=superuser_dob)
+
+        interest_labels = ["Medicine", "Engineering", "Law", "Art", "Science"]
+        specialisation_labels = ["Medicine", "Engineering", "Law", "Art", "Science"]
+
+        for interest_label in interest_labels:
+            Interest.objects.create(label=interest_label, description="")
+        print(f"Created interests with labels: {interest_labels}")
+
+        for specialisation_label in specialisation_labels:
+            Specialisation.objects.create(label=specialisation_label, description="")
+        print(f"Created specialisations with labels: {specialisation_labels}")
+
     else:
         print("Canceling operation")

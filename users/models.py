@@ -5,13 +5,38 @@ from django.db import models
 from users.methods import generate_token
 
 
+class Interest(models.Model):
+    label = models.CharField(max_length=200, unique=True)
+    description = models.CharField(max_length=2000, null=True, blank=True)
+
+    def __str__(self):
+        return self.label
+
+
+class Specialisation(models.Model):
+    label = models.CharField(max_length=200, unique=True)
+    description = models.CharField(max_length=2000, null=True, blank=True)
+
+    def __str__(self):
+        return self.label
+
+
 class StudentProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="student_profile")
+    user = models.OneToOneField('users.CustomUser', on_delete=models.CASCADE, related_name="student_profile")
+    interests = models.ManyToManyField('users.Interest', blank=True)
+
+    def __str__(self):
+        return f"{self.user.email}'s profile"
 
 
 class ExpertProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="expert_profile")
+    user = models.OneToOneField('users.CustomUser', on_delete=models.CASCADE, related_name="expert_profile")
     verified = models.BooleanField(default=False)
+    specialisations = models.ManyToManyField('users.Specialisation', blank=True)
+    associated_institute = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user.email}'s profile"
 
 
 # Refer: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/#a-full-example
@@ -46,10 +71,11 @@ class CustomUser(AbstractBaseUser):
     date_of_birth = models.DateField(verbose_name='date of birth')
     is_expert = models.BooleanField(verbose_name='is expert', default=False)
 
-    # Fields related to email verification
+    # Fields related to auth, profile
     email_verification_token = models.CharField(max_length=32,
                                                 default=generate_token)  # TODO Remove this hardcoded value
     verified = models.BooleanField(default=False, verbose_name='Verified')
+    profile_completed = models.BooleanField(default=False)
 
     # Django-specific fields
     is_active = models.BooleanField(default=True)

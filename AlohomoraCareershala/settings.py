@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'dashboard.apps.DashboardConfig',
     'questionnaire.apps.QuestionnaireConfig',
+    'errors.apps.ErrorsConfig',
 
     # default
     'django.contrib.admin',
