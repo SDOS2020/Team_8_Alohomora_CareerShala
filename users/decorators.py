@@ -22,6 +22,10 @@ def profile_completion_required(function):
         if not request.user.profile_completed:
             messages.error(request, "Please fill out your profile first!")
             return redirect('users-profile')
+        if request.user.is_expert and not request.user.expert_profile.verified:
+            messages.warning(request, "Please wait for expert-profile verification by admin before accessing the "
+                                      "platform.")
+            return redirect('users-profile')
         return function(request, *args, **kwargs)
 
     return check
