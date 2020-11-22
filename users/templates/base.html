@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,24 +30,26 @@
 	<title>{% block title %} {% endblock title %}</title>
 </head>
 <body>
-	
+
 	{% block bodyContent %}
+	
+	{% include 'common/navbar.html' %}
 
-		{% include 'common/navbar.html' %}
-		{% if messages %}
-		<ul class="messages">
-			{% for message in messages %}
-			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-			{% endfor %}
-		</ul>
-		{% endif %}
+	{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+		<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
 
-		{% block signup %} {% endblock signup%}
-		{% block login %} {% endblock login%}
+	{% block content %}
+
+	{% endblock content %}
 
 	{% endblock bodyContent %}
-
 	{% include 'common/footer.html' %}
+
 </body>
 
 {% block vueinstance %} {% endblock vueinstance %}
