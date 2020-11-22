@@ -138,3 +138,6 @@ EMAIL_USE_TLS = True
 
 # Auth-related settings
 LOGIN_URL = '/users/login'
+
+# Crispy Forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
