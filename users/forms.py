@@ -7,7 +7,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
-from users.models import CustomUser, StudentProfile, ExpertProfile
+from users.models import CustomUser, StudentProfile, ExpertProfile, Interest, Specialisation
 
 
 # Essential Forms
@@ -25,12 +25,20 @@ class LoginForm(forms.Form):
 
 
 class StudentProfileForm(forms.ModelForm):
+    interests = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(),
+                                               widget=forms.CheckboxSelectMultiple,
+                                               required=False)
+
     class Meta:
         model = StudentProfile
         fields = ('interests',)
 
 
 class ExpertProfileForm(forms.ModelForm):
+    interests = forms.ModelMultipleChoiceField(queryset=Specialisation.objects.all(),
+                                               widget=forms.CheckboxSelectMultiple,
+                                               required=True)
+
     class Meta:
         model = ExpertProfile
         fields = ('specialisations', 'associated_institute',)

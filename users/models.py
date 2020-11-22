@@ -32,7 +32,7 @@ class StudentProfile(models.Model):
 class ExpertProfile(models.Model):
     user = models.OneToOneField('users.CustomUser', on_delete=models.CASCADE, related_name="expert_profile")
     verified = models.BooleanField(default=False)
-    specialisations = models.ManyToManyField('users.Specialisation', blank=True)
+    specialisations = models.ManyToManyField('users.Specialisation')
     associated_institute = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
