@@ -153,7 +153,7 @@ Student Registration
 						</small>	
 					</div>
 					
-					<input name="login" type="submit" :disabled="matchPassword === false" value="Register" class="fadeIn third btn btn-success"/> &nbsp;
+					<input name="signup" type="submit" :disabled="matchPassword === false" value="Register" class="fadeIn third btn btn-success"/> &nbsp;
 					{% if error_message %}
 					<br>
 					<small class="red">{{ error_message }}</small> 	
@@ -171,29 +171,19 @@ Student Registration
 {% block vueinstance %}
 <script>
 
-	// function calc()
-	// {
-	// 	if (document.getElementById('toggle-user').checked) 
-	// {
-	// 	// send to my view ON
-	// } else {
-	// 	// send to my view OFF
-	// }
-	// }
-
-	new Vue({
-		delimiters: ["[[", "]]"],
-		data() {
-			return {
-				password: '',
-				confirmPassword: '',
-			}
-		},
-		computed: {
-			matchPassword() {
-				return this.password==this.confirmPassword;
+		new Vue({
+			delimiters: ["[[", "]]"],
+			data() {
+				return {
+					password: '',
+					confirmPassword: '',
+				}
 			},
-		}
-	}).$mount('#passwordChecking');
+			computed: {
+				matchPassword() {
+					return this.password==this.confirmPassword;
+				},
+			}
+		}).$mount('#passwordChecking');
 </script>
 {% endblock vueinstance %}
