@@ -75,7 +75,7 @@ class CustomUser(AbstractBaseUser):
     # Fields related to auth, profile
     email_verification_token = models.CharField(max_length=32,
                                                 default=generate_token)  # TODO Remove this hardcoded value
-    verified = models.BooleanField(default=False, verbose_name='Verified')
+    verified = models.BooleanField(default=False, verbose_name='Email Verified?')
     profile_completed = models.BooleanField(default=False)
 
     # Django-specific fields

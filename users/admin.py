@@ -9,7 +9,7 @@ from .models import CustomUser, StudentProfile, ExpertProfile, Interest, Special
 class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
-    list_display = ('email', 'password', 'first_name', 'last_name', 'phone_number', 'date_of_birth', 'is_expert',
+    list_display = ('email', 'first_name', 'last_name', 'phone_number', 'date_of_birth', 'is_expert',
                     'is_admin')  # columns of users table
     list_filter = ('is_admin', 'is_expert')
     # exclude = ['verified', ]  # TODO is this required if readonly_fields is present?
