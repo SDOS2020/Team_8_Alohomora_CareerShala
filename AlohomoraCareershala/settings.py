@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     # third party
     'crispy_forms',
+    'grappelli',
 
     # default
     'django.contrib.admin',
@@ -141,3 +142,6 @@ LOGIN_URL = '/users/login'
 
 # Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Grappelli Admin Site
+GRAPPELLI_ADMIN_TITLE = 'Alohomora CareerShala Admin Site'
