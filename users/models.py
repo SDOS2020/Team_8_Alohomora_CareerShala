@@ -64,7 +64,8 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser):
     # General fields
-    email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
+    email = models.EmailField(verbose_name='email address', max_length=255, unique=True,
+                              error_messages={'unique': 'A user with this email already exists.'})
     first_name = models.CharField(verbose_name='first name', max_length=255)
     last_name = models.CharField(verbose_name='last name', max_length=255)
     phone_number = models.CharField(verbose_name='phone number', max_length=14, unique=True, blank=True, null=True)
