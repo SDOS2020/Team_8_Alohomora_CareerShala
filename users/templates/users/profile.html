@@ -16,7 +16,7 @@ Update Profile
             <hr class="mt-0 mb-4">
             <form action="{% url 'users-profile' %}" method="post">
                 {% csrf_token %}
-                {% crispy form %}
+                {{ form|crispy }}
                 <input type="submit" class="btn btn-success" value="Update">
             </form>
         </div>
