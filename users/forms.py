@@ -35,9 +35,9 @@ class StudentProfileForm(forms.ModelForm):
 
 
 class ExpertProfileForm(forms.ModelForm):
-    interests = forms.ModelMultipleChoiceField(queryset=Specialisation.objects.all(),
-                                               widget=forms.CheckboxSelectMultiple,
-                                               required=True)
+    specialisations = forms.ModelMultipleChoiceField(queryset=Specialisation.objects.all(),
+                                                     widget=forms.CheckboxSelectMultiple,
+                                                     required=True)
 
     class Meta:
         model = ExpertProfile
