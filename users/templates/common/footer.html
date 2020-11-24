@@ -16,7 +16,11 @@
 							<ul class="list-unstyled">
 								<li>Home</li>
 								<li>About</li>
+								{% if user.is_authenticated %}
+								<li>Profile</li>
+								{% else %}
 								<li>Login</li>
+								{% endif %}
 							</ul>
 						</div>
 						<div class="col-xl-3 col-md-4 col-sm-4 col-12">
