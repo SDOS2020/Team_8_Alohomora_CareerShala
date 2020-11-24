@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
+from questionnaire.forms import QuestionnaireCreationForm
 from questionnaire.models import Questionnaire, Question, Option
 
 
@@ -15,9 +16,20 @@ class OptionInline(admin.TabularInline):
 
 
 class QuestionnaireAdmin(admin.ModelAdmin):
+    form = QuestionnaireCreationForm
     inlines = [
         QuestionInline,
     ]
+    list_filter = ('root',)
+    list_display = ('name', 'root',)
+    readonly_fields = ('root',)
+
+    def has_delete_permission(self, request, obj: Questionnaire = None):
+        if obj is not None and obj.root:
+            error_message = 'You cannot delete the root questionnaire. Consider editing it instead.'
+            self.message_user(request, error_message)
+            return False
+        return super(QuestionnaireAdmin, self).has_delete_permission(request, obj)
 
 
 class QuestionAdmin(admin.ModelAdmin):

@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -14,9 +15,38 @@ class Questionnaire(models.Model):
                                                       blank=True,
                                                       on_delete=models.SET_NULL)
     phase = models.PositiveSmallIntegerField(choices=PHASE_CHOICES, default=1)
+    root = models.BooleanField(default=False, help_text='Note that you cannot delete the root questionnaire.')
 
     def __str__(self):
         return self.name
+
+    # TODO needed? (already enforced in forms.py)
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None, *args, **kwargs):
+        root_field = self.root
+        if Questionnaire.objects.filter(root=True).exists():
+            invalid = False
+            if self.pk is None:  # if new questionnaire is being added
+                if root_field is True:
+                    invalid = True
+            else:  # if existing questionnaire is being edited
+                if Questionnaire.objects.get(root=True).pk != self.pk:
+                    if root_field is True:
+                        invalid = True
+            if invalid:
+                raise ValidationError('You already have a root questionnaire!')
+        super(Questionnaire, self).save(force_insert=force_insert,
+                                        force_update=force_update,
+                                        using=using,
+                                        update_fields=update_fields,
+                                        *args,
+                                        **kwargs)
+
+    # TODO needed? (already enforced in admin.py)
+    def delete(self, using=None, keep_parents=False):
+        if self.root:
+            raise ValidationError('You cannot delete a root question! Consider editing it instead.')
+        super(Questionnaire, self).delete(using=using, keep_parents=keep_parents)
 
 
 class Question(models.Model):
