@@ -20,6 +20,10 @@ class Questionnaire(models.Model):
     def __str__(self):
         return self.name
 
+    def clean(self):
+        if self.continuation_questionnaire == self:
+            raise ValidationError('Continuation questionnaire cannot point to the current one!')
+
     # TODO needed? (already enforced in forms.py)
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None, *args, **kwargs):
