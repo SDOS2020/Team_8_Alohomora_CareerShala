@@ -24,6 +24,8 @@ class Specialisation(models.Model):
 class StudentProfile(models.Model):
     user = models.OneToOneField('users.CustomUser', on_delete=models.CASCADE, related_name="student_profile")
     interests = models.ManyToManyField('users.Interest', blank=True)
+    next_questionnaire = models.ForeignKey('questionnaire.Questionnaire', on_delete=models.PROTECT,
+                                           related_name='pending_student', null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.email}'s profile"

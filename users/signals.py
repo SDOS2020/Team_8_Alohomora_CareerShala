@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from questionnaire.models import Questionnaire
 from users.methods import send_mail_async
 from users.models import CustomUser, ExpertProfile, StudentProfile
 
@@ -30,7 +31,8 @@ def create_user_profile(sender, instance: CustomUser, created=False, **kwargs):
         if instance.is_expert:
             ExpertProfile.objects.create(user=instance)
         else:
-            StudentProfile.objects.create(user=instance)
+            root_questionnaire = Questionnaire.objects.get(root=True)
+            StudentProfile.objects.create(user=instance, next_questionnaire=root_questionnaire)
 
 
 @receiver(post_save, sender=CustomUser)
