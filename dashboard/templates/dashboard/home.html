@@ -19,8 +19,9 @@ Welcome {{ request.user.first_name }} !
             <div id="content">
 
                 {% include 'common/dashboardNavbar.html' %}
+
                 <!-- Begin Page Content -->
-                <div class="container">
+                <div id="questionnaire" class="container">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
@@ -31,25 +32,27 @@ Welcome {{ request.user.first_name }} !
                     <!-- Content Row -->
                     <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <!-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                </div> -->
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><btn> Take Questionnaire </btn></div>
+                        <!-- Take Questionnaire Card -->
+                        <div class="col-xl-3 col-md-6 mb-4 ">
+                            <div class="card border-left-primary shadow h-100 py-2" id="questionnaireBtn">
+                                <a href="#questionnaireRow" style="text-decoration: none;">
+                                <div class="card-body" >
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <!-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                    </div> -->
+                                                <div class="h5 mb-0 font-weight-bold"><btn> Take Questionnaire </btn></div>
+                                            </div>
+                                            <!-- <div class="col-auto">
+                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            </div> -->
                                         </div>
-                                        <!-- <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div> -->
-                                    </div>
                                 </div>
+                                </a>
                             </div>
                         </div>
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- Questionnaire Path Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
@@ -59,15 +62,15 @@ Welcome {{ request.user.first_name }} !
                                                 Path Completion </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">40%</div>
+                                                    <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">You are on Phase: [[phase]]</div>
                                                 </div>
-                                                <div class="col">
+                                                <!-- <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
                                                             style="width: 40%" aria-valuenow="40" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -126,11 +129,30 @@ Welcome {{ request.user.first_name }} !
                         </div>
                     </div>
 
-                    <!-- Content Row -->
-
                     <div class="row">
 
                         <!-- Area Chart -->
+                        <div class="col-lg-10 offset-lg-1">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Welcome!</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                                    </blockquote>                                      
+                                </div>
+                                <img src="https://assets.rebelmouse.io/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbWFnZSI6Imh0dHBzOi8vYXNzZXRzLnJibC5tcy8yMDY0MzYzOC9vcmlnaW4ucG5nIiwiZXhwaXJlc19hdCI6MTY2Njg3NjU5MH0.KYtk6xADFdG1fYpzOLsLEHF79dOTz1q4tpWgxmq2w0U/img.png?width=980">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Content Row -->
+
+                    <div class="row" id="questionnaireRow">
                         <div class="col-lg-10 offset-lg-1">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
@@ -158,5 +180,11 @@ Welcome {{ request.user.first_name }} !
 
 </div>
 
+<style>
+#questionnaireBtn:hover .card-body:hover{
+    background-color: #4e73df;
+    color: white;
+}
+</style>
 
 {% endblock dashboard %}
