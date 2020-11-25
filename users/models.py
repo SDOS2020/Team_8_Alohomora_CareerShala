@@ -24,6 +24,8 @@ class Specialisation(models.Model):
 class StudentProfile(models.Model):
     user = models.OneToOneField('users.CustomUser', on_delete=models.CASCADE, related_name="student_profile")
     interests = models.ManyToManyField('users.Interest', blank=True)
+    next_questionnaire = models.ForeignKey('questionnaire.Questionnaire', on_delete=models.PROTECT,
+                                           related_name='pending_student', null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.email}'s profile"
@@ -64,7 +66,8 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser):
     # General fields
-    email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
+    email = models.EmailField(verbose_name='email address', max_length=255, unique=True,
+                              error_messages={'unique': 'A user with this email already exists.'})
     first_name = models.CharField(verbose_name='first name', max_length=255)
     last_name = models.CharField(verbose_name='last name', max_length=255)
     phone_number = models.CharField(verbose_name='phone number', max_length=14, unique=True, blank=True, null=True)
@@ -74,7 +77,7 @@ class CustomUser(AbstractBaseUser):
     # Fields related to auth, profile
     email_verification_token = models.CharField(max_length=32,
                                                 default=generate_token)  # TODO Remove this hardcoded value
-    verified = models.BooleanField(default=False, verbose_name='Verified')
+    verified = models.BooleanField(default=False, verbose_name='Email Verified?')
     profile_completed = models.BooleanField(default=False)
 
     # Django-specific fields

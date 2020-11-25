@@ -26,9 +26,9 @@ def profile(request):
             request.user.profile_completed = True
             request.user.save()
             success_message = "Profile successfully updated!"
-            if request.user.is_expert:
+            if request.user.is_expert and not request.user.expert_profile.verified:
                 success_message += " Please wait for expert-profile verification by admin."
-            messages.success(request, "Profile successfully updated!")
+            messages.success(request, success_message)
     else:
         if request.user.is_expert:
             profile_form = ExpertProfileForm(instance=request.user.expert_profile)

@@ -35,9 +35,12 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'questionnaire.apps.QuestionnaireConfig',
     'errors.apps.ErrorsConfig',
+    'api.apps.ApiConfig',
 
     # third party
     'crispy_forms',
+    'grappelli',
+    'rest_framework',
 
     # default
     'django.contrib.admin',
@@ -141,3 +144,16 @@ LOGIN_URL = '/users/login'
 
 # Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Grappelli Admin Site
+GRAPPELLI_ADMIN_TITLE = 'Alohomora CareerShala Admin Site'
+
+# Django Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+}
