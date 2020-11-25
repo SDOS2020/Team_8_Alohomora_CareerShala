@@ -1,3 +1,5 @@
+import uuid
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -54,6 +56,7 @@ class Questionnaire(models.Model):
 
 
 class Question(models.Model):
+    identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     body = models.CharField(max_length=1000)
     questionnaire = models.ForeignKey('Questionnaire', related_name='question', on_delete=models.CASCADE)
     multiselect = models.BooleanField(default=False)
@@ -63,6 +66,7 @@ class Question(models.Model):
 
 
 class Option(models.Model):
+    identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     body = models.CharField(max_length=1000)
     question = models.ForeignKey('Question', related_name='option', on_delete=models.CASCADE)
 
