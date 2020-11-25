@@ -6,7 +6,7 @@ from questionnaire.models import Questionnaire, Question, Option
 class OptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Option
-        fields = ['body']
+        fields = ['body', 'identifier', ]
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -14,7 +14,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['body', 'multiselect', 'option']
+        fields = ['body', 'multiselect', 'option', 'identifier', ]
 
 
 class QuestionnaireSerializer(serializers.ModelSerializer):
