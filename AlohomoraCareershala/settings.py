@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     # third party
     'crispy_forms',
     'grappelli',
+    'rest_framework',
 
     # default
     'django.contrib.admin',
@@ -145,3 +146,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Grappelli Admin Site
 GRAPPELLI_ADMIN_TITLE = 'Alohomora CareerShala Admin Site'
+
+# Django Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
