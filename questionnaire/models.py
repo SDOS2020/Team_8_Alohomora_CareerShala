@@ -12,19 +12,14 @@ class Questionnaire(models.Model):
         (3, 'Phase-3'),
         (4, 'Phase-4'),
     )
+
+    identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(max_length=500)
-    continuation_questionnaire = models.OneToOneField('self', related_name='previous_questionnaire', null=True,
-                                                      blank=True,
-                                                      on_delete=models.SET_NULL)
     phase = models.PositiveSmallIntegerField(choices=PHASE_CHOICES, default=1)
     root = models.BooleanField(default=False, help_text='Note that you cannot delete the root questionnaire.')
 
     def __str__(self):
         return self.name
-
-    def clean(self):
-        if self.continuation_questionnaire == self:
-            raise ValidationError('Continuation questionnaire cannot point to the current one!')
 
     # TODO needed? (already enforced in forms.py)
     def save(self, force_insert=False, force_update=False, using=None,
@@ -69,6 +64,13 @@ class Option(models.Model):
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     body = models.CharField(max_length=1000)
     question = models.ForeignKey('Question', related_name='option', on_delete=models.CASCADE)
+    continuation_questionnaire = models.OneToOneField('self', related_name='from_options', null=True,
+                                                      blank=True,
+                                                      on_delete=models.SET_NULL)
+
+    def clean(self):
+        if self.continuation_questionnaire == self.question.questionnaire:
+            raise ValidationError('Continuation questionnaire cannot point to the current one!')
 
     def __str__(self):
         return self.body

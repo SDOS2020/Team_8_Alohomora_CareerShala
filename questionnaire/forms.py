@@ -7,7 +7,7 @@ from questionnaire.models import Questionnaire
 class QuestionnaireCreationForm(forms.ModelForm):
     class Meta:
         model = Questionnaire
-        fields = ('phase', 'name', 'continuation_questionnaire', 'root')
+        fields = ('phase', 'name', 'root')
 
     def clean_root(self):
         root_field = self.cleaned_data.get('root')
