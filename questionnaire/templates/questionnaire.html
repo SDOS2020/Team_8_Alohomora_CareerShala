@@ -6,18 +6,17 @@
 
 {% block questionnaire %}
 
-<div id="questionnaire" class="container">
+<div class="container">
     <div class="row">
         <div class="col-lg-12">
 			
 			<form>
 				<div class="card mb-3" style="border: none;" >
 					<div class="card-header py-6" style="background-color: white;">
-						<h6>Phase :: [[phase]]</h6>
 						<h5><b> [[ getCurrentQuestion.body ]] </b></h5>
 					</div>
 					<!-- Card Body -->
-					<!-- [[selected]] -->
+					
 					<div class="card-body form-check">
 						<div class="form-check mt-1" style="padding-top:0px" v-bind="updateError">
 							<div v-if="getCurrentQuestion.option.length == 0">
@@ -81,6 +80,7 @@
 				phase: 0,
 				qindex: 0,
 				endPhase: 10,
+				pageCreated: 0,
 				selected: [],
 				questions: [
 					{
@@ -127,7 +127,10 @@
 				this.qindex = 0;
 				this.name = response.data.name;
 				this.phase = response.data.phase;
-				this.questions = response.data.question;
+				if (response.data.question.length == 0)
+					this.questions = [];
+				else
+					this.questions = response.data.question;
 				this.responses = new Array(this.questions.length);
 			})
 			.catch(e => {
@@ -145,7 +148,10 @@
 						this.responses.push(this.selected);
 					}
 					else {
-						this.responses[this.qindex] = this.selected;
+						this.responses[this.qindex] = {
+							identifier: this.getCurrentQuestion.identifier,
+							body: this.selected
+						}
 					}
 
 					this.qindex++;
@@ -189,6 +195,11 @@
 			},
 			onSubmit(evt) {
 				console.log("Submitting ...")
+				this.responses[this.qindex] = {
+					identifier: this.getCurrentQuestion.identifier,
+					body: this.selected
+				}
+				console.log(this.responses)
 				axios.post(`http://127.0.0.1:8000/api/questionnaire/submit_questionnaire/`, {withCredentials: true})
 				.then(response => {
 					this.qindex = 0;
@@ -208,10 +219,12 @@
 					this.errors = [];
 			},
 			getCurrentQuestion() {
-				if (this.questions[this.qindex].multiselect)
-					this.questions[this.qindex].type = "checkbox";
-				else  
-					this.questions[this.qindex].type = "radio";
+				if (this.questions.length > 0) {
+					if (this.questions[this.qindex].multiselect)
+						this.questions[this.qindex].type = "checkbox";
+					else  
+						this.questions[this.qindex].type = "radio";
+				}
 				return this.questions[this.qindex];
 			},
 			getProgressBarWidth() {
