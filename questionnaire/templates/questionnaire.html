@@ -18,6 +18,7 @@
 						<h2> Question here ! [[ getCurrentQuestion.question ]] </h2>
 					</div>
 					<!-- Card Body -->
+					[[selected]]
 					<div class="card-body form-check">
 						<div class="form-check mt-3">
 							<div v-if="getCurrentQuestion.options.length == 0">
@@ -25,10 +26,11 @@
 									<input :type="getCurrentQuestion.type" class="form-check-input">
 								</label>
 							</div>
+
 							<div v-else>
 								<div class="radio container" v-for="option in getCurrentQuestion.options">
 									<label class="form-check-label">
-										<input :type="getCurrentQuestion.type" :name="getCurrentQuestion.type" class="form-check-input"> [[option]]
+										<input :type="getCurrentQuestion.type" :value="option" :name="getCurrentQuestion.type" class="form-check-input" v-model="selected" multiple> [[option]]
 									</label>
 								</div>
 							</div>
@@ -71,7 +73,9 @@
 		delimiters: ["[[", "]]"],
 		data() {
 			return {
+				selected: [],
 				phase: 0,
+				endPhase: 10,
 				qindex: 0,
 				questions: [
 					{
@@ -103,7 +107,6 @@
 					}
 				],
 				responses: [
-					
 				],
 				progressBarWidth: {
 					width: this.getProgressBarWidth + "%",
@@ -131,7 +134,23 @@
 		methods: {
 			onNext(evt) {
 				console.log("Next ...")
-				this.qindex++;
+
+				if(this.selected.length != 0) {
+					// append selected in response
+					if(this.qindex == this.responses.length) {
+						this.responses.push(this.selected);
+					}
+					else {
+						this.responses[this.qindex] = this.selected;
+					}
+
+					this.qindex++;
+					this.selected = [];
+				}
+				else {
+					// error
+
+				}
 
 				// let respDataStr = response.data
 				// let jsObject = JSON.parse(respDataStr)
@@ -151,6 +170,9 @@
 			onPrev(evt) {
 				console.log("Prev ...")
 				this.qindex--;
+
+				this.selected = this.responses[this.qindex];
+
 				// axios.post(`https://localhost:8000/api/users/register/`, {
 				// 	body: this.form
 				// })
