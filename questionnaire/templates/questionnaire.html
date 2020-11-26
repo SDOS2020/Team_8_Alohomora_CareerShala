@@ -16,7 +16,13 @@
 						<h5><b> [[ getCurrentQuestion.body ]] </b></h5>
 					</div>
 					<!-- Card Body -->
-					
+					<!-- [[selected]]
+					<br>
+					[[tempResponses.length]]
+					<br>
+					[[tempResponses]]
+					<br>
+					[[qindex]] -->
 					<div class="card-body form-check">
 						<div class="form-check mt-1" style="padding-top:0px" v-bind="updateError">
 							<div v-if="getCurrentQuestion.option.length == 0">
@@ -81,60 +87,75 @@
 				phase: 0,
 				qindex: 0,
 				pageCreated: 0,
+				tempResponses: [],
 				selected: [],
 				questions: [
 					{
 						identifier: "q1",
-						question: "This is 	Ques 1",
-						options: [
+						body: "This is 	Ques 1",
+						option: [
 							{
 								body: "option1",
+								identifier: "q1o1",
 							},
 							{
 								body: "option2",
+								identifier: "q1o2",
 							},
 							{
 								body: "option3",
+								identifier: "q1o3",
 							}
 						],
-						type: "radio",
+						multiselect: true
 					},
 					{
 						identifier: "q2",
-						question: "This is Ques 2",
-						options: [
+						body: "This is Ques 2",
+						option: [
 							{
 								body: "option1",
-								identifier: "asasa",
+								identifier: "q2o1",
 							},
 							{
 								body: "option2",
+								identifier: "q2o2",
+
 							},
 							{
 								body: "option3",
+								identifier: "q2o3",
+
 							}
 						],
-						type: "radio"
+						multiselect: false
 					},
 					{
-						identifier: "q2",
-						question: "This is Ques 3",
-						options: [
+						identifier: "q3",
+						body: "This is Ques 3",
+						option: [
 							{
 								body: "option1",
+								identifier: "q3o1",
 							},
 							{
 								body: "option2",
+								identifier: "q3o2",
 							},
 							{
 								body: "option3",
+								identifier: "q3o3",
 							}
 						],
-						type: "checkbox"
+						multiselect: true
 					}
 				],
-				responses: [
-				],
+				// responses: {
+				// 	questionnaire: "",
+				// 	answers: [
+
+				// 	]
+				// },
 				progressBarWidth: {
 					width: this.getProgressBarWidth + "%",
 				},
@@ -153,12 +174,9 @@
 					this.questions = [];
 				else
 					this.questions = response.data.question;
-				this.responses = {
-					questionnaire: response.data.identifier,
-					answers: [
-						
-					]
-				};
+
+				this.tempResponses = new Array(this.questions.length);
+				this.tempResponses.pop();
 			})
 			.catch(e => {
 				this.errors.push(e)
@@ -171,15 +189,7 @@
 
 				if(this.selected.length != 0) {
 					// append selected in response
-					if(this.qindex == this.responses.length) {
-						this.responses.push(this.selected);
-					}
-					else {
-						this.responses[this.qindex] = {
-							identifier: this.getCurrentQuestion.identifier,
-							body: this.selected
-						}
-					}
+					this.tempResponses.push(this.selected)
 
 					this.qindex++;
 					this.selected = [];
@@ -187,6 +197,30 @@
 				else {
 					this.errors.push("Select atleast one option");
 				}
+
+
+
+				// if(this.selected.length != 0) {
+				// 	// append selected in response
+				// 	if(this.qindex == this.responses.length) {
+				// 		for (i = 0; i < this.selected.length; i++) {
+				// 			answer = {
+				// 				question: this.getCurrentQuestion.identifier,
+				// 				option: this.selected[i].identifier
+				// 			}
+				// 			this.responses.answers.push(answer);
+				// 		}
+				// 	}
+				// 	else {
+				// 		this.tempResponses.push(this.selected)
+				// 	}
+
+				// 	this.qindex++;
+				// 	this.selected = [];
+				// }
+				// else {
+				// 	this.errors.push("Select atleast one option");
+				// }
 
 				// let respDataStr = response.data
 				// let jsObject = JSON.parse(respDataStr)
@@ -205,10 +239,28 @@
 			},
 			onPrev(evt) {
 				console.log("Prev ...")
+				
+				if (this.tempResponses.length == this.qindex + 1) {
+					this.tempResponses.pop();
+				}
 				this.qindex--;
+				
+				// console.log(Array.isArray(this.tempResponses[this.qindex]));
+				// console.log(this.tempResponses[this.qindex]);
+
+				// if (Array.isArray(this.tempResponses[this.qindex])) {
+				// 	for (let i = 0; i < this.tempResponses[this.qindex].length; i++) {
+				// 		this.responses.answers.pop();
+				// 	}
+				// } else {
+				// 	this.responses.answers.pop();
+				// }
+				
 				this.errors = [];
 
-				this.selected = this.responses[this.qindex];
+				this.selected = this.tempResponses[this.qindex];
+
+				this.tempResponses.pop();
 
 				// axios.post(`http://localhost:8000/api/users/register/`, {
 				// 	body: this.form
@@ -222,22 +274,56 @@
 			},
 			onSubmit(evt) {
 				console.log("Submitting ...")
-				this.responses[this.qindex] = {
-					identifier: this.getCurrentQuestion.identifier,
-					body: this.selected
+
+				if (this.selected.length == 0) {
+					this.errors.push("Select atleast one option");
+					return;
 				}
-				console.log(this.responses)
-				axios.post(`http://127.0.0.1:8000/api/questionnaire/submit_questionnaire/`, {withCredentials: true})
-				.then(response => {
-					this.qindex = 0;
-					this.name = response.data.name;
-					this.phase = response.data.phase;
-					this.questions = response.data.question;
-					this.responses = new Array(this.questions.length);
-				})
-				.catch(e => {
-					this.errors.push(e)
-				})
+
+				this.tempResponses.push(this.selected)
+				this.selected = []
+				var responses = {
+					questionnaire: this.identifier,
+					answers: []
+				};
+
+				for (let i = 0; i < this.tempResponses.length; i++) {
+					console.log(i);
+
+					if (Array.isArray(this.tempResponses[i])) {
+						for (let j = 0; j < this.tempResponses[i].length; j++) {
+							answer = {
+								question: this.questions[i].identifier,
+								option: this.tempResponses[i][j].identifier
+							}
+							responses.answers.push(answer);
+						}
+					} else {
+						answer = {
+							question: this.questions[i].identifier,
+							option: this.tempResponses[i].identifier
+						}
+						responses.answers.push(answer);
+					}
+				}
+
+				console.log(responses.answers)
+				
+				if (this.questions.length == 1)
+					this.tempResponses.pop();
+
+				// console.log(this.responses)
+				// axios.post(`http://127.0.0.1:8000/api/questionnaire/submit_questionnaire_responses/`, {withCredentials: true})
+				// .then(response => {
+				// 	this.qindex = 0;
+				// 	this.name = response.data.name;
+				// 	this.phase = response.data.phase;
+				// 	this.questions = response.data.question;
+				// 	this.responses = new Array(this.questions.length);
+				// })
+				// .catch(e => {
+				// 	this.errors.push(e)
+				// })
 			},
 		},
 		computed: {
@@ -246,13 +332,13 @@
 					this.errors = [];
 			},
 			getCurrentQuestion() {
-				if (this.questions.length > 0) {
+				if (this.questions.length > 0 && this.qindex < this.questions.length) {
 					if (this.questions[this.qindex].multiselect)
 						this.questions[this.qindex].type = "checkbox";
 					else  
 						this.questions[this.qindex].type = "radio";
+					return this.questions[this.qindex];
 				}
-				return this.questions[this.qindex];
 			},
 			getProgressBarWidth() {
 				var val = ((this.qindex+1)/this.questions.length)*100;
