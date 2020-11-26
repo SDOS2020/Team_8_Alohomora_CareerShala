@@ -29,6 +29,8 @@ def next_questionnaire(request):
 @api_view(['POST', ])
 @permission_classes([permissions.IsAuthenticated, IsStudent])
 def submit_questionnaire_response(request):
+    # why I need to send request in context explicitly? Because it is sent automatically in some
+    # other class based view: https://stackoverflow.com/a/33550228/5394180
     serializer = QuestionnaireResponseSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
         questionnaire_response = serializer.save()

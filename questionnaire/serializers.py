@@ -23,7 +23,7 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Questionnaire
-        fields = ['name', 'phase', 'question']
+        fields = ['name', 'phase', 'question', 'identifier']
 
 
 class AnswerSerializer(serializers.ModelSerializer):
@@ -60,6 +60,9 @@ class AnswerSerializer(serializers.ModelSerializer):
 class QuestionnaireResponseSerializer(serializers.ModelSerializer):
     questionnaire = serializers.SlugRelatedField(slug_field='identifier',
                                                  queryset=Questionnaire.objects.all())
+
+    # why I had to use SerializerMethodField: https://stackoverflow.com/a/27934823/5394180
+    # why I cannot use CurrentUserDefault instead: https://stackoverflow.com/q/44729740/5394180
     student_profile = serializers.SerializerMethodField('get_student_profile')
     answers = AnswerSerializer(many=True)
 
