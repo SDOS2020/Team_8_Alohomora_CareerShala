@@ -33,25 +33,25 @@
 
 	{% block bodyContent %}
 	
-	{% include 'common/navbar.html' %}
+		{% include 'common/navbar.html' %}
 
-	{% if messages %}
-	<ul class="messages">
-		{% for message in messages %}
-		<strong>
-			<div {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-				<div class="alert-warning">
-					{{ message }}
+		{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+			<strong>
+				<div {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+					<div class="alert-warning">
+						{{ message }}
+					</div>
 				</div>
-			</div>
-		</strong>
-		{% endfor %}
-	</ul>
-	{% endif %}
+			</strong>
+			{% endfor %}
+		</ul>
+		{% endif %}
 
-	{% block content %}
+		{% block content %}
 
-	{% endblock content %}
+		{% endblock content %}
 
 	{% endblock bodyContent %}
 	{% include 'common/footer.html' %}
