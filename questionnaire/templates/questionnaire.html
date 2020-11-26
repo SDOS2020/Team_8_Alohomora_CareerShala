@@ -150,12 +150,6 @@
 						multiselect: true
 					}
 				],
-				// responses: {
-				// 	questionnaire: "",
-				// 	answers: [
-
-				// 	]
-				// },
 				progressBarWidth: {
 					width: this.getProgressBarWidth + "%",
 				},
@@ -164,23 +158,23 @@
 			}
 		},
 		created() {
-			axios.get(`http://127.0.0.1:8000/api/questionnaire/next_questionnaire/`)
-			.then(response => {
-				console.log(response.data)
-				this.qindex = 0;
-				this.name = response.data.name;
-				this.phase = response.data.phase;
-				if (response.data.question.length == 0)
-					this.questions = [];
-				else
-					this.questions = response.data.question;
+			// axios.get(`http://127.0.0.1:8000/api/questionnaire/next_questionnaire/`)
+			// .then(response => {
+			// 	console.log(response.data)
+			// 	this.qindex = 0;
+			// 	this.name = response.data.name;
+			// 	this.phase = response.data.phase;
+			// 	if (response.data.question.length == 0)
+			// 		this.questions = [];
+			// 	else
+			// 		this.questions = response.data.question;
 
-				this.tempResponses = new Array(this.questions.length);
-				this.tempResponses.pop();
-			})
-			.catch(e => {
-				this.errors.push(e)
-			})
+			// 	this.tempResponses = new Array(this.questions.length);
+			// 	this.tempResponses.pop();
+			// })
+			// .catch(e => {
+			// 	this.errors.push(e)
+			// })
 		},
 		methods: {
 			onNext(evt) {
@@ -198,34 +192,6 @@
 					this.errors.push("Select atleast one option");
 				}
 
-
-
-				// if(this.selected.length != 0) {
-				// 	// append selected in response
-				// 	if(this.qindex == this.responses.length) {
-				// 		for (i = 0; i < this.selected.length; i++) {
-				// 			answer = {
-				// 				question: this.getCurrentQuestion.identifier,
-				// 				option: this.selected[i].identifier
-				// 			}
-				// 			this.responses.answers.push(answer);
-				// 		}
-				// 	}
-				// 	else {
-				// 		this.tempResponses.push(this.selected)
-				// 	}
-
-				// 	this.qindex++;
-				// 	this.selected = [];
-				// }
-				// else {
-				// 	this.errors.push("Select atleast one option");
-				// }
-
-				// let respDataStr = response.data
-				// let jsObject = JSON.parse(respDataStr)
-				// this.windows = jsObject
-
 				// axios.post(`http://localhost:8000/api/users/register/`, {
 				// 	body: this.form
 				// })
@@ -239,25 +205,9 @@
 			},
 			onPrev(evt) {
 				console.log("Prev ...")
-				
-				if (this.tempResponses.length == this.qindex + 1) {
-					this.tempResponses.pop();
-				}
+
 				this.qindex--;
-				
-				// console.log(Array.isArray(this.tempResponses[this.qindex]));
-				// console.log(this.tempResponses[this.qindex]);
-
-				// if (Array.isArray(this.tempResponses[this.qindex])) {
-				// 	for (let i = 0; i < this.tempResponses[this.qindex].length; i++) {
-				// 		this.responses.answers.pop();
-				// 	}
-				// } else {
-				// 	this.responses.answers.pop();
-				// }
-				
 				this.errors = [];
-
 				this.selected = this.tempResponses[this.qindex];
 
 				this.tempResponses.pop();
@@ -281,7 +231,7 @@
 				}
 
 				this.tempResponses.push(this.selected)
-				this.selected = []
+
 				var responses = {
 					questionnaire: this.identifier,
 					answers: []
@@ -308,22 +258,17 @@
 				}
 
 				console.log(responses.answers)
-				
-				if (this.questions.length == 1)
-					this.tempResponses.pop();
 
-				// console.log(this.responses)
-				// axios.post(`http://127.0.0.1:8000/api/questionnaire/submit_questionnaire_responses/`, {withCredentials: true})
-				// .then(response => {
-				// 	this.qindex = 0;
-				// 	this.name = response.data.name;
-				// 	this.phase = response.data.phase;
-				// 	this.questions = response.data.question;
-				// 	this.responses = new Array(this.questions.length);
-				// })
-				// .catch(e => {
-				// 	this.errors.push(e)
-				// })
+				axios.post(`http://127.0.0.1:8000/api/questionnaire/submit_questionnaire_responses/`, {withCredentials: true})
+				.then(response => {
+					body: responses
+				})
+				.catch(e => {
+					this.errors.push(e)
+				})
+
+				this.selected = []
+				this.tempResponses.pop();
 			},
 		},
 		computed: {
