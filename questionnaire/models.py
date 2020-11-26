@@ -78,24 +78,15 @@ class Option(models.Model):
         return self.body
 
 
-class Answer(models.Model):
+class QuestionnaireResponse(models.Model):
     questionnaire = models.ForeignKey('questionnaire.Questionnaire', on_delete=models.RESTRICT,
                                       related_name='questionnaire_responses')
-    user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, related_name='user_responses')
+    student_profile = models.ForeignKey('users.StudentProfile', on_delete=models.CASCADE,
+                                        related_name='student_profile_responses')
+
+
+class Answer(models.Model):
+    questionnaire_response = models.ForeignKey('questionnaire.QuestionnaireResponse', on_delete=models.RESTRICT,
+                                               related_name='answers')
     question = models.ForeignKey('questionnaire.Question', on_delete=models.RESTRICT, related_name='question_responses')
     option = models.ForeignKey('questionnaire.Option', on_delete=models.RESTRICT, related_name='option_responses')
-
-    class Meta:
-        unique_together = ('user', 'question')
-
-    def clean(self):
-        cond1 = not self.user.is_expert
-        cond2 = self.user.student_profile.next_questionnaire == self.questionnaire
-        cond3 = self.question.questionnaire == self.questionnaire
-        cond4 = self.option.question == self.question
-        cond5 = (not self.question.multiselect and not Answer.objects.filter(user=self.user,
-                                                                             question=self.question)).exists() or self.question.multiselect
-
-        if not (cond1 and cond2 and cond3 and cond4 and cond5):
-            raise ValidationError("Inconsistent Answer, either user is not supposed to answer this questionnaire yet "
-                                  "or the questionnaire, question and option do not fit together.")

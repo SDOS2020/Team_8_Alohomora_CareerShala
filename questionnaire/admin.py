@@ -2,7 +2,7 @@ from django.contrib import admin, messages
 
 # Register your models here.
 from questionnaire.forms import QuestionnaireCreationForm
-from questionnaire.models import Questionnaire, Question, Option
+from questionnaire.models import Questionnaire, Question, Option, Answer, QuestionnaireResponse
 
 
 class QuestionInline(admin.TabularInline):
@@ -13,6 +13,17 @@ class QuestionInline(admin.TabularInline):
 class OptionInline(admin.TabularInline):
     model = Option
     show_change_link = True
+
+
+class AnswerInline(admin.TabularInline):
+    model = Answer
+
+
+class QuestionnaireResponseAdmin(admin.ModelAdmin):
+    inlines = [
+        AnswerInline
+    ]
+    # readonly_fields = ('questionnaire', 'student_profile', 'answers')
 
 
 class QuestionnaireAdmin(admin.ModelAdmin):
@@ -41,3 +52,5 @@ class QuestionAdmin(admin.ModelAdmin):
 admin.site.register(Questionnaire, QuestionnaireAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Option)
+admin.site.register(Answer)
+admin.site.register(QuestionnaireResponse, QuestionnaireResponseAdmin)
