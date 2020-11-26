@@ -19,8 +19,9 @@ def reset():
             os.remove(file)
 
         db_path = "db.sqlite3"
-        print("removing", db_path)
-        os.remove(db_path)
+        if os.path.isfile(db_path):
+            print("removing", db_path)
+            os.remove(db_path)
 
         print("Initiating database...")
         os.system("python manage.py makemigrations")
