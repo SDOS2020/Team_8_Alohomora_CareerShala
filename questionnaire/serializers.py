@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.fields import CurrentUserDefault
 
 from questionnaire.models import Questionnaire, Question, Option, Answer, QuestionnaireResponse
 from users.models import StudentProfile
@@ -57,13 +58,22 @@ class AnswerSerializer(serializers.ModelSerializer):
         return attrs
 
 
+class CurrentStudentProfile(object):
+    requires_context = True
+
+    def __call__(self, serializer_field):
+        return serializer_field.context['request'].user.student_profile
+
+    def __repr__(self):
+        return '%s()' % self.__class__.__name__
+
+
 class QuestionnaireResponseSerializer(serializers.ModelSerializer):
     questionnaire = serializers.SlugRelatedField(slug_field='identifier',
                                                  queryset=Questionnaire.objects.all())
 
-    # why I had to use SerializerMethodField: https://stackoverflow.com/a/27934823/5394180
-    # why I cannot use CurrentUserDefault instead: https://stackoverflow.com/q/44729740/5394180
-    student_profile = serializers.SerializerMethodField('get_student_profile')
+    # I finally created my own default class
+    student_profile = serializers.HiddenField(default=CurrentStudentProfile, write_only=True)
     answers = AnswerSerializer(many=True)
 
     class Meta:
