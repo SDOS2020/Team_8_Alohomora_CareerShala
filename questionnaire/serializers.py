@@ -73,7 +73,7 @@ class QuestionnaireResponseSerializer(serializers.ModelSerializer):
                                                  queryset=Questionnaire.objects.all())
 
     # I finally created my own default class
-    student_profile = serializers.HiddenField(default=CurrentStudentProfile, write_only=True)
+    student_profile = serializers.HiddenField(default=CurrentStudentProfile(), write_only=True)
     answers = AnswerSerializer(many=True)
 
     class Meta:
@@ -92,8 +92,7 @@ class QuestionnaireResponseSerializer(serializers.ModelSerializer):
     # why we need custom create: https://www.django-rest-framework.org/api-guide/relations/#writable-nested-serializers
     def create(self, validated_data):
         answers = validated_data.pop('answers')
-        questionnaire_response = QuestionnaireResponse.objects.create(**validated_data, student_profile=self.context[
-            'request'].user.student_profile)
+        questionnaire_response = QuestionnaireResponse.objects.create(**validated_data)
         for answer in answers:
             Answer.objects.create(questionnaire_response=questionnaire_response, **answer)
         return questionnaire_response
