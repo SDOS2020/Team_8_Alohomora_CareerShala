@@ -8,9 +8,10 @@ Welcome {{ request.user.first_name }} !
 
 {% block pagecss %} 
 <link rel="stylesheet" href="{% static 'css/home/style.css' %}">
+<script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock pagecss %}
 
-{% block dashboard %}
+{% block dashboardPage %}
     <!-- Begin Page Content -->
     <div id="questionnaire" class="container">
         <!-- Page Heading -->
@@ -170,4 +171,4 @@ Welcome {{ request.user.first_name }} !
 }
 </style>
 
-{% endblock dashboard %}
+{% endblock dashboardPage %}

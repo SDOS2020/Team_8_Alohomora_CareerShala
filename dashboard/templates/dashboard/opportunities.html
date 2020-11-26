@@ -3,171 +3,122 @@
 {% load static %}
 
 {% block title %} 
-Welcome {{ request.user.first_name }} !
+Courses Offered !
 {% endblock title %}
 
 {% block pagecss %} 
 <link rel="stylesheet" href="{% static 'css/home/style.css' %}">
 {% endblock pagecss %}
 
-{% block dashboard %}
-    <!-- Begin Page Content -->
-    <div id="questionnaire" class="container">
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Opportunities</h1>
-            <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
-        </div>
+{% block dashboardPage %}
+<!-- Begin Page Content -->
 
-        <!-- Content Row -->
-        <div class="row">
+<div id="coursesOffered" class="container">
 
-            <!-- Take Questionnaire Card -->
-            <div class="col-xl-3 col-md-6 mb-4 ">
-                <div class="card border-left-primary shadow h-100 py-2" id="questionnaireBtn">
-                    <a href="#questionnaireRow" style="text-decoration: none;">
-                    <div class="card-body" >
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <!-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        </div> -->
-                                    <div class="h5 mb-0 font-weight-bold"><btn> Take Questionnaire </btn></div>
-                                </div>
-                                <!-- <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                </div> -->
-                            </div>
-                    </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Questionnaire Path Card -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Path Completion </div>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">You are on Phase: [[phase]]</div>
-                                    </div>
-                                    <!-- <div class="col">
-                                        <div class="progress progress-sm mr-2">
-                                            <div class="progress-bar bg-info" role="progressbar"
-                                                style="width: 40%" aria-valuenow="40" aria-valuemin="0"
-                                                aria-valuemax="100"></div>
-                                        </div>
-                                    </div> -->
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                                </div>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="progress progress-sm mr-2">
-                                            <div class="progress-bar bg-info" role="progressbar"
-                                                style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Pending Requests</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-
-            <!-- Area Chart -->
-            <div class="col-lg-10 offset-lg-1">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Welcome!</h6>
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-                    <blockquote class="blockquote">
-                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                        </blockquote>                                      
-                    </div>
-                    <img src="https://assets.rebelmouse.io/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbWFnZSI6Imh0dHBzOi8vYXNzZXRzLnJibC5tcy8yMDY0MzYzOC9vcmlnaW4ucG5nIiwiZXhwaXJlc19hdCI6MTY2Njg3NjU5MH0.KYtk6xADFdG1fYpzOLsLEHF79dOTz1q4tpWgxmq2w0U/img.png?width=980">
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Content Row -->
-
-        <div class="row" id="questionnaireRow">
-            <div class="col-lg-10 offset-lg-1">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Questionnaire</h6>
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        {% include 'questionnaire.html' %}
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800"> Courses Offered </h1>
     </div>
-    <!-- /.container-fluid -->
+
+    <div class="row">
+        
+        <!-- <div class="container"> -->
+            <div class="col-lg-6" v-for="column in columns">
+                <div class="item-container" v-for="item in column">
+                    <!-- [[item]] -->
+                    
+                    <!-- Dropdown Card Example -->
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">[[ item.header ]]</h6>
+
+                            <div class="dropdown no-arrow">
+                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <i class="fa fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                    aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            [[ item.body ]]
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
 
 </div>
+<!-- /.container-fluid -->
+
+</div>
+
 <!-- End of Main Content -->
 
+<script>
+    new Vue({
+		delimiters: ["[[", "]]"],
+		data() {
+			return {
+                cols: 2,
+                count: 5,
+                coursesList: [
+                    {
+                        header: "Jet King1",
+                        body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
+                        readMore: ""
+                    },
+                    {
+                        header: "Navgurukul2",
+                        body: "Founded by IITians, Navgurukul enables software development learning for students from low income communities who have keen interest in this field. They provide rigorous training for 1 year in which a student becomes strongly capable to understsand the world of programming and has skills as good as a engineer after 4 years of degree course.",
+                        readMore: ""
+                    },
+                    {
+                        header: "Jet King3",
+                        body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
+                        readMore: ""
+                    },
+                    {
+                        header: "Navgurukul4",
+                        body: "Founded by IITians, Navgurukul enables software development learning for students from low income communities who have keen interest in this field. They provide rigorous training for 1 year in which a student becomes strongly capable to understsand the world of programming and has skills as good as a engineer after 4 years of degree course.",
+                        readMore: ""
+                    },
+                    {
+                        header: "Jet King5",
+                        body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
+                        readMore: ""
+                    }
+                ],
+				errors: [
+				],
+            }
+        },
+        computed: {
+            columns () {
+                let columns = [];
+                let mid = Math.ceil(this.coursesList.length / 2);
+                for (let col = 0; col < 2; col++) {
+                    columns.push(this.coursesList.slice(col * mid, col * mid + mid));
+                }
+                return columns;
+            }
+        }
+	}).$mount('#coursesOffered');
+
+</script>
+
 <style>
-#questionnaireBtn:hover .card-body:hover{
-    background-color: #4e73df;
-    color: white;
-}
+
 </style>
 
-{% endblock dashboard %}
+{% endblock dashboardPage %}
