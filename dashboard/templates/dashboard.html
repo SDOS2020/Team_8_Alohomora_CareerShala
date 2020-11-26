@@ -3,7 +3,18 @@
 
 {% block bodyContent %}
 
+<div id="page-top">
+    <div id="wrapper">
+        {% include 'common/dashboardSidebar.html' %}
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                {% include 'common/dashboardNavbar.html' %}
 
-{% block dashboard %} {% endblock dashboard %}
+                {% block dashboard %} {% endblock dashboard %}
 
+            </div>
+        </div>    
+    </div>
+</div>
+                
 {% endblock bodyContent %}
