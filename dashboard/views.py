@@ -9,3 +9,10 @@ from users.decorators import user_verification_required, profile_completion_requ
 @profile_completion_required
 def home(request):
     return render(request, 'dashboard/home.html')
+
+
+@login_required
+@user_verification_required
+@profile_completion_required
+def opportunities(request):
+    return render(request, 'dashboard/opportunities.html')

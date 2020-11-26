@@ -7,7 +7,8 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center bg-white" href="index.html">
         <div class="sidebar-brand-icon">
-            <img src="{% static 'images/alohomora-logo.png' %}" class="d-inline-block align-top" alt="Alohomora" height="100rem">
+            <img src="{% static 'images/alohomora-logo.png' %}" class="d-inline-block align-top" alt="Alohomora"
+                 height="100rem">
         </div>
     </a>
 
@@ -16,14 +17,14 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/dashboard/home">
+        <a class="nav-link" href="{% url 'dashboard-home' %}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/dashboard/home">
+        <a class="nav-link" href="{% url 'dashboard-opportunities' %}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Opportunity</span></a>
     </li>
