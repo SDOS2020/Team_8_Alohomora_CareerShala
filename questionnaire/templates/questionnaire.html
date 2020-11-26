@@ -27,7 +27,7 @@
 							<div v-else>
 								<div class="radio container" v-for="opt in getCurrentQuestion.option">
 									<label class="form-check-label">
-										<input :type="getCurrentQuestion.type" :value="opt.body" :name="getCurrentQuestion.type" class="form-check-input" v-model="selected" multiple> [[opt.body]]
+										<input :type="getCurrentQuestion.type" :value="opt" :name="getCurrentQuestion.type" class="form-check-input" v-model="selected" multiple> [[opt.body]]
 									</label>
 								</div>
 							</div>
@@ -76,14 +76,15 @@
 		delimiters: ["[[", "]]"],
 		data() {
 			return {
+				identifier: "questionnaireId",
 				name: "Questionnaire Name",
 				phase: 0,
 				qindex: 0,
-				endPhase: 10,
 				pageCreated: 0,
 				selected: [],
 				questions: [
 					{
+						identifier: "q1",
 						question: "This is 	Ques 1",
 						options: [
 							{
@@ -99,10 +100,12 @@
 						type: "radio",
 					},
 					{
+						identifier: "q2",
 						question: "This is Ques 2",
 						options: [
 							{
 								body: "option1",
+								identifier: "asasa",
 							},
 							{
 								body: "option2",
@@ -114,6 +117,7 @@
 						type: "radio"
 					},
 					{
+						identifier: "q2",
 						question: "This is Ques 3",
 						options: [
 							{
@@ -149,7 +153,12 @@
 					this.questions = [];
 				else
 					this.questions = response.data.question;
-				this.responses = new Array(this.questions.length);
+				this.responses = {
+					questionnaire: response.data.identifier,
+					answers: [
+						
+					]
+				};
 			})
 			.catch(e => {
 				this.errors.push(e)
