@@ -96,6 +96,6 @@ class Answer(models.Model):
         cond5 = (not self.question.multiselect and not Answer.objects.filter(user=self.user,
                                                                              question=self.question)).exists() or self.question.multiselect
 
-        if not cond1 and cond2 and cond3 and cond4 and cond5:
+        if not (cond1 and cond2 and cond3 and cond4 and cond5):
             raise ValidationError("Inconsistent Answer, either user is not supposed to answer this questionnaire yet "
                                   "or the questionnaire, question and option do not fit together.")

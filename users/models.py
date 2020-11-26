@@ -43,7 +43,7 @@ class ExpertProfile(models.Model):
 
 # Refer: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/#a-full-example
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, date_of_birth, password=None):
+    def create_user(self, email, first_name, last_name, date_of_birth, password=None, is_expert=False):
         if not email:
             raise ValueError('Email is a required field.')
         if not date_of_birth:
@@ -51,7 +51,8 @@ class CustomUserManager(BaseUserManager):
         user = self.model(email=self.normalize_email(email),
                           first_name=first_name,
                           last_name=last_name,
-                          date_of_birth=date_of_birth)
+                          date_of_birth=date_of_birth,
+                          is_expert=is_expert)
         user.set_password(password)
         user.save(using=self._db)
         return user
