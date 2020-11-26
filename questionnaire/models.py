@@ -64,9 +64,9 @@ class Option(models.Model):
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     body = models.CharField(max_length=1000)
     question = models.ForeignKey('Question', related_name='option', on_delete=models.CASCADE)
-    continuation_questionnaire = models.OneToOneField('self', related_name='from_options', null=True,
-                                                      blank=True,
-                                                      on_delete=models.SET_NULL)
+    continuation_questionnaire = models.ForeignKey('Questionnaire', related_name='from_options', null=True,
+                                                   blank=True,
+                                                   on_delete=models.SET_NULL)
 
     def clean(self):
         if self.continuation_questionnaire == self.question.questionnaire:
