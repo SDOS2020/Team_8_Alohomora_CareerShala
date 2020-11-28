@@ -49,7 +49,16 @@ Courses Offered !
                         </div>
                         <!-- Card Body -->
                         <div class="card-body">
-                            [[ item.body ]]
+                            <div class="row">
+                                <div class="col-12">
+                                    <img :src=item.image class="img-fluid" alt="Responsive image" >
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    [[ item.body ]]
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -76,6 +85,7 @@ Courses Offered !
                     {
                         header: "Jet King1",
                         body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
+                        image: "https://content3.jdmagicbox.com/comp/jammu/b5/9999px191.x191.170828194509.h7b5/catalogue/jetking-jammu-learning-centre-gandhinagar-jammu-computer-training-institutes-for-hardware-assembling-v8xhckaf4m-250.jpg",
                         readMore: ""
                     },
                     {
@@ -106,8 +116,8 @@ Courses Offered !
         computed: {
             columns () {
                 let columns = [];
-                let mid = Math.ceil(this.coursesList.length / 2);
-                for (let col = 0; col < 2; col++) {
+                let mid = Math.ceil(this.coursesList.length / this.cols);
+                for (let col = 0; col < this.cols; col++) {
                     columns.push(this.coursesList.slice(col * mid, col * mid + mid));
                 }
                 return columns;
@@ -118,6 +128,18 @@ Courses Offered !
 </script>
 
 <style>
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  width: 100%;
+  max-height: auto;
+}
+
+/* .container img {
+   
+} */
 
 </style>
 

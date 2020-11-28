@@ -15,14 +15,7 @@
 					<div class="card-header py-6" style="background-color: white;">
 						<h5><b> [[ getCurrentQuestion.body ]] </b></h5>
 					</div>
-					<!-- Card Body -->
-					<!-- [[selected]]
-					<br>
-					[[tempResponses.length]]
-					<br>
-					[[tempResponses]]
-					<br>
-					[[qindex]] -->
+
 					<div class="card-body form-check">
 						<div class="form-check mt-1" style="padding-top:0px" v-bind="updateError">
 							<div v-if="getCurrentQuestion.option.length == 0">
@@ -175,26 +168,29 @@
 			}
 		},
 		created() {
-			axios.get(`http://127.0.0.1:8000/api/questionnaire/next_questionnaire/`)
-			.then(response => {
-				console.log(response.data)
-				this.qindex = 0;
-				this.identifier = response.data.identifier;
-				this.name = response.data.name;
-				this.phase = response.data.phase;
-				if (response.data.question.length == 0)
-					this.questions = [];
-				else
-					this.questions = response.data.question;
-
-				this.tempResponses = new Array(this.questions.length);
-				this.tempResponses.pop();
-			})
-			.catch(e => {
-				this.errors.push(e)
-			})
+			this.getNextQuestionnaire();
 		},
 		methods: {
+			getNextQuestionnaire(evt) {
+				axios.get(`http://127.0.0.1:8000/api/questionnaire/next_questionnaire/`)
+				.then(response => {
+					console.log(response.data)
+					this.qindex = 0;
+					this.identifier = response.data.identifier;
+					this.name = response.data.name;
+					this.phase = response.data.phase;
+					if (response.data.question.length == 0)
+						this.questions = [];
+					else
+						this.questions = response.data.question;
+
+					this.tempResponses = new Array(this.questions.length);
+					this.tempResponses.pop();
+				})
+				.catch(e => {
+					this.errors.push(e)
+				})
+			},
 			onNext(evt) {
 				console.log("Next ...")
 				this.errors = [];
@@ -285,10 +281,12 @@
 				})
 				.then(response => {
 					console.log(response)
+					this.getNextQuestionnaire();
 				})
 				.catch(e => {
 					this.errors.push(e)
 				})
+
 
 				this.selected = []
 				this.tempResponses.pop();
