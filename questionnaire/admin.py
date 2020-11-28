@@ -1,11 +1,13 @@
 from django.contrib import admin, messages
 
 # Register your models here.
-from questionnaire.forms import QuestionnaireCreationForm
+from grappelli.forms import GrappelliSortableHiddenMixin
+
+from questionnaire.forms import QuestionnaireCreationForm, OptionCreationForm, QuestionCreationForm
 from questionnaire.models import Questionnaire, Question, Option, Answer, QuestionnaireResponse
 
 
-class QuestionInline(admin.TabularInline):
+class QuestionInline(GrappelliSortableHiddenMixin, admin.TabularInline):
     model = Question
     show_change_link = True
 
@@ -13,6 +15,7 @@ class QuestionInline(admin.TabularInline):
 class OptionInline(admin.TabularInline):
     model = Option
     show_change_link = True
+    form = OptionCreationForm
 
 
 class AnswerInline(admin.TabularInline):
@@ -47,10 +50,17 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [
         OptionInline
     ]
+    form = QuestionCreationForm
+
+    exclude = ('position',)
+
+
+class OptionAdmin(admin.ModelAdmin):
+    form = OptionCreationForm
 
 
 admin.site.register(Questionnaire, QuestionnaireAdmin)
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Option)
+admin.site.register(Option, OptionAdmin)
 admin.site.register(Answer)
 admin.site.register(QuestionnaireResponse, QuestionnaireResponseAdmin)

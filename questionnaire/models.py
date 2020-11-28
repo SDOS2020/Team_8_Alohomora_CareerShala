@@ -57,6 +57,10 @@ class Question(models.Model):
     body = models.CharField(max_length=1000)
     questionnaire = models.ForeignKey('Questionnaire', related_name='question', on_delete=models.CASCADE)
     multiselect = models.BooleanField(default=False)
+    position = models.PositiveSmallIntegerField("position", null=True)
+
+    class Meta:
+        ordering = ['position']
 
     def __str__(self):
         return self.body
