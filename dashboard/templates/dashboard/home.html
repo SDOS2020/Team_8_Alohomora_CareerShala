@@ -53,7 +53,14 @@ Welcome {{ request.user.first_name }} !
                                     Path Completion </div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
-                                        <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">You are on Phase: [[phase]]</div>
+                                        <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">
+                                            <p v-if="questionnaireCompleted">
+                                                Completed
+                                            </p>
+                                            <p v-else>
+                                                You are on Phase: [[phase]]
+                                            </p>
+                                        </div>
                                     </div>
                                     <!-- <div class="col">
                                         <div class="progress progress-sm mr-2">
