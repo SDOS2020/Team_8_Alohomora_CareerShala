@@ -23,12 +23,15 @@ def profile(request):
             profile_form = StudentProfileForm(request.POST, instance=request.user.student_profile)
         if profile_form.is_valid():
             profile_form.save()
+            first_time = not request.user.profile_completed
             request.user.profile_completed = True
             request.user.save()
             success_message = "Profile successfully updated!"
             if request.user.is_expert and not request.user.expert_profile.verified:
                 success_message += " Please wait for expert-profile verification by admin."
             messages.success(request, success_message)
+            if first_time and not request.user.is_expert:
+                return render(request, 'dashboard/home.html')
     else:
         if request.user.is_expert:
             profile_form = ExpertProfileForm(instance=request.user.expert_profile)
@@ -89,6 +92,7 @@ def verify(request):
         message = ""
         if request.user.is_authenticated:
             message = "You cannot verify an account when you are logged in."
+            messages.error(request, message)
         else:
             try:
                 email = request.GET.get("email")
@@ -96,18 +100,18 @@ def verify(request):
                 user: CustomUser = get_object_or_404(get_user_model(), email=email)
                 if user.verified:
                     message = "Your account is already verified!"
+                    messages.warning(request, message)
                 else:
                     if email_verification_token == user.email_verification_token:
                         user.verified = True
                         user.save()
                         message = "Your account has been verified, proceed to login."
+                        messages.success(request, message)
                     else:
                         message = "Email verification failed."
+                        messages.error(request, message)
             except KeyError as e:
-                return HttpResponseBadRequest()
-        context = {
-            'message': message
-        }
-        return render(request, 'users/verify.html', context=context)
+                return HttpResponseBadRequest()  # TODO pretty print
+        return render(request, 'users/login.html')
     else:
         return HttpResponseBadRequest()
