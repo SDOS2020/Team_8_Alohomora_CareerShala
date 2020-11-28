@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from . import views
 
 urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
@@ -22,4 +23,5 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('api/', include('api.urls')),
+    path('', views.homepage, name='homepage')
 ]

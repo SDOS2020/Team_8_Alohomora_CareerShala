@@ -16,3 +16,10 @@ def home(request):
 @profile_completion_required
 def opportunities(request):
     return render(request, 'dashboard/opportunities.html')
+
+
+@login_required
+@user_verification_required
+@profile_completion_required
+def courses(request):
+    return render(request, 'dashboard/courses.html')
