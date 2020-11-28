@@ -9,9 +9,8 @@ class QuestionnaireCreationForm(forms.ModelForm):
         model = Questionnaire
         fields = ('phase', 'name', 'root')
 
+    # enforcing single root
     def clean_root(self):
-
-        # enforcing single root
         root_field = self.cleaned_data.get('root')
         invalid = False
         if Questionnaire.objects.filter(root=True).exists():
@@ -25,10 +24,11 @@ class QuestionnaireCreationForm(forms.ModelForm):
             if invalid:
                 raise ValidationError('You already have a root questionnaire!')
 
-        # enforcing non-continuation of a multiselect last question
-        # questions_queryset = Question.objects.filter(questionnaire=self.instance).order_by('-position')
+        return self.cleaned_data.get('root')
 
+    # enforcing non-continuation of a multiselect last question
     def clean(self):
+        cleaned_data = super().clean()
         questions_queryset = self.instance.question.order_by('-position')
         if questions_queryset.exists():
             last_question: Question = questions_queryset.first()
@@ -38,7 +38,7 @@ class QuestionnaireCreationForm(forms.ModelForm):
                 raise ValidationError(
                     "If the last question is multiselect, it's options cannot lead to continuation questionnaire. "
                     "You can reorder the queryset accordingly.")
-        return self.cleaned_data.get('root')
+        return cleaned_data
 
 
 class OptionCreationForm(forms.ModelForm):
@@ -67,6 +67,7 @@ class QuestionCreationForm(forms.ModelForm):
         fields = ('body', 'questionnaire')
 
     def clean(self):
+        cleaned_data = super().clean()
         parent_questionnaire: Questionnaire = self.instance.questionnaire
         if parent_questionnaire is not None:
             if parent_questionnaire.question.order_by('-position').first().pk == self.instance.pk:
@@ -76,3 +77,4 @@ class QuestionCreationForm(forms.ModelForm):
                                               "questionnaire. One of its options have a continuation questionnaire. "
                                               "Such questions cannot have options that lead to a continuation "
                                               "questionnaire.")
+        return cleaned_data

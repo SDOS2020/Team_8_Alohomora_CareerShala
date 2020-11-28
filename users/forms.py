@@ -22,6 +22,7 @@ class LoginForm(forms.Form):
                         password=cleaned_data.get("password")) is None:
             print("invalid credentials")
             raise ValidationError("Incorrect credentials")
+        return cleaned_data
 
 
 class StudentProfileForm(forms.ModelForm):
