@@ -33,7 +33,14 @@ def submit_questionnaire_response(request):
     # other class based view: https://stackoverflow.com/a/33550228/5394180
     serializer = QuestionnaireResponseSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
-        questionnaire_response = serializer.save()
+        questionnaire_response: QuestionnaireResponse = serializer.save()
+        answers_queryset = questionnaire_response.answers.filter(option__continuation_questionnaire__isnull=False)
+        if answers_queryset.exists():
+            last_answer = answers_queryset.first()
+            request.user.student_profile.next_questionnaire = last_answer.option.continuation_questionnaire
+        else:
+            request.user.student_profile.next_questionnaire = None
+        request.user.student_profile.save()
         if questionnaire_response:
             return Response(status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
