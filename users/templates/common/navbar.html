@@ -2,7 +2,7 @@
 {% block navBar %}
 
 <div class="col-12 remove-pad">
-  <nav class="navbar navbar-expand-sm navbar-light beige">
+  <nav class="navbar navbar-expand-sm navbar-light beige sticky">
     <img src="{% static 'images/alohomora-logo.png' %}" class="d-inline-block align-top" alt="Alohomora" height="100px">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,10 +10,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link btn btn-dark giveMargin" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link btn btn-dark giveMargin" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-dark giveMargin" href="#">About</a>
+          <a class="nav-link btn btn-dark giveMargin" href="#about">About</a>
         </li>
         {% if user.is_authenticated %}
 
