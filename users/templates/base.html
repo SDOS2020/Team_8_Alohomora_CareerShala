@@ -34,17 +34,16 @@
 
 
 	{% if messages %}
-	<ul class="messages">
+	<div class="messages">
 		{% for message in messages %}
-		<strong>
-			<div {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-				<div class="alert-warning">
-					{{ message }}
-				</div>
-			</div>
-		</strong>
+		<div class="alert {{ message.tags }} alert-dismissible p-3" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+			{{ message }}
+		</div>
 		{% endfor %}
-	</ul>
+	</div>
 	{% endif %}
 
 	
