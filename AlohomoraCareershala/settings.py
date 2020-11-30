@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'grappelli',
     'rest_framework',
+    'taggit',
 
     # default
     'django.contrib.admin',
@@ -168,3 +169,6 @@ MESSAGE_TAGS = {
     constants.WARNING: 'alert-warning',
     constants.ERROR: 'alert-danger',
 }
+
+# Django-Taggit
+TAGGIT_CASE_INSENSITIVE = False
