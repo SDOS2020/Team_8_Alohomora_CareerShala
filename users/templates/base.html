@@ -32,6 +32,7 @@
 </head>
 <body>
 
+
 	{% if messages %}
 	<ul class="messages">
 		{% for message in messages %}
@@ -45,20 +46,47 @@
 		{% endfor %}
 	</ul>
 	{% endif %}
-	
+
 	{% block bodyContent %}
 	
-		{% include 'common/navbar.html' %}
+	{% include 'common/navbar.html' %}
 
 
-		{% block content %}
+	{% block content %}
 
-		{% endblock content %}
+	{% endblock content %}
 
 	{% endblock bodyContent %}
 	{% include 'common/footer.html' %}
 
 </body>
+
+<style>
+	      .main-text
+{
+    position: absolute;
+    top: 50px;
+    width: 96.66666666666666%;
+    color: #FFF;
+}
+.btn-min-block
+{
+    min-width: 170px;
+    line-height: 26px;
+}
+.btn-clear
+{
+    color: #FFF;
+    background-color: transparent;
+    border-color: #FFF;
+    margin-right: 15px;
+}
+.btn-clear:hover
+{
+    color: #000;
+    background-color: #FFF;
+}
+</style>
 
 {% block vueinstance %} {% endblock vueinstance %}
 

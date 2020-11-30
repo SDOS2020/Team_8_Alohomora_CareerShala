@@ -9,50 +9,59 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-			
+
 			<form>
 				<div class="card mb-3" style="border: none;" >
-					<div class="card-header py-6" style="background-color: white;">
-						<h5><b> [[ getCurrentQuestion.body ]] </b></h5>
-					</div>
-
-					<div class="card-body form-check">
-						<div class="form-check mt-1" style="padding-top:0px" v-bind="updateError">
-							<div v-if="getCurrentQuestion.option.length == 0">
-								<label class="form-check-label">
-									<input :type="getCurrentQuestion.type" :value="option.body" class="form-check-input" v-model="selected">
-								</label>
-							</div>
-							<div v-else>
-								<div class="radio container" v-for="opt in getCurrentQuestion.option">
+					<div v-if="!questionnaireCompleted">
+						<div class="card-header py-6" style="background-color: white;">
+							<h5><b> [[ getCurrentQuestion.body ]] </b></h5>
+						</div>
+						
+						<div class="card-body form-check">
+							<div class="form-check mt-1" style="padding-top:0px" v-bind="updateError">
+								<div v-if="getCurrentQuestion.option.length == 0">
 									<label class="form-check-label">
-										<input :type="getCurrentQuestion.type" :value="opt" :name="getCurrentQuestion.type" class="form-check-input" v-model="selected" multiple> [[opt.body]]
+										<input :type="getCurrentQuestion.type" :value="option.body" class="form-check-input" v-model="selected">
 									</label>
 								</div>
+								<div v-else>
+									<div class="radio container" v-for="opt in getCurrentQuestion.option">
+										<label class="form-check-label">
+											<input :type="getCurrentQuestion.type" :value="opt" :name="getCurrentQuestion.type" class="form-check-input" v-model="selected" multiple> [[opt.body]]
+										</label>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div v-if="qindex !== 0" class="col-12 col-sm-6 col-md-4 mt-3">
+										<div class="btn btn-primary" style="width: 100%;" v-on:click="onPrev"> Prev </div>
+									</div>
+									<div class="col-12 col-sm-6 col-md-4 mt-3 ">
+										<div v-if="qindex !== questions.length-1" class="btn btn-primary" style="width: 100%;" v-on:click="onNext"> Next </div>
+										<div v-if="qindex === questions.length-1" class="btn btn-primary" style="width: 100%;" v-on:click="onSubmit"> Submit </div>
+									</div>
+								</div>
+								<div class="progress progress-sm mr-2 mt-4"> 
+									<div 
+									class="progress-bar bg-info" 
+									role="progressbar"
+									v-model="getProgressBarWidth"
+									v-bind:style="progressBarWidth"
+									aria-valuemin="0"
+									aria-valuemax="100"></div>
+								</div>
 							</div>
-							
 						</div>
-						
-						<div class="row">
-							<div v-if="qindex !== 0" class="col-12 col-sm-6 col-md-4 mt-3">
-								<div class="btn btn-primary" style="width: 100%;" v-on:click="onPrev"> Prev </div>
-							</div>
-							<div class="col-12 col-sm-6 col-md-4 mt-3 ">
-								<div v-if="qindex !== questions.length-1" class="btn btn-primary" style="width: 100%;" v-on:click="onNext"> Next </div>
-								<div v-if="qindex === questions.length-1" class="btn btn-primary" style="width: 100%;" v-on:click="onSubmit"> Submit </div>
-							</div>
-						</div>
-						<div class="progress progress-sm mr-2 mt-4"> 
-							<div 
-								class="progress-bar bg-info" 
-								role="progressbar"
-								v-model="getProgressBarWidth"
-								v-bind:style="progressBarWidth"
-								aria-valuemin="0"
-								aria-valuemax="100"></div>
-						</div>
-						
 					</div>
+					<div class="card-header py-6 alert-success" v-else>
+						Yay!! You have completed the questionnaire. Now, check out your <a href="{% url 'dashboard-opportunities' %}"> Opportunities </a>
+						<br>
+						Jaa bete, jeele apni zindagi
+					</div>
+					<div class="card-header alert-warning">
+						You can retake the questionnaire anytime, by clicking: <a :href="onRetake" v-on:click.prevent="onRetake"> Retake Questionnaire </btn
+					</div>
+					
 				</div>		
 			</form>
 			<small class="red">
@@ -97,6 +106,7 @@
 				phase: 0,
 				qindex: 0,
 				pageCreated: 0,
+				questionnaireCompleted: false,
 				tempResponses: [],
 				selected: [],
 				questions: [
@@ -176,20 +186,31 @@
 				.then(response => {
 					console.log(response.data)
 					this.qindex = 0;
-					this.identifier = response.data.identifier;
 					this.name = response.data.name;
 					this.phase = response.data.phase;
-					if (response.data.question.length == 0)
-						this.questions = [];
-					else
-						this.questions = response.data.question;
 
-					this.tempResponses = new Array(this.questions.length);
-					this.tempResponses.pop();
+					if (this.phase == null) {
+						this.questionnaireCompleted = true;
+						this.questions = []
+						this.tempResponses = []
+					}
+					else {		
+						this.questionnaireCompleted = false;
+						this.identifier = response.data.identifier;
+						if (response.data.question == undefined || response.data.question.length == 0)
+						this.questions = [];
+						else
+						this.questions = response.data.question;
+						
+						this.tempResponses = [];
+					}
 				})
 				.catch(e => {
 					this.errors.push(e)
 				})
+			},
+			onRetake(evt) {
+				console.log("Retaking Questionnaire");
 			},
 			onNext(evt) {
 				console.log("Next ...")
@@ -252,7 +273,6 @@
 				};
 
 				for (let i = 0; i < this.tempResponses.length; i++) {
-					console.log(i);
 
 					if (Array.isArray(this.tempResponses[i])) {
 						for (let j = 0; j < this.tempResponses[i].length; j++) {
@@ -282,14 +302,17 @@
 				.then(response => {
 					console.log(response)
 					this.getNextQuestionnaire();
+					this.selected = []
+				    this.tempResponses = [];
 				})
 				.catch(e => {
-					this.errors.push(e)
+					this.errors.push(e);
+					this.selected = []
+				    this.tempResponses.pop();
 				})
 
 
-				this.selected = []
-				this.tempResponses.pop();
+
 			},
 		},
 		computed: {
