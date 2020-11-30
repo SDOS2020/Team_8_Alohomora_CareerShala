@@ -4,10 +4,12 @@ html {
 }
 
 body {
-	background: linear-gradient(180deg, #fff, 80%, #343a40);
+	background: linear-gradient(90deg, #fff, 70%, #343a40);
 	font-family: 'Rubik', sans-serif;
 	/*background: #455A64;*/
-	height: auto !important
+	/* height: auto !important; */
+	height: 100vh;
+	height: 100%;
 }
 
 .green {
@@ -70,8 +72,13 @@ body {
 	background-color: white;
 }
 
-.navbar {
+/* .navbar {
 	margin-bottom: 40px;
+} */
+
+.remove-pad-vert {
+	padding-top: 0px;
+	padding-bottom: 0px;
 }
 
 .remove-pad {
