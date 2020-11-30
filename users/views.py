@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import get_user_model, authenticate, login as builtin_login
+from django.contrib.auth import get_user_model, authenticate, login as builtin_login, logout as builtin_logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect
@@ -31,7 +31,7 @@ def profile(request):
                 success_message += " Please wait for expert-profile verification by admin."
             messages.success(request, success_message)
             if first_time and not request.user.is_expert:
-                return render(request, 'dashboard/home.html')
+                return redirect('dashboard-home')
     else:
         if request.user.is_expert:
             profile_form = ExpertProfileForm(instance=request.user.expert_profile)
@@ -74,17 +74,22 @@ def login(request):
                                             password=password)  # TODO duplicate in form validation
 
             if not user.verified:
-                return error(request, error_dict={'title': 'Please verify your email first!',
-                                                  'body': ''})
-
-            builtin_login(request, user)
-            return redirect(success_redirect_url)
+                messages.error(request, "Please verify your email first")
+            else:
+                builtin_login(request, user)
+                return redirect(success_redirect_url)
         else:
             return render(request, 'users/login.html', {'form': login_form_filled})
 
     else:
         login_form_empty = LoginForm()
         return render(request, 'users/login.html', {'form': login_form_empty})
+
+
+@login_required
+def logout(request):
+    builtin_logout(request)
+    return redirect('homepage')
 
 
 def verify(request):
@@ -112,6 +117,6 @@ def verify(request):
                         messages.error(request, message)
             except KeyError as e:
                 return HttpResponseBadRequest()  # TODO pretty print
-        return render(request, 'users/login.html')
+        return redirect('users-login')
     else:
         return HttpResponseBadRequest()
