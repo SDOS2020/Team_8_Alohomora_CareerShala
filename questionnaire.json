@@ -1,0 +1,221 @@
+{
+    "name": "Root Questionnaire",
+    "question": 
+    [
+        {
+            "body": "",
+            "option": 
+            [
+                {
+                    "body": "",
+                    "continuation_questionnaire": {
+                        "name": "",
+                        "question": [
+                            
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "body": "Aap Alohomora ke CareerShala se kya chahte ho?",
+            "multiselect" : false,
+            "option": [
+                {
+                    "body": "Mujhe apne interest/ talent se jude career opportunities ke baare mein janna hain",
+                    "continuation_questionnaire": 
+                    {
+                        "name": "",
+                        "question": [
+                            {
+                                "body": "Aapko kaunse option mein career banana hain?",
+                                "multiselect": true,
+                                "option": [
+                                    {
+                                        "body": "IT/Computers",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Fashion",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Art and Design",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Fitness",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Hospitality and Food",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Healthcare",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Beauty and Wellness",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Media and Journalism",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Mujhe inme se kisi mein bhi interest nahi hain",
+                                        "continuation_questionnaire": null
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "body": "Main apne career ko lekar confused hoon aur mujhe seekhna hain ki mere liye kya sahi career option ho sakti hain",
+                    "continuation_questionnaire": {
+                        "name": "",
+                        "question": [
+                            {
+                                "body": "",
+                                "multiselect": false,
+                                "option": [
+                                    {
+                                        "body": "Main kuch naya hi career dhoondna chahti hoon jo shayad itna common na ho",
+                                        "continuation_questionnaire": {
+                                            "name": "",
+                                            "question": [
+                                                {
+                                                    "body": "Aap kitne mahino tak padhai karne ke liye tayyar ho?",
+                                                    "multiselect": false,
+                                                    "option": [
+                                                        {
+                                                            "body": "6 mahino se kum",
+                                                            "continuation_questionnaire": null
+                                                        },
+                                                        {
+                                                            "body": "Ek saal",
+                                                            "continuation_questionnaire": null
+                                                        },
+                                                        {
+                                                            "body": "2-3 saal",
+                                                            "continuation_questionnaire": null
+                                                        }
+                                                    ]
+
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "body": "Main aisa career chahti hoon jisme mujhe bahut jald hi job mil sake?",
+                                        "continuation_questionnaire": {
+                                            "name": "",
+                                            "question": [
+                                                {
+                                                    "body": "Aap kitne mahino tak padhai karne ke liye tayyar ho?",
+                                                    "multiselect": false,
+                                                    "option": [
+                                                        {
+                                                            "body": "6 mahino se kum",
+                                                            "continuation_questionnaire": null
+                                                        },
+                                                        {
+                                                            "body": "Ek saal",
+                                                            "continuation_questionnaire": null
+                                                        },
+                                                        {
+                                                            "body": "2-3 saal",
+                                                            "continuation_questionnaire": null
+                                                        }
+                                                    ]
+
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "body": "Main kuch skills seekhkar hi decide karna chahti hoon ke mere liye kya career option best hain?",
+                                        "continuation_questionnaire": {
+                                            "name": "",
+                                            "question": [
+                                                {
+                                                    "body": "",
+                                                    "multiselect": false,
+                                                    "option": [
+                                                        {
+                                                            "body": "Kya aap apna communication or confidence behtar karna chahte ho",
+                                                            "continuation_questionnaire": null
+                                                        },
+                                                        {
+                                                            "body": "2. Kya aap problems ko solve karna, aur deep thinking karna seekhna chahte ho?",
+                                                            "continuation_questionnaire": null
+                                                        },
+                                                        {
+                                                            "body": "3. Kya aap apna creativity badhana chahte ho?",
+                                                            "continuation_questionnaire": null
+                                                        },
+                                                        {
+                                                            "body": "Kya aap bilkul nayi cheez janna chahte ho?",
+                                                            "continuation_questionnaire": null
+                                                        }
+                                                    ]
+
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+
+                        ]
+                    }
+                },
+                {
+                    "body": "Mujhe turant hi job lekar apne family ko support karna hain",
+                    "continuation_questionnaire": {
+                        "name": "",
+                        "question": [
+                            {
+                                "body": "Aapko kis tareeke ka job chahiye- koi bhi 3 options choose karein?",
+                                "multiselect": true,
+                                "option": [
+                                    {
+                                        "body": "Main kuch logon ke saath kaam karne wale job chahti hoon",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Main ghar se kuch kaam karke paisa kumana chahti hoon",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Mujhe kuch akele ka kaam karna pasand aayega",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Main computer se jude kaam karna chahti hoon",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Main aisa kaam karna chahoongi jisme mujhe communities mein ghoomne ko mile",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Mujhe ek jagah baithkar kaam karna nahi pasand",
+                                        "continuation_questionnaire": null
+                                    },
+                                    {
+                                        "body": "Mujhe aisa job chahiye jisse main logon ki help kar sakoon",
+                                        "continuation_questionnaire": null
+                                    }
+                                ]
+                            }
+
+                        ]
+                    }
+                }
+            ]
+        }
+    ]   
+}
