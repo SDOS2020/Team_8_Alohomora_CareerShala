@@ -44,7 +44,7 @@ class QuestionnaireCreationForm(forms.ModelForm):
 class OptionCreationForm(forms.ModelForm):
     class Meta:
         model = Option
-        fields = ('body', 'question', 'continuation_questionnaire')
+        fields = ('body', 'question', 'continuation_questionnaire', 'tags')
 
     def clean_continuation_questionnaire(self):
         continuation_questionnaire = self.cleaned_data['continuation_questionnaire']
