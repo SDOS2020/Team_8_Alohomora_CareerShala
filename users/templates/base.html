@@ -23,13 +23,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.18.1/bootstrap-vue.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.18.1/bootstrap-vue.min.css"></script>
-	<script src="https://surveyjs.azureedge.net/1.8.14/survey.vue.min.js"></script> -->
 	
 	{% block pagecss %} {% endblock pagecss %}
 	<title>{% block title %} {% endblock title %}</title>
 </head>
+
+{% include 'common/navbar.html' %}
+
 <body>
 
 
@@ -47,45 +47,51 @@
 	</ul>
 	{% endif %}
 
+	
 	{% block bodyContent %}
 	
-	{% include 'common/navbar.html' %}
-
-
 	{% block content %}
 
 	{% endblock content %}
 
 	{% endblock bodyContent %}
+	
 	{% include 'common/footer.html' %}
 
 </body>
 
 <style>
-	      .main-text
-{
-    position: absolute;
-    top: 50px;
-    width: 96.66666666666666%;
-    color: #FFF;
-}
-.btn-min-block
-{
-    min-width: 170px;
-    line-height: 26px;
-}
-.btn-clear
-{
-    color: #FFF;
-    background-color: transparent;
-    border-color: #FFF;
-    margin-right: 15px;
-}
-.btn-clear:hover
-{
-    color: #000;
-    background-color: #FFF;
-}
+
+	.main-text
+	{
+		position: absolute;
+		top: 150px;
+		width: 96.66666666666666%;
+		color: #FFF;
+	}
+	.btn-min-block
+	{
+		min-width: 170px;
+		line-height: 26px;
+	}
+	.btn-clear
+	{
+		color: #FFF;
+		background-color: transparent;
+		border-color: #FFF;
+		margin-right: 15px;
+	}
+	.btn-clear:hover
+	{
+		color: #000;
+		background-color: #FFF;
+	}
+	#footer {
+		width:100%;
+		left: 0px;
+		right: 0px;
+		margin-bottom: 0px;
+	}
 </style>
 
 {% block vueinstance %} {% endblock vueinstance %}
