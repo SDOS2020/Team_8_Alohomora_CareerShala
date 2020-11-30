@@ -36,7 +36,7 @@ article, aside, figcaption, figure, header, hgroup, main, section {
 }
 
 .card-padding {
-  padding-top: 7%;
+  padding-top: 6%;
 }
 
 @media (max-width: 800px) {

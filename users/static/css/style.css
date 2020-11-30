@@ -1,13 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
 html {
 	scroll-behavior: smooth;
+	padding-top: 80px;
 }
 
 body {
 	background: linear-gradient(90deg, #fff, 70%, #343a40);
 	font-family: 'Rubik', sans-serif;
-	/*background: #455A64;*/
-	/* height: auto !important; */
+	/* background: #455A64; */
+	height: auto !important;
 	height: 100vh;
 	height: 100%;
 }

@@ -27,6 +27,9 @@
 	{% block pagecss %} {% endblock pagecss %}
 	<title>{% block title %} {% endblock title %}</title>
 </head>
+
+{% include 'common/navbar.html' %}
+
 <body>
 
 
@@ -44,10 +47,9 @@
 	</ul>
 	{% endif %}
 
-	{% include 'common/navbar.html' %}
-
+	
 	{% block bodyContent %}
-
+	
 	{% block content %}
 
 	{% endblock content %}
