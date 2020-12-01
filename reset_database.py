@@ -3,6 +3,7 @@ WARNING:    THIS WILL DELETE ALL MIGRATION FILES AND THE SQLITE DATABASE.
             To be used as a utility script.
             No main function so that user doesn't delete files by mistake.
 """
+import json
 import os
 from datetime import date
 from glob import glob
@@ -27,18 +28,24 @@ def reset():
         os.system("python manage.py makemigrations")
         os.system("python manage.py migrate")
 
-        root_questionnaire_name = "Root questionnaire"
-        question_one_name = "Aap Alohomora ke CareerShala se kya chahte ho?"
-        option_one_name = "Mujhe apne interest/ talent se jude career opportunities ke baare mein janna hain"
-        option_two_name = "Main apne career ko lekar confused hoon aur mujhe seekhna hain ki mere liye kya sahi career option ho sakti hain"
-        option_three_name = "Mujhe turant hi job lekar apne family ko support karna hain"
+        # root_questionnaire_name = "Root questionnaire"
+        # question_one_name = "Aap Alohomora ke CareerShala se kya chahte ho?"
+        # option_one_name = "Mujhe apne interest/ talent se jude career opportunities ke baare mein janna hain"
+        # option_two_name = "Main apne career ko lekar confused hoon aur mujhe seekhna hain ki mere liye kya sahi career option ho sakti hain"
+        # option_three_name = "Mujhe turant hi job lekar apne family ko support karna hain"
+        #
+        # questionnaire = Questionnaire.objects.create(name=root_questionnaire_name, root=True)
+        # question1 = Question.objects.create(body=question_one_name, questionnaire=questionnaire)
+        # option1 = Option.objects.create(body=option_one_name, question=question1)
+        # option2 = Option.objects.create(body=option_two_name, question=question1)
+        # option3 = Option.objects.create(body=option_three_name, question=question1)
 
-        questionnaire = Questionnaire.objects.create(name=root_questionnaire_name, root=True)
-        question1 = Question.objects.create(body=question_one_name, questionnaire=questionnaire)
-        option1 = Option.objects.create(body=option_one_name, question=question1)
-        option2 = Option.objects.create(body=option_two_name, question=question1)
-        option3 = Option.objects.create(body=option_three_name, question=question1)
-        print(f"Created a root questionnaire with name: {root_questionnaire_name}")
+        questionnaires_json_file_name = 'questionnaires.json'
+        with open(questionnaires_json_file_name) as f:
+            root_questionnaire_json = json.load(f)
+            load_questionnaire_from_json(root_questionnaire_json, None)
+
+        print(f"Created questionnaires from file {questionnaires_json_file_name}")
 
         superuser_email = "reeshabhkumarranjan@gmail.com"
         superuser_password = "reeshabh@123"
@@ -123,6 +130,30 @@ def reset():
             Specialisation.objects.create(label=specialisation_label, description="")
         print(f"Created specialisations with labels: {specialisation_labels}")
 
-
     else:
         print("Canceling operation")
+
+
+def load_option_from_json(option_json, from_question):
+    option = Option.objects.create(body=option_json["body"], question=from_question)
+    option.save()
+    if option_json["continuation_questionnaire"] is not None:
+        questionnaire_json = option_json["continuation_questionnaire"]
+        load_questionnaire_from_json(questionnaire_json, option)
+
+
+def load_question_from_json(question_json, from_questionnaire: Questionnaire):
+    question = Question.objects.create(body=question_json["body"], multiselect=question_json["multiselect"],
+                                       questionnaire=from_questionnaire)
+    question.save()
+    for option_json in question_json["option"]:
+        load_option_from_json(option_json, question)
+
+
+def load_questionnaire_from_json(questionnaire_json, from_option: Option):
+    questionnaire = Questionnaire.objects.create(name=questionnaire_json["name"], root=questionnaire_json["root"])
+    if from_option is not None:
+        from_option.continuation_questionnaire = questionnaire
+        from_option.save()
+    for question_json in questionnaire_json["question"]:
+        load_question_from_json(question_json, questionnaire)
