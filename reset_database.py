@@ -28,18 +28,6 @@ def reset():
         os.system("python manage.py makemigrations")
         os.system("python manage.py migrate")
 
-        # root_questionnaire_name = "Root questionnaire"
-        # question_one_name = "Aap Alohomora ke CareerShala se kya chahte ho?"
-        # option_one_name = "Mujhe apne interest/ talent se jude career opportunities ke baare mein janna hain"
-        # option_two_name = "Main apne career ko lekar confused hoon aur mujhe seekhna hain ki mere liye kya sahi career option ho sakti hain"
-        # option_three_name = "Mujhe turant hi job lekar apne family ko support karna hain"
-        #
-        # questionnaire = Questionnaire.objects.create(name=root_questionnaire_name, root=True)
-        # question1 = Question.objects.create(body=question_one_name, questionnaire=questionnaire)
-        # option1 = Option.objects.create(body=option_one_name, question=question1)
-        # option2 = Option.objects.create(body=option_two_name, question=question1)
-        # option3 = Option.objects.create(body=option_three_name, question=question1)
-
         questionnaires_json_file_name = 'questionnaires.json'
         with open(questionnaires_json_file_name) as f:
             root_questionnaire_json = json.load(f)
