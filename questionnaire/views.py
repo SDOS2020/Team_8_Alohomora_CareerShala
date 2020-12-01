@@ -5,10 +5,10 @@ from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
-from questionnaire.models import QuestionnaireResponse
+from questionnaire.models import QuestionnaireResponse, Questionnaire
 from questionnaire.permissions import IsStudent
 from questionnaire.serializers import QuestionnaireSerializer, QuestionnaireResponseSerializer
-from users.models import CustomUser
+from users.models import CustomUser, StudentProfile
 
 
 @api_view(['GET', ])
@@ -45,9 +45,12 @@ def submit_questionnaire_response(request):
             return Response(status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(['GET', ])
-# @permission_classes([])
-# def get_questionnaire_response(request):
-#     questionnaire_response = QuestionnaireResponse.objects.get()
-#     serializer = QuestionnaireResponseSerializer(questionnaire_response)
-#     return Response(serializer.data)
+
+@api_view(['POST', ])
+@permission_classes([permissions.IsAuthenticated, IsStudent])
+def reset_questionnaire_responses(request):
+    student_profile: StudentProfile = request.user.student_profile
+    student_profile.student_profile_responses.all().delete()
+    student_profile.next_questionnaire = Questionnaire.objects.get(root=True)
+    student_profile.save()
+    return Response(status=status.HTTP_200_OK)
