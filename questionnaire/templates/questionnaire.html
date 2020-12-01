@@ -211,7 +211,7 @@
 			},
 			onRetake(evt) {
 				console.log("Retaking Questionnaire");
-				axios.post(`http://{{request.get_host}}/api/questionnaire/submit_questionnaire_response/`, {
+				axios.post(`http://{{request.get_host}}/api/questionnaire/reset_questionnaire_responses/`, null, {
 					headers: {
 						'X-CSRFTOKEN': getCookie('csrftoken')
 					}
