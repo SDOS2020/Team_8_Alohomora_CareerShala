@@ -10,6 +10,9 @@
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+ @import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
+
  :root {
     --blue: #4e73df;
     --indigo: #6610f2;
@@ -9303,6 +9306,7 @@
       border: 0;
       font-weight: 900;
       content: '\f107';
+      color: lightcyan;
       font-family: 'Font Awesome 5 Free';
     }
     .sidebar .nav-item .nav-link[data-toggle="collapse"].collapsed::after {
