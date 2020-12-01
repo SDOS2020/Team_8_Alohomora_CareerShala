@@ -30,34 +30,49 @@
 
 {% include 'common/navbar.html' %}
 
-<body>
-
+<body id="body">
 
 	{% if messages %}
 	<div class="messages">
 		{% for message in messages %}
 		<div class="alert {{ message.tags }} alert-dismissible p-3" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
+				<span aria-hidden="true">&times;</span>
 			</button>
 			{{ message }}
 		</div>
 		{% endfor %}
 	</div>
 	{% endif %}
-
-	
+		
+		
 	{% block bodyContent %}
 	
 	{% block content %}
-
+	
 	{% endblock content %}
-
+	
 	{% endblock bodyContent %}
 	
 	{% include 'common/footer.html' %}
 
 </body>
+
+<script>
+	var div = document.getElementById('body');
+	var hasVerticalScrollbar = div.scrollHeight > this.innerHeight;
+	console.log(div.scrollHeight);
+	console.log(this.innerHeight)
+	var footer = document.getElementById("footer");
+	console.log(hasVerticalScrollbar)
+	if (hasVerticalScrollbar) {
+		footer.style.position = "relative";
+	}
+	else {
+		footer.style.position = "fixed";
+	}
+
+</script>
 
 <style>
 
@@ -86,10 +101,10 @@
 		background-color: #FFF;
 	}
 	#footer {
-		width:100%;
-		left: 0px;
-		right: 0px;
-		margin-bottom: 0px;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
 	}
 </style>
 
