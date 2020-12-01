@@ -93,7 +93,7 @@ class QuestionnaireResponse(models.Model):
 
 
 class Answer(models.Model):
-    questionnaire_response = models.ForeignKey('questionnaire.QuestionnaireResponse', on_delete=models.RESTRICT,
+    questionnaire_response = models.ForeignKey('questionnaire.QuestionnaireResponse', on_delete=models.CASCADE,
                                                related_name='answers')
     question = models.ForeignKey('questionnaire.Question', on_delete=models.RESTRICT, related_name='question_responses')
     option = models.ForeignKey('questionnaire.Option', on_delete=models.RESTRICT, related_name='option_responses')
