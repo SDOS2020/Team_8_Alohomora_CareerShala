@@ -7,24 +7,23 @@ import json
 import os
 from datetime import date
 from glob import glob
+from urllib.parse import urlparse
+
+import psycopg2
 
 from questionnaire.models import Questionnaire, Question, Option
 from users.models import CustomUser, Interest, Specialisation
 
 
 def reset():
-    confirm = input("Are you sure to continue? (y/n)")
+    confirm = input("Are you sure to continue? (y/n). Select 'n' if you are doing this on Heroku!")
     if confirm.lower() == "y":
         for file in glob('*/migrations/000*.py'):
             print("removing", str(file))
             os.remove(file)
 
-        db_path = "db.sqlite3"
-        if os.path.isfile(db_path):
-            print("removing", db_path)
-            os.remove(db_path)
-
-        print("Initiating database...")
+        print("Resetting database...")
+        os.system("python manage.py reset_db --noinput")
         os.system("python manage.py makemigrations")
         os.system("python manage.py migrate")
 

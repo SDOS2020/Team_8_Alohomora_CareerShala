@@ -28,7 +28,7 @@ SECRET_KEY = 's8+03rl^1b1z&nyzy!0okoz-wwl)m^f4i(00cohqus$u&0vh(j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['calm-ravine-02049.herokuapp.com']
+ALLOWED_HOSTS = ['calm-ravine-02049.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'grappelli',
     'rest_framework',
     'taggit',
+    'django_extensions',
 
     # default
     'django.contrib.admin',
@@ -92,11 +93,8 @@ WSGI_APPLICATION = 'AlohomoraCareershala.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {'default': dj_database_url.config(conn_max_age=600)}
-postgresql_db_url = os.environ.get('POSTGRESQL_DB_URL')
-DATABASES['default'] = dj_database_url.config(default=postgresql_db_url)
-DATABASES['default'] = dj_database_url.parse(postgresql_db_url, conn_max_age=600)
+DB_URL = os.environ.get('DATABASE_URL')
+DATABASES = {'default': dj_database_url.parse(DB_URL, conn_max_age=600)}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
