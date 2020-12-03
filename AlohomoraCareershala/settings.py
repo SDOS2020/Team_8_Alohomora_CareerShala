@@ -130,10 +130,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-# older configs
-# STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
 STATIC_URL = '/static/'
 
@@ -188,6 +184,7 @@ TAGGIT_CASE_INSENSITIVE = False
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_MANIFEST_STRICT = False
 
 # PRODUCTION
 PRODUCTION_SERVER = False
