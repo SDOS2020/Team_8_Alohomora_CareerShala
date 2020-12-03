@@ -188,6 +188,8 @@ TAGGIT_CASE_INSENSITIVE = False
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
 
 # SSL
 LOCAL_SETTINGS_FILE_NAME = 'local_settings.py'
