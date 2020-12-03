@@ -30,47 +30,49 @@
 
 {% include 'common/navbar.html' %}
 
-<body id="body">
+<body>
+	<div id="body-content">
 
-	{% if messages %}
-	<div class="messages">
-		{% for message in messages %}
-		<div class="alert {{ message.tags }} alert-dismissible p-3" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			{{ message }}
+		{% if messages %}
+		<div class="messages">
+			{% for message in messages %}
+			<div class="alert {{ message.tags }} alert-dismissible p-3" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				{{ message }}
+			</div>
+			{% endfor %}
 		</div>
-		{% endfor %}
+		{% endif %}
+		
+		
+		{% block bodyContent %}
+		
+		{% block content %}
+		
+		{% endblock content %}
+		
+		{% endblock bodyContent %}
+		
+		{% include 'common/footer.html' %}
 	</div>
-	{% endif %}
 		
-		
-	{% block bodyContent %}
+	</body>
 	
-	{% block content %}
-	
-	{% endblock content %}
-	
-	{% endblock bodyContent %}
-	
-	{% include 'common/footer.html' %}
+	<script>
 
-</body>
+		var bodyContent = document.getElementById("body-content");
 
-<script>
-	var div = document.getElementById('body');
-	var hasVerticalScrollbar = div.scrollHeight > this.innerHeight;
-	console.log(div.scrollHeight);
-	console.log(this.innerHeight)
-	var footer = document.getElementById("footer");
-	console.log(hasVerticalScrollbar)
-	if (hasVerticalScrollbar) {
-		footer.style.position = "relative";
-	}
-	else {
-		footer.style.position = "fixed";
-	}
+		var footerElement = document.getElementById("footer");
+		hasVerticalScrollbar = bodyContent.offsetHeight > globalThis.innerHeight;
+		// console.log(hasVerticalScrollbar);
+		if (hasVerticalScrollbar) {
+			footer.style.position = "relative";
+		}
+		else {
+			footer.style.position = "fixed";
+		}
 
 </script>
 
@@ -79,7 +81,7 @@
 	.main-text
 	{
 		position: absolute;
-		top: 150px;
+		top: 100px;
 		width: 96.66666666666666%;
 		color: #FFF;
 	}
@@ -101,7 +103,7 @@
 		background-color: #FFF;
 	}
 	#footer {
-		position: fixed;
+		position: relative;
 		left: 0;
 		bottom: 0;
 		width: 100%;

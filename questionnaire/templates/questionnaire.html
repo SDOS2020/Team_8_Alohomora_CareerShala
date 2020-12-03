@@ -184,7 +184,6 @@
 			getNextQuestionnaire(evt) {
 				axios.get(`http://{{request.get_host}}/api/questionnaire/next_questionnaire/`)
 				.then(response => {
-					console.log(response.data)
 					this.qindex = 0;
 					this.name = response.data.name;
 					this.phase = response.data.phase;
@@ -217,7 +216,6 @@
 					}
 				})
 				.then(response => {
-					// console.log(response)
 					this.getNextQuestionnaire();
 					this.selected = []
 				    this.tempResponses = [];
@@ -292,7 +290,6 @@
 					}
 				})
 				.then(response => {
-					// console.log(response)
 					this.getNextQuestionnaire();
 					this.selected = []
 				    this.tempResponses = [];
