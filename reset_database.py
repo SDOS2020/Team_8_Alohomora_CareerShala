@@ -16,14 +16,16 @@ from users.models import CustomUser, Interest, Specialisation
 
 
 def reset():
-    confirm = input("Are you sure to continue? (y/n). Select 'n' if you are doing this on Heroku!")
+    confirm = input("Are you sure to continue? (y/n).")
     if confirm.lower() == "y":
         for file in glob('*/migrations/000*.py'):
             print("removing", str(file))
             os.remove(file)
 
         print("Resetting database...")
-        # os.system("python manage.py reset_db --noinput")
+        confirm = input("Do you want to clear the existing database? This operation will fail on Heroku. (y/n).")
+        if confirm.lower() == "y":
+            os.system("python manage.py reset_db --noinput")
         os.system("python manage.py makemigrations")
         os.system("python manage.py migrate")
 
