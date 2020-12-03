@@ -64,7 +64,7 @@
                         "root": false,
                         "question": [
                             {
-                                "body": "",
+                                "body": "Inme se koi ek chuniye.",
                                 "multiselect": false,
                                 "option": [
                                     {
@@ -130,7 +130,7 @@
                                             "root": false,
                                             "question": [
                                                 {
-                                                    "body": "",
+                                                    "body": "Inme se koi ek chuniye.",
                                                     "multiselect": false,
                                                     "option": [
                                                         {
@@ -138,11 +138,11 @@
                                                             "continuation_questionnaire": null
                                                         },
                                                         {
-                                                            "body": "2. Kya aap problems ko solve karna, aur deep thinking karna seekhna chahte ho?",
+                                                            "body": "Kya aap problems ko solve karna, aur deep thinking karna seekhna chahte ho?",
                                                             "continuation_questionnaire": null
                                                         },
                                                         {
-                                                            "body": "3. Kya aap apna creativity badhana chahte ho?",
+                                                            "body": "Kya aap apna creativity badhana chahte ho?",
                                                             "continuation_questionnaire": null
                                                         },
                                                         {

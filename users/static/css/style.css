@@ -53,10 +53,6 @@ body {
 	min-height: 100vh;
 }
 
-.bg-cover {
-	background-image: url("{% static 'images/background-image.jpg' %}") !important;
-}
-
 .info-color {
 	background: #FEF2F9;
 	color: #2c3e50;

@@ -15,6 +15,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.contrib.messages import constants
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +28,7 @@ SECRET_KEY = 's8+03rl^1b1z&nyzy!0okoz-wwl)m^f4i(00cohqus$u&0vh(j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['calm-ravine-02049.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'grappelli',
     'rest_framework',
     'taggit',
+    'django_extensions',
 
     # default
     'django.contrib.admin',
@@ -55,6 +57,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # third-party
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
+    # default
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -87,13 +93,8 @@ WSGI_APPLICATION = 'AlohomoraCareershala.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DB_URL = os.environ.get('DATABASE_URL')
+DATABASES = {'default': dj_database_url.parse(DB_URL, conn_max_age=600)}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -128,8 +129,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+# older configs
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static/'),
+)
 
 # Custom User
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -172,3 +183,8 @@ MESSAGE_TAGS = {
 
 # Django-Taggit
 TAGGIT_CASE_INSENSITIVE = False
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
