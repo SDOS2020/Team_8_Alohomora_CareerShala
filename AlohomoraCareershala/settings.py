@@ -189,7 +189,7 @@ TAGGIT_CASE_INSENSITIVE = False
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# SSL
-LOCAL_SETTINGS_FILE_NAME = 'local_settings.py'
-if os.path.isfile(LOCAL_SETTINGS_FILE_NAME):
-    from .local_settings import *
+# PRODUCTION
+if os.environ.get("ALOHOMORA_PRODUCTION_SERVER") is not None:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
