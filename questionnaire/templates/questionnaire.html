@@ -56,7 +56,6 @@
 					<div class="card-header py-6 alert-success" v-else>
 						Yay!! You have completed the questionnaire. Now, check out your <a href="{% url 'dashboard-opportunities' %}"> Opportunities </a>
 						<br>
-						Jaa bete, jeele apni zindagi
 					</div>
 					<div class="card-header alert-warning">
 						You can retake the questionnaire anytime, by clicking: <a :href="onRetake" v-on:click.prevent="onRetake"> Retake Questionnaire </btn
@@ -182,7 +181,7 @@
 		},
 		methods: {
 			getNextQuestionnaire(evt) {
-				axios.get(`http://{{request.get_host}}/api/questionnaire/next_questionnaire/`)
+				axios.get(`{% url 'api-questionnaire-next-questionnaire' %}`)
 				.then(response => {
 					this.qindex = 0;
 					this.name = response.data.name;
@@ -210,7 +209,7 @@
 			},
 			onRetake(evt) {
 				console.log("Retaking Questionnaire");
-				axios.post(`http://{{request.get_host}}/api/questionnaire/reset_questionnaire_responses/`, null, {
+				axios.post(`{% url 'api-questionnaire-reset-questionnaire-responses' %}`, null, {
 					headers: {
 						'X-CSRFTOKEN': getCookie('csrftoken')
 					}
@@ -284,7 +283,7 @@
 					}
 				}
 
-				axios.post(`http://{{request.get_host}}/api/questionnaire/submit_questionnaire_response/`, responses, {
+				axios.post(`{% url 'api-questionnaire-submit-questionnaire-response' %}`, responses, {
 					headers: {
 						'X-CSRFTOKEN': getCookie('csrftoken')
 					}

@@ -62,17 +62,21 @@
 	
 	<script>
 
-		var bodyContent = document.getElementById("body-content");
+		function checkScrollbar(params) {
+			var bodyContent = document.getElementById("body-content");
+			var footerElement = document.getElementById("footer");
+			hasVerticalScrollbar = bodyContent.offsetHeight > globalThis.innerHeight;
+			// console.log(hasVerticalScrollbar);
+			if (hasVerticalScrollbar) {
+				footer.style.position = "relative";
+			}
+			else {
+				footer.style.position = "fixed";
+			}
+		}
 
-		var footerElement = document.getElementById("footer");
-		hasVerticalScrollbar = bodyContent.offsetHeight > globalThis.innerHeight;
-		// console.log(hasVerticalScrollbar);
-		if (hasVerticalScrollbar) {
-			footer.style.position = "relative";
-		}
-		else {
-			footer.style.position = "fixed";
-		}
+		window.addEventListener("resize", this.checkScrollbar);
+
 
 </script>
 
