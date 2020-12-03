@@ -117,3 +117,6 @@ media/
 
 # Static files
 assets/
+
+# Project-related
+*/local_settings.py
