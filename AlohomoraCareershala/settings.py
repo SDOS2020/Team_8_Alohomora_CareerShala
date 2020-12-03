@@ -55,6 +55,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # third-party
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
+    # default
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -182,3 +186,9 @@ MESSAGE_TAGS = {
 
 # Django-Taggit
 TAGGIT_CASE_INSENSITIVE = False
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
