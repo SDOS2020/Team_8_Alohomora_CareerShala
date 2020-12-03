@@ -188,3 +188,7 @@ TAGGIT_CASE_INSENSITIVE = False
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# SSL
+if os.path.isfile('local_settings.py'):
+    from .local_settings import *
