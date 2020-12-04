@@ -1,3 +1,4 @@
+import logging
 import threading
 
 from django.contrib import messages
@@ -18,7 +19,7 @@ def send_mail_async(sender: str, receivers, subject, body):
         'message': body,
         'from_email': sender,
         'recipient_list': receivers
-    })
+    }, name=f'email to {receivers}')
     t.setDaemon(True)
     t.start()  # TODO log this
 

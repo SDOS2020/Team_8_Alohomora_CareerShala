@@ -1,3 +1,5 @@
+import logging
+
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -24,6 +26,9 @@ def profile(request):
         if profile_form.is_valid():
             profile_form.save()
             first_time = not request.user.profile_completed
+            if first_time:
+                logger = logging.getLogger('app.accounts.profile')
+                logger.info(f'{request.user} has completed their profile.')
             request.user.profile_completed = True
             request.user.save()
             success_message = "Profile successfully updated!"
@@ -72,14 +77,14 @@ def login(request):
             password = login_form_filled.cleaned_data["password"]
             user: CustomUser = authenticate(request, email=email,
                                             password=password)  # TODO duplicate in form validation
-
             if not user.verified:
                 messages.error(request, "Please verify your email first")
             else:
                 builtin_login(request, user)
+                logger = logging.getLogger('app.accounts.login')
+                logger.info(f'{user} has logged into the site')
                 return redirect(success_redirect_url)
-        else:
-            return render(request, 'users/login.html', {'form': login_form_filled})
+        return render(request, 'users/login.html', {'form': login_form_filled})
 
     else:
         login_form_empty = LoginForm()
@@ -89,6 +94,8 @@ def login(request):
 @login_required
 def logout(request):
     builtin_logout(request)
+    logger = logging.getLogger('app.accounts.logout')
+    logger.info(f'{request.user} has logged out from the site')
     return redirect('homepage')
 
 
@@ -111,6 +118,8 @@ def verify(request):
                         user.verified = True
                         user.save()
                         message = "Your account has been verified, proceed to login."
+                        logger = logging.getLogger('app.accounts.verification')
+                        logger.info(f'{user} has verified their email')
                         messages.success(request, message)
                     else:
                         message = "Email verification failed."
