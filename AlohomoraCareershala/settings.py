@@ -145,13 +145,8 @@ STATICFILES_DIRS = (
 # Custom User
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# Email backend  # TODO change credentials before production release
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('SDOS_G8_DEV_EMAIL_USERNAME')
-EMAIL_HOST_PASSWORD = os.environ.get('SDOS_G8_DEV_EMAIL_PASSWORD')
-EMAIL_USE_TLS = True
+# Email backend
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 
 # Auth-related settings
 LOGIN_URL = '/users/login'
