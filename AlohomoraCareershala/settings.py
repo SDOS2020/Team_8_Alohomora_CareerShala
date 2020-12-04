@@ -222,6 +222,10 @@ LOGGING = {
         'app': {
             'handlers': ['console', 'file'],
             'level': 'DEBUG',
+        },
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO'
         }
     },
 }
