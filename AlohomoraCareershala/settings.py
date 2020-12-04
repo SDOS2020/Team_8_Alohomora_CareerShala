@@ -28,7 +28,7 @@ SECRET_KEY = 's8+03rl^1b1z&nyzy!0okoz-wwl)m^f4i(00cohqus$u&0vh(j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['calm-ravine-02049.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['alohomoracareershala.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -57,10 +57,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # third-party
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-
-    # default
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -68,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'AlohomoraCareershala.urls'
@@ -179,11 +176,6 @@ MESSAGE_TAGS = {
 # Django-Taggit
 TAGGIT_CASE_INSENSITIVE = False
 
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 # Logging
 LOGGING = {
     'version': 1,
@@ -229,7 +221,7 @@ LOGGING = {
 PRODUCTION_SERVER = False
 if os.environ.get("ALOHOMORA_PRODUCTION_SERVER_URL") is not None:
     PRODUCTION_SERVER = True
-    DEBUG = True  # TODO fix it for Heroku
+    DEBUG = False
     PRODUCTION_SERVER_URL = os.environ.get("ALOHOMORA_PRODUCTION_SERVER_URL")
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
