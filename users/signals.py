@@ -1,6 +1,6 @@
+import logging
+
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -23,6 +23,8 @@ def send_verification_email(sender, instance: CustomUser, created=False,
         receivers = [user.email]
         subject = 'CareerShala Account Email Verification'
         body = email_verification_link
+        logger = logging.getLogger('app.email.verification')
+        logger.info(f'Sent verification email to {receivers} (sender={sender})')
 
         send_mail_async(sender=sender,
                         receivers=receivers,

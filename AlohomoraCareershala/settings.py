@@ -195,12 +195,14 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'simple': {
-            'format': '{asctime} {levelname} {message}',
-            'style': '{'
+            'format': '[{asctime}] {levelname} module:[{module}] {message}',
+            'style': '{',
+            'datefmt': '%d/%b/%Y %H:%M:%S'
         },
         'verbose': {
-            'format': '{asctime} {levelname} {pathname} {lineno} {threadName} {message}',
-            'style': '{'
+            'format': '{asctime} {levelname} location:[{pathname}:{lineno}] thread:[{threadName}] {message}',
+            'style': '{',
+            'datefmt': '%d/%b/%Y %H:%M:%S'
         }
     },
     'handlers': {
@@ -216,10 +218,12 @@ LOGGING = {
             'formatter': 'verbose'
         }
     },
-    'root': {
-        'handlers': ['console', 'file'],
-        'level': 'DEBUG',
-    }
+    'loggers': {
+        'app': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+        }
+    },
 }
 
 # PRODUCTION
