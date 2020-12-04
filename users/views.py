@@ -84,8 +84,7 @@ def login(request):
                 logger = logging.getLogger('app.accounts.login')
                 logger.info(f'{user} has logged into the site')
                 return redirect(success_redirect_url)
-        else:
-            return render(request, 'users/login.html', {'form': login_form_filled})
+        return render(request, 'users/login.html', {'form': login_form_filled})
 
     else:
         login_form_empty = LoginForm()

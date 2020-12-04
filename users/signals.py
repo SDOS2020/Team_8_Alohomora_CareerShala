@@ -17,7 +17,7 @@ def send_verification_email(sender, instance: CustomUser, created=False,
         if settings.PRODUCTION_SERVER:
             server_base_url = settings.PRODUCTION_SERVER_URL
         else:
-            server_base_url = "http://localhost:8000"
+            server_base_url = "http://127.0.0.1:8000"
         email_verification_link = f'{server_base_url}/users/verify/?email={user.email}&email_verification_token={user.email_verification_token}'
         sender = 'noreply@careershala.com'
         receivers = [user.email]

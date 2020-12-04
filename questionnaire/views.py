@@ -26,7 +26,8 @@ def next_questionnaire(request):
     questionnaire = user.student_profile.next_questionnaire
     serializer = QuestionnaireSerializer(questionnaire)
     logger = logging.getLogger('app.questionnaire.next_questionnaire')
-    logger.info(f'{request.user} has requested the next questionnaire ({questionnaire.identifier})')
+    if questionnaire is not None:
+        logger.info(f'{request.user} has requested the next questionnaire ({questionnaire.identifier})')
     return Response(serializer.data)
 
 
@@ -48,6 +49,8 @@ def submit_questionnaire_response(request):
         logger = logging.getLogger('app.questionnaire.submit_questionnaire_response')
         logger.info(
             f'{request.user} has submitted responses to questionnaire: {questionnaire_response.questionnaire.identifier}')
+        if request.user.student_profile.next_questionnaire is None:
+            logger.info(f'{request.user} has completed the questionnaire')
         if questionnaire_response:
             return Response(status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
