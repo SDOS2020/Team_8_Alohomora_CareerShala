@@ -1,3 +1,5 @@
+import logging
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -23,6 +25,8 @@ def next_questionnaire(request):
     user: CustomUser = request.user
     questionnaire = user.student_profile.next_questionnaire
     serializer = QuestionnaireSerializer(questionnaire)
+    logger = logging.getLogger('app.questionnaire.next_questionnaire')
+    logger.info(f'{request.user} has requested the next questionnaire ({questionnaire.identifier})')
     return Response(serializer.data)
 
 
@@ -41,6 +45,9 @@ def submit_questionnaire_response(request):
         else:
             request.user.student_profile.next_questionnaire = None
         request.user.student_profile.save()
+        logger = logging.getLogger('app.questionnaire.submit_questionnaire_response')
+        logger.info(
+            f'{request.user} has submitted responses to questionnaire: {questionnaire_response.questionnaire.identifier}')
         if questionnaire_response:
             return Response(status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -53,4 +60,6 @@ def reset_questionnaire_responses(request):
     student_profile.student_profile_responses.all().delete()
     student_profile.next_questionnaire = Questionnaire.objects.get(root=True)
     student_profile.save()
+    logger = logging.getLogger('app.questionnaire.reset_questionnaire_response')
+    logger.info(f'{request.user} has reset their responses')
     return Response(status=status.HTTP_200_OK)
