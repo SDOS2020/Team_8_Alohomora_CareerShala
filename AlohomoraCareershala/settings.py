@@ -189,6 +189,39 @@ TAGGIT_CASE_INSENSITIVE = False
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '{asctime} {levelname} {message}',
+            'style': '{'
+        },
+        'verbose': {
+            'format': '{asctime} {levelname} {pathname} {lineno} {threadName} {message}',
+            'style': '{'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'warning.log',
+            'formatter': 'verbose'
+        }
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'DEBUG',
+    }
+}
+
 # PRODUCTION
 PRODUCTION_SERVER = False
 if os.environ.get("ALOHOMORA_PRODUCTION_SERVER_URL") is not None:
