@@ -35,11 +35,14 @@ def send_verification_email(sender, instance: CustomUser, created=False,
 @receiver(post_save, sender=CustomUser)
 def create_user_profile(sender, instance: CustomUser, created=False, **kwargs):
     if created and not instance.is_admin:
+        logger = logging.getLogger('app.accounts.register')
         if instance.is_expert:
             ExpertProfile.objects.create(user=instance)
+            logger.info(f'Created expert-user with email {instance.email}')
         else:
             root_questionnaire = Questionnaire.objects.get(root=True)
             StudentProfile.objects.create(user=instance, next_questionnaire=root_questionnaire)
+            logger.info(f'Created student-user with email {instance.email}')
 
 
 @receiver(post_save, sender=CustomUser)
