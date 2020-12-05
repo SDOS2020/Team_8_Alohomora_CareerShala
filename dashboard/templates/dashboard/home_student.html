@@ -2,12 +2,12 @@
 
 {% load static %}
 
-{% block title %} 
-Welcome {{ request.user.first_name }} !
+{% block title %}
+    Welcome {{ request.user.first_name }} !
 {% endblock title %}
 
-{% block pagecss %} 
-<link rel="stylesheet" href="{% static 'css/home/style.css' %}">
+{% block pagecss %}
+    <link rel="stylesheet" href="{% static 'css/home/style.css' %}">
 {% endblock pagecss %}
 
 {% block dashboardPage %}
@@ -27,18 +27,20 @@ Welcome {{ request.user.first_name }} !
             <div class="col-xl-3 col-md-6 mb-4 ">
                 <div class="card border-left-primary shadow h-100 py-2" id="questionnaireBtn">
                     <a href="#questionnaireRow" style="text-decoration: none;">
-                    <div class="card-body" >
+                        <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <!-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         </div> -->
-                                    <div class="h5 mb-0 font-weight-bold"><btn> Take Questionnaire </btn></div>
+                                    <div class="h5 mb-0 font-weight-bold">
+                                        <btn> Take Questionnaire</btn>
+                                    </div>
                                 </div>
                                 <!-- <div class="col-auto">
                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                 </div> -->
                             </div>
-                    </div>
+                        </div>
                     </a>
                 </div>
             </div>
@@ -50,7 +52,8 @@ Welcome {{ request.user.first_name }} !
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Path Completion </div>
+                                    Path Completion
+                                </div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">
@@ -87,8 +90,8 @@ Welcome {{ request.user.first_name }} !
                                     <div class="col">
                                         <div class="progress progress-sm mr-2">
                                             <div class="progress-bar bg-info" role="progressbar"
-                                                style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                aria-valuemax="100"></div>
+                                                 style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +111,8 @@ Welcome {{ request.user.first_name }} !
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Pending Requests</div>
+                                    Pending Requests
+                                </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                             </div>
                             <div class="col-auto">
@@ -157,14 +161,14 @@ Welcome {{ request.user.first_name }} !
     </div>
     <!-- /.container-fluid -->
 
-</div>
-<!-- End of Main Content -->
+    </div>
+    <!-- End of Main Content -->
 
-<style>
-#questionnaireBtn:hover .card-body:hover{
-    background-color: #4e73df;
-    color: white;
-}
-</style>
+    <style>
+        #questionnaireBtn:hover .card-body:hover {
+            background-color: #4e73df;
+            color: white;
+        }
+    </style>
 
 {% endblock dashboardPage %}
