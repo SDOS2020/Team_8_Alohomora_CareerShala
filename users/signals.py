@@ -19,17 +19,18 @@ def send_verification_email(sender, instance: CustomUser, created=False,
         else:
             server_base_url = "http://127.0.0.1:8000"
         email_verification_link = f'{server_base_url}/users/verify/?email={user.email}&email_verification_token={user.email_verification_token}'
-        sender = 'noreply@careershala.com'
+        sender = 'sdosg8dev@gmail.com'
         receivers = [user.email]
         subject = 'CareerShala Account Email Verification'
-        body = email_verification_link
+        dynamic_template_data = {'email_verification_url': email_verification_link}
+        template_id = 'd-c5740219251a4be390c34e9386f1e4b8'
         logger = logging.getLogger('app.email.verification')
-        logger.info(f'Sent verification email to {receivers} (sender={sender})')
-
+        logger.info(f'Sending verification email to {receivers} (sender={sender})')
         send_mail_async(sender=sender,
                         receivers=receivers,
                         subject=subject,
-                        body=body)
+                        dynamic_template_data=dynamic_template_data,
+                        template_id=template_id)
 
 
 @receiver(post_save, sender=CustomUser)
