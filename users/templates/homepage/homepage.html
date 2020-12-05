@@ -9,7 +9,7 @@ Alohomora CareerShala
 <link rel="stylesheet" href="{% static 'css/homepage/styles.css' %}">
 {% endblock pagecss %}
 
-{% block bodyContent %}
+{% block content %}
 
 <div id="#home" style="margin-bottom: -30px;">
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
@@ -90,18 +90,16 @@ Alohomora CareerShala
   </div>
 
   <style>
+    .car-min-height {
+      min-height: 350px;
+    }
 
-
-      .car-min-height {
-        min-height: 350px;
-      }
-
-      .special-card {
-        background-color: rgba(0, 0, 0, 0.6);
-      }
+    .special-card {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
 
   </style>
 
 
 
-{% endblock bodyContent%}
+{% endblock content%}
