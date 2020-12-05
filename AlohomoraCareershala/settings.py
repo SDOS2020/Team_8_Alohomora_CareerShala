@@ -144,9 +144,15 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 # Email backend
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+# For SMTP support: https://sendgrid.com/docs/for-developers/sending-email/django/
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'  # this is exactly the value 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Auth-related settings
-LOGIN_URL = '/users/login'
+LOGIN_URL = '/users/login/'
 
 # Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

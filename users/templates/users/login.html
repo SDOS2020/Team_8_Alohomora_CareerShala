@@ -48,9 +48,9 @@ Login
 					{% for error in form.non_field_errors %}
 						<div class="alert-danger">
 							<strong>{{ error }}</strong>
-						</div>
-					{% endfor %}
-				</small>
+                        </div>
+                    {% endfor %}
+                </small>
           </form>
       </div>
 
@@ -58,17 +58,17 @@ Login
       <div id="formFooter">
           <div class="conatiner">
               <div class="row justify-content-center">
-                  <a class="underlineHover" href="#">Forgot Password?</a>
+                  <a class="underlineHover" href="{% url 'password_reset' %}">Forgot Password?</a>
               </div>
-			<div class="row justify-content-center">
-				<div class="col-sm-6">
-					<a class="underlineHover" href="{% url 'users-register' %}">Register</a> 
-				</div>
-				
-			</div>
-  		</div>
+              <div class="row justify-content-center">
+                  <div class="col-sm-6">
+                      <a class="underlineHover" href="{% url 'users-register' %}">Register</a>
+                  </div>
 
-	</div>
+              </div>
+          </div>
+
+      </div>
 
   </div>
 </div>
