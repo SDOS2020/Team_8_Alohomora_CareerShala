@@ -14,12 +14,24 @@
 						<div class="col-xl-3 col-md-4 col-sm-4 col-12">
 							<h6 class="mb-3 mb-lg-4 bold-text "><b>MENU</b></h6>
 							<ul class="list-unstyled">
-								<li>Home</li>
-								<li>About</li>
+								<li>
+									<a  href="{% url 'homepage' %}">Home</a>
+								</li>
+								<li>
+									<a  href="{% url 'homepage'%}#about">About</a>
+								</li>
 								{% if user.is_authenticated %}
-								<li>Profile</li>
+								<li>
+									<a  href="{% url 'dashboard-home' %}">Dashboard</a>
+								</li>
+								<li>
+									<a  href="{% url 'users-profile' %}">Profile</a>
+								</li>
 								{% else %}
-								<li>Login</li>
+								<li>
+									<a  href="{% url 'users-login' %}">Login</a>
+								</li>
+								<!-- <li>Login</li> -->
 								{% endif %}
 							</ul>
 						</div>
