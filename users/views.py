@@ -46,6 +46,9 @@ def profile(request):
 
 
 def register(request):
+    if request.user.is_authenticated:
+        messages.warning('You are already logged in. Logout to register another user.')
+        return redirect('dashboard-home')
     if request.method == 'POST':
 
         user_creation_form_filled = CustomUserCreationForm(request.POST)
