@@ -17,18 +17,78 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
+        {% if user.is_expert %}
+
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCert"
+            aria-expanded="true" aria-controls="collapseCert">
+            <i class="fa fa-book-open" aria-hidden="true"></i>
+            <span>Courses</span>
+        </a>
+
+        <div id="collapseCert" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'dashboard-courses' %}">Create a Course</a>
+                <a class="collapse-item" href="#">My Course</a>
+                <a class="collapse-item" href="#">All Course</a>
+            </div>
+        </div>
+
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fa fa-newspaper" aria-hidden="true"></i>
+            <span>Articles</span>
+        </a>
+
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'dashboard-courses' %}">Create an Article</a>
+                <a class="collapse-item" href="#">My Articles</a>
+                <a class="collapse-item" href="#">All Articles</a>
+            </div>
+        </div>
+
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProject"
+            aria-expanded="true" aria-controls="collapseProject">
+            <i class="fa fa-project-diagram" aria-hidden="true"></i>
+            <span>Projects</span>
+        </a>
+
+        <div id="collapseProject" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'dashboard-courses' %}">Create a Project</a>
+                <a class="collapse-item" href="#">My Projects</a>
+                <a class="collapse-item" href="#">All Projects</a>
+            </div>
+        </div>
+
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseJob"
+            aria-expanded="true" aria-controls="collapseJob">
+            <i class="fa fa-briefcase" aria-hidden="true"></i>
+            <span>Jobs</span>
+        </a>
+
+        <div id="collapseJob" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'dashboard-courses' %}">Create Job</a>
+                <a class="collapse-item" href="#">My Jobs</a>
+                <a class="collapse-item" href="#">All Jobs</a>
+            </div>
+        </div>
+
+        {% else %}
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fa fa-graduation-cap" aria-hidden="true"></i>
             <span>Opportunities</span>
         </a>
+        
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">All</a>
-                <a class="collapse-item" href="{% url 'dashboard-opportunities' %}">Courses Offered</a>
+                <a class="collapse-item" href="{% url 'dashboard-courses' %}">Courses Offered</a>
                 <a class="collapse-item" href="#">Articles</a>
             </div>
         </div>
+        {% endif %}
     </li>
 
 </ul>
