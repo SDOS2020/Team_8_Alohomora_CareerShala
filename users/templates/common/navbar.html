@@ -2,7 +2,7 @@
 {% block navBar %}
 
 <div class="col-12 remove-pad">
-  <nav class="navbar navbar-expand-sm navbar-light beige fixed-top remove-pad-vert" style="padding-top: 0px; padding-bottom: 0px;">
+  <nav class="navbar navbar-expand-sm navbar-light fixed-top remove-pad-vert navbar-background">
     <img src="{% static 'images/alohomora-logo.png' %}" class="d-inline-block align-top" alt="Alohomora" height="80px">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -16,90 +16,27 @@
           <a class="nav-link btn btn-dark giveMargin" href="/#about">About</a>
         </li>
         {% if user.is_authenticated %}
-            <!-- Nav Item - Messages -->
-            <!-- <li class="nav-item dropdown arrow mx-1">
-                <a class="nav-link btn btn-dark giveMargin dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-envelope fa-fw fa-lg"></i>
-                    <span class="badge badge-danger badge-counter">7</span>
-                </a>
-                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                    aria-labelledby="messagesDropdown">
-                    <h6 class="dropdown-header">
-                        Message Center
-                    </h6>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="dropdown-list-image mr-3">
-                            <div class="status-indicator bg-success"></div>
-                        </div>
-                        <div class="font-weight-bold">
-                            <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                problem I've been having.</div>
-                            <div class="small text-gray-500">Emily Fowler · 58m</div>
-                        </div>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="dropdown-list-image mr-3">
-                            <div class="status-indicator"></div>
-                        </div>
-                        <div>
-                            <div class="text-truncate">I have the photos that you ordered last month, how
-                                would you like them sent to you?</div>
-                            <div class="small text-gray-500">Jae Chun · 1d</div>
-                        </div>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="dropdown-list-image mr-3">
-                            <div class="status-indicator bg-warning"></div>
-                        </div>
-                        <div>
-                            <div class="text-truncate">Last month's report looks great, I am very happy with
-                                the progress so far, keep up the good work!</div>
-                            <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                        </div>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="dropdown-list-image mr-3">
-                            <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                alt="">
-                            <div class="status-indicator bg-success"></div>
-                        </div>
-                        <div>
-                            <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                told me that people say this to all dogs, even if they aren't good...</div>
-                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                        </div>
-                    </a>
-                    <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                </div>
-            </li> -->
-
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown arrow">
                 <a class="nav-link btn btn-dark giveMargin dropdown-toggle" href="#" id="userDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2">Hi {{ request.user.first_name }}!</span>
-                    <!-- <img class="img-profile rounded-circle"
-                        src="img/undraw_profile.svg"> -->
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                     aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="{% url 'dashboard-home' %}">
-                        <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        <i class="fas fa-fw fa-tachometer-alt mr-2"></i>
                         Dashboard
                     </a>
                     <a class="dropdown-item" href="{% url 'users-profile' %}">
-                        <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        <i class="fa fa-user fa-sm fa-fw mr-2"></i>
                         Profile
                     </a>
-                    <!-- <a class="dropdown-item" href="#">
-                        <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Settings
-                    </a> -->
+
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'users-logout' %}" >
-                        <i class="fa fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
                         Logout
                     </a>
                 </div>
@@ -113,5 +50,17 @@
     </div>
   </nav>
 </div>
+
+<style>
+  .navbar-background {
+    padding-top: 0px; 
+    padding-bottom: 0px; 
+    background: white;
+    border-bottom-style: solid;
+    border-bottom-width: 5px;
+    border-color: #262626;
+}
+
+</style>
 
 {% endblock navBar%}

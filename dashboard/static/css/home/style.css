@@ -11,8 +11,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
-@import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
-
  :root {
     --blue: #4e73df;
     --indigo: #6610f2;
@@ -2328,7 +2326,7 @@
     }
   }
   
-  .dropup,
+  /* .dropup,
   .dropright,
   .dropdown,
   .dropleft {
@@ -2348,13 +2346,13 @@
     border-right: 0.3em solid transparent;
     border-bottom: 0;
     border-left: 0.3em solid transparent;
-  }
+  } */
 
   .container-fluid {
       margin-top: 0px;
   }
   
-  .dropdown-toggle:empty::after {
+  /* .dropdown-toggle:empty::after {
     margin-left: 0;
   }
   
@@ -2376,9 +2374,9 @@
     background-clip: padding-box;
     border: 1px solid #e3e6f0;
     border-radius: 0.35rem;
-  }
+  } */
   
-  .dropdown-menu-left {
+  /* .dropdown-menu-left {
     right: auto;
     left: 0;
   }
@@ -2460,13 +2458,13 @@
     left: 100%;
     margin-top: 0;
     margin-left: 0.125rem;
-  }
+  } */
 
-  .bg-yellow {
+  /* .bg-yellow {
     background-color: #ffc038;
-  }
+  } */
   
-  .dropright .dropdown-toggle::after {
+  /* .dropright .dropdown-toggle::after {
     display: inline-block;
     margin-left: 0.255em;
     vertical-align: 0.255em;
@@ -2532,9 +2530,9 @@
     margin: 0.5rem 0;
     overflow: hidden;
     border-top: 1px solid #eaecf4;
-  }
+  } */
   
-  .dropdown-item {
+  /* .dropdown-item {
     display: block;
     width: 100%;
     padding: 0.25rem 1.5rem;
@@ -2576,13 +2574,13 @@
     font-size: 0.875rem;
     color: #858796;
     white-space: nowrap;
-  }
+  } */
   
-  .dropdown-item-text {
+  /* .dropdown-item-text {
     display: block;
     padding: 0.25rem 1.5rem;
     color: #3a3b45;
-  }
+  } */
   
   .input-group {
     position: relative;
@@ -8308,9 +8306,9 @@
     text-transform: lowercase !important;
   }
   
-  .text-uppercase, .dropdown .dropdown-menu .dropdown-header, .sidebar .sidebar-heading {
+  /* .text-uppercase, .dropdown .dropdown-menu .dropdown-header, .sidebar .sidebar-heading {
     text-transform: uppercase !important;
-  }
+  } */
   
   .text-capitalize {
     text-transform: capitalize !important;
@@ -8867,7 +8865,7 @@
     transform: rotate(-15deg);
   }
   
-  .dropdown .dropdown-menu {
+  /* .dropdown .dropdown-menu {
     font-size: 0.85rem;
   }
   
@@ -8876,7 +8874,7 @@
     font-size: 0.65rem;
     color: #b7b9cc;
   }
-  
+   */
   .dropdown.no-arrow .dropdown-toggle::after {
     display: none;
   }
@@ -8982,13 +8980,13 @@
     overflow: hidden;
   }
   
-  .topbar .dropdown-list .dropdown-header {
+  /* .topbar .dropdown-list .dropdown-header {
     background-color: #4e73df;
     border: 1px solid #4e73df;
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
     color: #fff;
-  }
+  } */
   
   .topbar .dropdown-list .dropdown-item {
     white-space: normal;
@@ -9011,7 +9009,7 @@
     width: 2.5rem;
   }
   
-  .topbar .dropdown-list .dropdown-item .dropdown-list-image .status-indicator {
+  /* .topbar .dropdown-list .dropdown-item .dropdown-list-image .status-indicator {
     background-color: #eaecf4;
     height: 0.75rem;
     width: 0.75rem;
@@ -9020,18 +9018,18 @@
     bottom: 0;
     right: 0;
     border: 0.125rem solid #fff;
-  }
+  } */
   
   .topbar .dropdown-list .dropdown-item .text-truncate {
     max-width: 10rem;
   }
   
-  .topbar .dropdown-list .dropdown-item:active {
+  /* .topbar .dropdown-list .dropdown-item:active {
     background-color: #eaecf4;
     color: #3a3b45;
-  }
+  } */
   
-  @media (min-width: 576px) {
+  /* @media (min-width: 576px) {
     .topbar .dropdown {
       position: relative;
     }
@@ -9045,7 +9043,7 @@
     .topbar .dropdown-list .dropdown-item .text-truncate {
       max-width: 13.375rem;
     }
-  }
+  } */
   
   .topbar.navbar-dark .navbar-nav .nav-item .nav-link {
     color: rgba(255, 255, 255, 0.8);
@@ -9097,6 +9095,12 @@
   
   .sidebar .nav-item.active .nav-link {
     font-weight: 700;
+    color: #ffc038;
+  }
+
+  .sidebar .nav-item.active .nav-link:hover {
+    font-weight: 700;
+    color: gold;
   }
   
   .sidebar .nav-item .collapse {
@@ -9109,6 +9113,11 @@
   .sidebar .nav-item .collapse .collapse-inner {
     border-radius: 0.35rem;
     box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  }
+
+  .sidebar .nav-item .collapse .collapse-item {
+    background-color: #3b3b3b;
+    margin-bottom: 0.25rem;
   }
   
   .sidebar .nav-item .collapsing {
@@ -9140,7 +9149,7 @@
     padding: 0.5rem 1rem;
     margin: 0 0.5rem;
     display: block;
-    color: #3a3b45;
+    color: #ffc038;
     text-decoration: none;
     border-radius: 0.35rem;
     white-space: nowrap;
@@ -9148,7 +9157,8 @@
   
   .sidebar .nav-item .collapse .collapse-inner .collapse-item:hover,
   .sidebar .nav-item .collapsing .collapse-inner .collapse-item:hover {
-    background-color: #eaecf4;
+    background-color: #1d1d1d;
+    color: gold;
   }
   
   .sidebar .nav-item .collapse .collapse-inner .collapse-item:active,
@@ -9306,11 +9316,12 @@
       border: 0;
       font-weight: 900;
       content: '\f107';
-      color: lightcyan;
+      color: #ffc038;
       font-family: 'Font Awesome 5 Free';
     }
     .sidebar .nav-item .nav-link[data-toggle="collapse"].collapsed::after {
       content: '\f105';
+      color: gold;
     }
     .sidebar .sidebar-brand .sidebar-brand-icon i {
       font-size: 2rem;
@@ -9442,7 +9453,7 @@
     color: rgba(255, 255, 255, 0.4);
   }
   
-  .sidebar-dark .nav-item .nav-link {
+  /* .sidebar-dark .nav-item .nav-link {
     color: rgba(255, 255, 255, 0.8);
   }
   
@@ -9468,7 +9479,7 @@
   
   .sidebar-dark .nav-item.active .nav-link i {
     color: #fff;
-  }
+  } */
   
   .sidebar-dark #sidebarToggle {
     background-color: rgba(255, 255, 255, 0.2);

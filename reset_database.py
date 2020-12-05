@@ -30,7 +30,7 @@ def reset():
         os.system("python manage.py migrate")
 
         questionnaires_json_file_name = 'questionnaires.json'
-        with open(questionnaires_json_file_name) as f:
+        with open(questionnaires_json_file_name, encoding='utf-8') as f:
             root_questionnaire_json = json.load(f)
             load_questionnaire_from_json(root_questionnaire_json, None)
 

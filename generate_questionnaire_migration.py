@@ -39,6 +39,6 @@ def generate_questionnaire(apps, schema_editor):
         'Option': optionClass
     }
     questionnaires_json_file_name = 'questionnaires.json'
-    with open(questionnaires_json_file_name) as f:
+    with open(questionnaires_json_file_name, encoding='utf-8') as f:
         root_questionnaire_json = json.load(f)
         load_questionnaire_from_json(root_questionnaire_json, None, class_dict)

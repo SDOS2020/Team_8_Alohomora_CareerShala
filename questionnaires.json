@@ -3,6 +3,150 @@
     "root": true,
     "question": [
         {
+            "body": "आपको स्कूल में किस तरह के विषय पसंद हैं?",
+            "multiselect": false,
+            "option": [
+                {
+                    "body": "जिनमें प्रोजेक्ट वर्क या फाइल अच्छे से बनाकर जमा करनी होती है",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "जिनमें कविता, कहानी इत्यादि पढ़ने या लिखने को मिले",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "गणित या अर्थशास्त्र जैसे - जिनमें चीज़ें याद रखना और भिन्न सवालों में प्रयोग करना हो",
+                    "continuation_questionnaire": null
+                }
+            ]
+        },
+        {
+            "body": "आप स्कूल की कौनसी गतिविधियों में ख़ुशी से भाग लेते हो?",
+            "multiselect": false,
+            "option": [
+                {
+                    "body": "खेलकूद, योगा, कला, नाचना, गाना, acting, NCC या होम साइंस से जुडी",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "टीचर्स की मदद करना, annual day जैसे functions का आयोजन करवाना",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "भाषण, वाद-विवाद प्रतियोगिता, quiz जैसी प्रतियोगिताओं में",
+                    "continuation_questionnaire": null
+                }
+            ]
+        },
+        {
+            "body": "Alohomora के प्रोजेक्ट्स में आपने किस तरह से काम किया",
+            "multiselect": false,
+            "option": [
+                {
+                    "body": "Level 0, 1 करते समय मैंने बहुत सारे ideas करके देखे",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "Level 0, 1 करते समय मैंने बहुत सारे नए लोगों से connections बनाये",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "Level 0, 1 करते समय मैंने नए ideas सोचे और जुड़ाग लगाकर उन्हें किया",
+                    "continuation_questionnaire": null
+                }
+            ]
+        },
+        {
+            "body": "जब घर में कोई बीमार हो तब आप क्या करते हो",
+            "multiselect": false,
+            "option": [
+                {
+                    "body": "ज़रूरत के हिसाब से घर का अतिरिक्त काम संभाल लेते हो",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "आपको बहुत चिंता होती है और जितना हो सके अपना समय उनके साथ गुज़ारते हो",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "इंटरनेट के द्वारा बीमारी की वजह और इलाज समझने की कोशिश करते हो",
+                    "continuation_questionnaire": null
+                }
+            ]
+        },
+        {
+            "body": "घर के किस तरह के कामों में आपकी रूचि है",
+            "multiselect": false,
+            "option": [
+                {
+                    "body": "ख़राब चीज़ों को खुद से ठीक करना या फिर ठीक करवा कर लाना",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "नज़दीक के लोगों के बीच के झगड़े या विवाद सुलझाना",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "घरखर्च का प्लान या उसका हिसाब रखना ",
+                    "continuation_questionnaire": null
+                }
+            ]
+        },
+        {
+            "body": "जब कभी आपको घर में खाना बनाना हो तो किस तरह से बनाना पसंद है",
+            "multiselect": false,
+            "option": [
+                {
+                    "body": "सब्ज़ी अच्छे से धोकर काटना, step by step खाना बनाना",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "सबकी पसंद ध्यान में रखकर उनकी ख़ुशी के लिए खाना बनाना",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "नए नए बनाने के तरीके इज़ाद करना या अपना कुछ खास तरीका बनाना",
+                    "continuation_questionnaire": null
+                }
+            ]
+        },
+        {
+            "body": "घर की साफ़ सफाई करते समय कैसा लगता है",
+            "multiselect": false,
+            "option": [
+                {
+                    "body": "चीज़ों को अपनी सही जगह रखना, घर को व्यवस्थित रखना अच्छा लगता है",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "परिवार को खुश करना मक़सद या goal होता है",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "चीज़ों को व्यवस्थित रखने के तरीके सोचने में मज़ा आता है (eg अलमारी में अपने कपडे कैसे ज़माने हैं, यह सोचना)",
+                    "continuation_questionnaire": null
+                }
+            ]
+        },
+        {
+            "body": "खाली समय में आपको क्या करना पसंद है",
+            "multiselect": false,
+            "option": [
+                {
+                    "body": "कुछ करते रहना - जैसे खेलना, drawing करना, साफ़ सफाई करना ",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "दोस्तों के साथ या परिवार के साथ गप्पें मारना",
+                    "continuation_questionnaire": null
+                },
+                {
+                    "body": "दिमाग का प्रयोग वाले कार्य - अखबार पढ़कर समझना, कविता लिखना, puzzle solve करना, कुछ नया बनाना इत्यादि",
+                    "continuation_questionnaire": null
+                }
+            ]
+        },
+        {
             "body": "Aap Alohomora ke CareerShala se kya chahte ho?",
             "multiselect": false,
             "option": [
