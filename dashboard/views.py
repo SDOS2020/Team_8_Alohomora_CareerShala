@@ -8,7 +8,10 @@ from users.decorators import user_verification_required, profile_completion_requ
 @user_verification_required
 @profile_completion_required
 def home(request):
-    return render(request, 'dashboard/home.html')
+    if not request.user.is_expert:
+        return render(request, 'dashboard/home_student.html')
+    else:
+        return render(request, 'dashboard/home_expert.html')
 
 
 @login_required
