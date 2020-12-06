@@ -35,6 +35,28 @@ input:-internal-autofill-selected {
     color: #ffc038 !important;
 }
 
+/* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+	-webkit-text-fill-color: #ffc038 !important;
+}
+
+/* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+	box-shadow: 0 0 0 30px #262626 inset !important;
+    -webkit-box-shadow: 0 0 0 30px #262626 inset !important;
+}
+
 #formFooter {
 	background-color: #1d1d1d;
 	color: #ffc038;
@@ -83,8 +105,30 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
 	transform: scale(0.95);
 }
 
-input[type=text],input[type=email],input[type=password] {
+::-webkit-calendar-picker-indicator {
+	background-color: #ffc038;
+}
+
+input[type=text],input[type=email],input[type=password],input[type=date] {
 	background-color: #262626;
+	border: 2px solid #ffc038;
+	color: #ffc038;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 5px;
+	width: 100%;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+
+input[type=text]:focus,input[type=email]:focus,input[type=password]:focus,input[type=date]:focus {
+	background-color: #3d3d3d;
 	border: 2px solid #ffc038;
 	color: #ffc038;
 	padding: 15px 32px;
@@ -119,6 +163,7 @@ input[type=text]:placeholder,input[type=email]:placeholder,input[type=password]:
 	animation-fill-mode: both;
 }
 
+
 @-webkit-keyframes fadeInDown {
 	0% {
 	opacity: 0;
@@ -131,6 +176,7 @@ input[type=text]:placeholder,input[type=email]:placeholder,input[type=password]:
 	transform: none;
 	}
 }
+
 
 @keyframes fadeInDown {
 	0% {

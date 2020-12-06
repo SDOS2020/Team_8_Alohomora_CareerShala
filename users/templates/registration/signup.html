@@ -16,7 +16,7 @@ Student Registration
 	  	<div class="fadeIn first container pb-3">
 		  	<div id="formFooter" class="row">
 			  	<div class="col-sm-6 offset-sm-3 ">
-					<h3 class="text-center py-4">
+					<h3 class="text-center">
 						<strong>Register</strong>
 					</h3>
 				</div>
@@ -52,6 +52,7 @@ Student Registration
 				<div class="form-group">
 					<label for="input-first-name">First Name</label>
 					<input 
+						type="text"
 						class="form-control" 
 						{% if form.first_name.value != None %} value="{{ form.first_name.value|stringformat:'s' }}"{% endif %}
 						id="input-first-name"
@@ -69,6 +70,7 @@ Student Registration
 				<div class="form-group">
 					<label for="input-last-name">Last Name</label>
 					<input 
+						type="text"
 						class="form-control" 
 						{% if form.last_name.value != None %}value="{{ form.last_name.value|stringformat:'s' }}"{% endif %}
 						id="input-last-name" 
