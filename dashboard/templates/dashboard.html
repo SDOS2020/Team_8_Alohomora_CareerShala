@@ -8,12 +8,20 @@
         {% include 'common/dashboardSidebar.html' %}
         <div id="content-wrapper" class="d-flex flex-column" style="padding-top: 20px;">
             <div id="content">
-
                 {% block dashboardPage %} {% endblock dashboardPage %}
-
             </div>
         </div>    
     </div>
 </div>
+
+<style>
+
+    #content-wrapper {
+        background-image: url("{% static 'images/background-4.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+</style>
                 
 {% endblock content %}

@@ -18,6 +18,15 @@ a {
 	font-weight: 400;
 }
 
+.topCardBody {
+  background: #262626;
+}
+
+.addBtnStyle:hover .card-body:hover {
+  background-color: #f6c23e;
+  color: #262626;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -105,12 +114,25 @@ a:hover {
 	color: gold;
 }
 
+
+.btn-dark:hover  {
+	background-color: #030303;
+}
+
 .btn-dark {
-	background-color: #3b3b3b;
+  background-color: #262626;
+	border: 2px solid #ffc038;
+	color: #ffc038;
 }
 
 .btn-dark:hover {
+  color: gold;
 	background-color: #1d1d1d;
+}
+
+.dashboardButton {
+  text-decoration: none;
+  color: #5A5C69;
 }
 
 .green {
@@ -131,6 +153,14 @@ a:hover {
 #nav a {
 	font-weight: bold;
 	color: #edf57f;
+}
+
+#formFooter {
+	background-color: #1d1d1d;
+	color: #ffc038;
+	padding: 25px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
 }
 
 /* #nav a.router-link-exact-active {

@@ -31,7 +31,7 @@
 
 {% include 'common/navbar.html' %}
 
-<body>
+<body style="background-image: url("{% static 'images/background-1.jpg' %}");">
 	<div id="body-content">
 
 		{% if messages %}
@@ -82,6 +82,12 @@
 </script>
 
 <style>
+
+	#body-content {
+		background-image: url("{% static 'images/background-4.jpg' %}");
+		background-repeat: no-repeat;
+        background-size: cover;
+	}
 
 	.main-text
 	{
