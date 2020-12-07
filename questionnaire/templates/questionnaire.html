@@ -34,11 +34,11 @@
 								
 								<div class="row">
 									<div v-if="qindex !== 0" class="col-12 col-sm-6 col-md-4 mt-3">
-										<div class="btn btn-primary" style="width: 100%;" v-on:click="onPrev"> Prev </div>
+										<div class="btn btn-dark" style="width: 100%;" v-on:click="onPrev"> Prev </div>
 									</div>
 									<div class="col-12 col-sm-6 col-md-4 mt-3 ">
-										<div v-if="qindex !== questions.length-1" class="btn btn-primary" style="width: 100%;" v-on:click="onNext"> Next </div>
-										<div v-if="qindex === questions.length-1" class="btn btn-primary" style="width: 100%;" v-on:click="onSubmit"> Submit </div>
+										<div v-if="qindex !== questions.length-1" class="btn btn-dark" style="width: 100%;" v-on:click="onNext"> Next </div>
+										<div v-if="qindex === questions.length-1" class="btn btn-dark" style="width: 100%;" v-on:click="onSubmit"> Submit </div>
 									</div>
 								</div>
 								<div class="progress progress-sm mr-2 mt-4"> 
