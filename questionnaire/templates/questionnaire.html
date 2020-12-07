@@ -1,9 +1,5 @@
 {% load static %}
 
-{% block pagecss %} 
-<link rel="stylesheet" href="{% static 'css/questionnaire/style.css' %}">
-{% endblock pagecss %}
-
 {% block questionnaire %}
 
 <div class="container">
@@ -43,7 +39,7 @@
 								</div>
 								<div class="progress progress-sm mr-2 mt-4"> 
 									<div 
-									class="progress-bar bg-info" 
+									class="progress-bar bg-warning" 
 									role="progressbar"
 									v-model="getProgressBarWidth"
 									v-bind:style="progressBarWidth"

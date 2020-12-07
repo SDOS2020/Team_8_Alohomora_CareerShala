@@ -31,54 +31,52 @@
 
 {% include 'common/navbar.html' %}
 
-<body style="background-image: url("{% static 'images/background-1.jpg' %}");">
-	<div id="body-content">
-
-		{% if messages %}
-		<div class="messages">
-			{% for message in messages %}
-			<div class="alert {{ message.tags }} alert-dismissible p-3" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				{{ message }}
-			</div>
-			{% endfor %}
+<body id="body-content" style="margin-top: 85px;">
+	{% if messages %}
+	<div class="messages">
+		{% for message in messages %}
+		<div class="alert {{ message.tags }} alert-dismissible p-3" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			{{ message }}
 		</div>
-		{% endif %}
-		
-		
-		{% block content %}
-		
-		{% endblock content %}
-		
-		
-		{% include 'common/footer.html' %}
+		{% endfor %}
 	</div>
-		
-	</body>
+	{% endif %}
 	
-	<script>
+	
+	{% block content %}
+	
+	{% endblock content %}
 
-		window.addEventListener("resize", this.checkScrollbar)
-		this.checkScrollbar()
+</body>
+{% include 'common/footer.html' %}
+	
+<script>
 
-		function checkScrollbar(params) {
-			var bodyContent = document.getElementById("body-content");
-			var footerElement = document.getElementById("footer");
-			hasVerticalScrollbar = bodyContent.offsetHeight > globalThis.innerHeight;
-			console.log(hasVerticalScrollbar);
-			if (hasVerticalScrollbar) {
-				footer.style.position = "relative";
-			}
-			else {
-				footer.style.position = "fixed";
-			}
+	window.addEventListener("resize", this.checkScrollbar)
+	this.checkScrollbar()
+
+	function checkScrollbar(params) {
+		var bodyContent = document.getElementById("body-content");
+		var footerElement = document.getElementById("footer");
+		
+		console.log(bodyContent.offsetHeight)
+		console.log(footerElement.offsetHeight)
+		console.log(globalThis.innerHeight)
+
+		hasVerticalScrollbar = bodyContent.offsetHeight > (globalThis.innerHeight);
+		console.log(hasVerticalScrollbar);
+		if (hasVerticalScrollbar) {
+			footer.style.position = "relative";
 		}
+		else {
+			footer.style.position = "fixed";
+		}
+	}
 
-		window.addEventListener("resize", this.checkScrollbar);
-
-
+	window.addEventListener("resize", this.checkScrollbar);
 </script>
 
 <style>
