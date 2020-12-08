@@ -1,14 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
 html {
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
+  /* height: 100%; */
 	/* padding-top: 80px; */
 }
 
 body {
 	font-family: 'Rubik', sans-serif;
 	height: auto !important;
-	height: 100vh;
-	height: 100%;
+	/* height: 100vh; */
+  /* min-height: 100%; */
+
 }
 
 a {
@@ -127,6 +129,7 @@ a:hover {
 
 .btn-dark:hover {
   color: gold;
+  border: 2px solid gold;
 	background-color: #1d1d1d;
 }
 

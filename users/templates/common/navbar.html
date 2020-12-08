@@ -3,7 +3,7 @@
 
 <div class="col-12 remove-pad">
   <nav class="navbar navbar-expand-sm navbar-light fixed-top navbar-background">
-    <img src="{% static 'images/alohomora-logo.png' %}" class="d-inline-block align-top" alt="Alohomora" height="80px">
+    <img id="alohomora-logo" src="{% static 'images/Alohomora.jpg' %}" class="d-inline-block align-top" alt="Alohomora" height="80px">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -55,10 +55,16 @@
   .navbar-background {
     padding-top: 0px; 
     padding-bottom: 0px; 
-    background: white;
+    background: #262626;
     border-bottom-style: solid;
     border-bottom-width: 5px;
-    border-color: #262626;
+    border-color: #ffc038;
+  }
+
+  #alohomora-logo {
+    border: 5px solid #ffc038;
+    border-radius: 10px;
+    margin: 5px;
   }
 
 </style>
