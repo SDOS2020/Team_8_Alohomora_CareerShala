@@ -31,7 +31,7 @@
 
 {% include 'common/navbar.html' %}
 
-<body id="body-content" style="margin-top: 85px;">
+<body id="body-content">
 	{% if messages %}
 	<div class="messages">
 		{% for message in messages %}
@@ -45,28 +45,28 @@
 	</div>
 	{% endif %}
 	
-	
 	{% block content %}
 	
 	{% endblock content %}
 
 </body>
+
 {% include 'common/footer.html' %}
 	
 <script>
 
-	window.addEventListener("resize", this.checkScrollbar)
-	this.checkScrollbar()
+	window.addEventListener("load", checkScrollbar, false);
+	window.addEventListener("resize", checkScrollbar, false);
+	// this.checkScrollbar()
 
 	function checkScrollbar(params) {
 		var bodyContent = document.getElementById("body-content");
 		var footerElement = document.getElementById("footer");
 		
 		console.log(bodyContent.offsetHeight)
-		console.log(footerElement.offsetHeight)
-		console.log(globalThis.innerHeight)
+		console.log(globalThis.innerHeight - footerElement.offsetHeight)
 
-		hasVerticalScrollbar = bodyContent.offsetHeight > (globalThis.innerHeight);
+		hasVerticalScrollbar = bodyContent.offsetHeight > globalThis.innerHeight;
 		console.log(hasVerticalScrollbar);
 		if (hasVerticalScrollbar) {
 			footer.style.position = "relative";
@@ -75,16 +75,19 @@
 			footer.style.position = "fixed";
 		}
 	}
-
-	window.addEventListener("resize", this.checkScrollbar);
 </script>
 
 <style>
 
+	html {
+		height: 100%;
+	}
+
 	#body-content {
 		background-image: url("{% static 'images/background-4.jpg' %}");
 		background-repeat: no-repeat;
-        background-size: cover;
+		background-size: cover;
+		margin-top: 85px;
 	}
 
 	.main-text

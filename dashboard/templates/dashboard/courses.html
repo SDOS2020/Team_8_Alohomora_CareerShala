@@ -17,28 +17,27 @@ Courses Offered !
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"> Courses Offered </h1>
+        <h1 class="h3 mb-0 font-weight-bold text-gray-800"> Courses Offered </h1>
     </div>
 
     <div class="row">
         
         <!-- <div class="container"> -->
-            <div class="col-lg-6" v-for="column in columns">
+            <div class="col-6" v-for="column in columns">
                 <div class="item-container" v-for="item in column">
-                    <!-- [[item]] -->
-                    
+
                     <!-- Dropdown Card Example -->
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <div id="formFooter" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <div class="col-12 align-items-center center">
-                                <h6 class="m-0 font-weight-bold text-primary">[[ item.header ]]</h6>
+                                <h6 class="m-0 font-weight-bold">[[ item.header ]]</h6>
                             </div>
 
                             <div class="dropdown no-arrow">
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <i class="fa fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    <i class="fa fa-ellipsis-v fa-sm fa-fw"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                     aria-labelledby="dropdownMenuLink">
@@ -64,7 +63,7 @@ Courses Offered !
                             </div>
                             <div class="row">
                                 <div class="col-12 center">
-                                    <a class="btn btn-primary" :href=item.link role="button" target="tab">Link</a>
+                                    <a class="btn btn-dark" :href=item.link role="button" target="tab">Link</a>
                                 </div>
                             </div>
                         </div>
@@ -147,16 +146,13 @@ Courses Offered !
 <style>
 #course-image {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
   width: 100%;
   /* max-height: 300px; */
   /* margin-bottom: 20px; */
 }
 
 .card-body {
-    padding: 0px;
+    padding: 20px;
     /* height: auto; */
 }
 
