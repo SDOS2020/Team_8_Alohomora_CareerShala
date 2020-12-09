@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'questionnaire.apps.QuestionnaireConfig',
     'errors.apps.ErrorsConfig',
     'api.apps.ApiConfig',
+    'blog.apps.BlogConfig',
 
     # third party
     'crispy_forms',
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'taggit',
     'django_extensions',
+    'ckeditor',
+    'django_comments',
 
     # default
     'django.contrib.admin',
@@ -54,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -131,7 +135,8 @@ USE_TZ = True
 # STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
+STATIC_ROOT_FOLDER_NAME = 'assets'
+STATIC_ROOT = os.path.join(BASE_DIR, f'{STATIC_ROOT_FOLDER_NAME}/')
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
@@ -222,6 +227,9 @@ LOGGING = {
         }
     },
 }
+
+# django-contrib-comments
+SITE_ID = 1
 
 # PRODUCTION
 PRODUCTION_SERVER = False
