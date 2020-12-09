@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'taggit',
     'django_extensions',
+    'ckeditor',
 
     # default
     'django.contrib.admin',
@@ -223,6 +224,9 @@ LOGGING = {
         }
     },
 }
+
+# Ckeditor
+CKEDITOR_BASEPATH = STATIC_ROOT + "ckeditor/ckeditor/"
 
 # PRODUCTION
 PRODUCTION_SERVER = False
