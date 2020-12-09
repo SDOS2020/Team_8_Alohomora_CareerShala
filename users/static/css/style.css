@@ -158,6 +158,15 @@ a:hover {
 	color: #edf57f;
 }
 
+.navbar-toggler {
+  padding: .25rem .75rem;
+  background-color: #ffc038;
+}
+
+.navbar-toggler:focus, .navbar-toggler:hover {
+  background-color: gold;
+}
+
 #formFooter {
 	background-color: #1d1d1d;
 	color: #ffc038;
