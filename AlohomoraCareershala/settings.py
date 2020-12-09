@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'taggit',
     'django_extensions',
+    'ckeditor',
 
     # default
     'django.contrib.admin',
