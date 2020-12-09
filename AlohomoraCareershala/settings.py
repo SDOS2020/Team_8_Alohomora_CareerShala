@@ -236,6 +236,14 @@ COMMENTS_XTD_MAX_THREAD_LEVEL = 1
 COMMENTS_XTD_CONFIRM_EMAIL = True
 # TODO add email settings if required
 
+# django-tagulous
+SERIALIZATION_MODULES = {
+    'xml': 'tagulous.serializers.xml_serializer',
+    'json': 'tagulous.serializers.json',
+    'python': 'tagulous.serializers.python',
+    'yaml': 'tagulous.serializers.pyyaml',
+}
+
 # PRODUCTION
 PRODUCTION_SERVER = False
 if os.environ.get("ALOHOMORA_PRODUCTION_SERVER_URL") is not None:
