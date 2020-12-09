@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'questionnaire.apps.QuestionnaireConfig',
     'errors.apps.ErrorsConfig',
     'api.apps.ApiConfig',
-    'blog.apps.BlogConfig',
 
     # third party
     'crispy_forms',
@@ -47,8 +46,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'taggit',
     'django_extensions',
-    'ckeditor',
-    'django_comments',
 
     # default
     'django.contrib.admin',
@@ -227,9 +224,6 @@ LOGGING = {
         }
     },
 }
-
-# django-contrib-comments
-SITE_ID = 1
 
 # PRODUCTION
 PRODUCTION_SERVER = False
