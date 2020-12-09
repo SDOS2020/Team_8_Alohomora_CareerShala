@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'questionnaire.apps.QuestionnaireConfig',
     'errors.apps.ErrorsConfig',
     'api.apps.ApiConfig',
+    'blog.apps.BlogConfig',
 
     # third party
     'crispy_forms',
@@ -46,6 +47,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'taggit',
     'django_extensions',
+    'ckeditor',
+    'django_comments_xtd',
+    'django_comments',
 
     # default
     'django.contrib.admin',
@@ -224,6 +228,13 @@ LOGGING = {
         }
     },
 }
+
+# django-comments-xtd
+SITE_ID = 1
+COMMENTS_APP = 'django_comments_xtd'
+COMMENTS_XTD_MAX_THREAD_LEVEL = 1
+COMMENTS_XTD_CONFIRM_EMAIL = True
+# TODO add email settings if required
 
 # PRODUCTION
 PRODUCTION_SERVER = False
