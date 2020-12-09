@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'questionnaire.apps.QuestionnaireConfig',
     'errors.apps.ErrorsConfig',
     'api.apps.ApiConfig',
+    'blog.apps.BlogConfig',
 
     # third party
     'crispy_forms',
