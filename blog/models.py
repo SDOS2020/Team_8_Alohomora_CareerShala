@@ -34,3 +34,7 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.title}, by {self.author.first_name} {self.author.last_name}'
+
+    @property
+    def likes_count(self):
+        return self.likes.count()
