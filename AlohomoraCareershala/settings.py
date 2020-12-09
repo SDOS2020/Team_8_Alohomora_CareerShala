@@ -133,7 +133,8 @@ USE_TZ = True
 # STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
+STATIC_ROOT_FOLDER_NAME = 'assets'
+STATIC_ROOT = os.path.join(BASE_DIR, f'{STATIC_ROOT_FOLDER_NAME}/')
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
@@ -226,7 +227,7 @@ LOGGING = {
 }
 
 # Ckeditor
-CKEDITOR_BASEPATH = STATIC_ROOT + "ckeditor/ckeditor/"
+# CKEDITOR_BASEPATH = f'/{STATIC_ROOT_FOLDER_NAME}/ckeditor/ckeditor/'
 
 # PRODUCTION
 PRODUCTION_SERVER = False
