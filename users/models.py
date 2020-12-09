@@ -100,3 +100,8 @@ class CustomUser(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+    # https://stackoverflow.com/a/22027915/5394180
+    @property
+    def is_superuser(self):
+        return self.is_admin

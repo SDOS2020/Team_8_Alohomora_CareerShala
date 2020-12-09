@@ -1,5 +1,6 @@
 import uuid
 
+import tagulous.models
 from ckeditor.fields import RichTextField
 from django.db import models
 
@@ -19,6 +20,7 @@ class Post(models.Model):
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     slug = models.SlugField(unique=True, null=True, blank=True)
     type = models.PositiveSmallIntegerField(choices=POST_TYPE, default=1)
+    tags = tagulous.models.TagField()
 
     author = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, related_name='blogs')
     title = models.CharField(max_length=255)

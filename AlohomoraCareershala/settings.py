@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'grappelli',
     'rest_framework',
-    'taggit',
     'django_extensions',
     'ckeditor',
     'django_comments_xtd',
     'django_comments',
+    'tagulous',
 
     # default
     'django.contrib.admin',
