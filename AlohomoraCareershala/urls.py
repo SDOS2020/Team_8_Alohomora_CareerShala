@@ -24,4 +24,5 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('api/', include('api.urls')),
     path('', views.homepage, name='homepage'),
+    path('comments/', include('django_comments_xtd.urls')),  # TODO move it to blog app
 ]
