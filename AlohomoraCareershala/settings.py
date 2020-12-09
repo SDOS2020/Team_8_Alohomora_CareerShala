@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'taggit',
     'django_extensions',
     'ckeditor',
+    'django_comments',
 
     # default
     'django.contrib.admin',
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -226,8 +228,8 @@ LOGGING = {
     },
 }
 
-# Ckeditor
-# CKEDITOR_BASEPATH = f'/{STATIC_ROOT_FOLDER_NAME}/ckeditor/ckeditor/'
+# django-contrib-comments
+SITE_ID = 1
 
 # PRODUCTION
 PRODUCTION_SERVER = False

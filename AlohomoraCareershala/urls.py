@@ -23,5 +23,6 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('api/', include('api.urls')),
-    path('', views.homepage, name='homepage')
+    path('', views.homepage, name='homepage'),
+    path('comments/', include('django_comments.urls')),
 ]
