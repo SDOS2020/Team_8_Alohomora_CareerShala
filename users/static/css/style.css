@@ -116,6 +116,17 @@ a:hover {
 	color: gold;
 }
 
+.card-body {
+  padding: 20px;
+  display: block;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding: 1rem;
+}
 
 .btn-dark:hover  {
 	background-color: #030303;

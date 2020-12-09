@@ -21,61 +21,54 @@ Courses Offered !
     </div>
 
     <div class="row">
-        
-        <!-- <div class="container"> -->
-            <div class="col-6" v-for="column in columns">
-                <div class="item-container" v-for="item in column">
+        <div class="col-6" v-for="column in columns">
+            <div class="item-container" v-for="item in column">
 
-                    <!-- Dropdown Card Example -->
-                    <div class="card shadow mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div id="formFooter" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <div class="col-12 align-items-center center">
-                                <h6 class="m-0 font-weight-bold">[[ item.header ]]</h6>
-                            </div>
-
-                            <div class="dropdown no-arrow">
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <i class="fa fa-ellipsis-v fa-sm fa-fw"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                    aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
+                <!-- Dropdown Card Example -->
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div id="formFooter" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <div class="col-12 align-items-center center">
+                            <h6 class="m-0 font-weight-bold">[[ item.header ]]</h6>
                         </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 center-cropped">
-                                    <img id="course-image" :src=item.image class="img-fluid" alt="Responsive image" >
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-12">
-                                    [[ item.body ]]
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 center">
-                                    <a class="btn btn-dark" :href=item.link role="button" target="tab">Link</a>
-                                </div>
+
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <i class="fa fa-ellipsis-v fa-sm fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
                             </div>
                         </div>
                     </div>
-
+                    <!-- Card Body -->
+                    <div class="card-body center">
+                        <div class="row">
+                            <div class="col-12 center-cropped">
+                                <img id="course-image" :src=item.image class="img-fluid" alt="Responsive image" >
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-12">
+                                [[ item.body ]]
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 center">
+                                <a class="btn btn-dark" :href=item.link role="button" target="tab">Link</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    <!-- </div> -->
-
-</div>
-<!-- /.container-fluid -->
+    </div>
 
 </div>
 
@@ -91,6 +84,7 @@ Courses Offered !
                 coursesList: [
                     {
                         header: "Jet King1",
+                        short_body: "",
                         body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
                         image: "https://www.coursecrown.com/blog/wp-content/uploads/2017/05/Jetking-courses-fees-1.jpg",
                         link: "https://www.jetking.com/",
@@ -143,25 +137,11 @@ Courses Offered !
 
 </script>
 
-<style>
-#course-image {
-  display: block;
-  width: 100%;
-  /* max-height: 300px; */
-  /* margin-bottom: 20px; */
-}
-
-.card-body {
-    padding: 20px;
-    /* height: auto; */
-}
-
-.center {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    padding: 1rem;
-}
+<style scoped>
+    #courses-image {
+        display: block;
+        width: 100%;
+    }
 
 </style>
 
