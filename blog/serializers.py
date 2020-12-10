@@ -12,10 +12,10 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('identifier', 'type', 'tags', 'author', 'title', 'body', 'likes_count', 'absolute_url')
+        fields = ('identifier', 'type', 'tags', 'author', 'title', 'body', 'likes_count', 'relative_url')
 
 
 class PostMiniSerializer(PostSerializer):
     class Meta:
         model = Post
-        fields = ('type', 'tags', 'author', 'title', 'preview', 'likes_count', 'absolute_url')
+        fields = ('type', 'tags', 'author', 'title', 'preview', 'likes_count', 'relative_url')
