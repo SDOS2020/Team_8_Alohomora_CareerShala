@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'errors.apps.ErrorsConfig',
     'api.apps.ApiConfig',
     'blog.apps.BlogConfig',
+    'tag.apps.TagConfig',
 
     # third party
     'crispy_forms',
