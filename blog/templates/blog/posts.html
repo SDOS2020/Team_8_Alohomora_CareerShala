@@ -12,18 +12,58 @@
 {% block dashboardPage %}
 
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 font-weight-bold text-gray-800">Blogs</h1>
-    </div>
-
-    {% for post in posts %}
-        <div class="row">
-            <a href="{% url 'blog-post' slug=post.slug %}">{{ post.title }}</a>
+    <div class="row">
+        <div class="col-12">
+            <div class="item-container">
+                <!-- Dropdown Card Example -->
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div id="formFooter" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <div class="col-12 align-items-center center">
+                            <h6 class="m-0 font-weight-bold">{{ post.title }}</h6>
+                        </div>
+                    </div>
+                    
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12 center" id="post-body">
+                                {{ post.body|safe }}
+                            </div>
+                        </div>
+                        <div class="row center">
+                            <div class="col-12">
+                                <a class="btn btn-dark text-warning" :href=item.link role="button" target="tab">Go to Website</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% endfor %}
+    </div>
 </div>
 
+<script>
+    var images = document.images;
 
+    for (var i = 1; i < images.length; ++i) {
+        var image = images[i];
+        image['id'] = 'blog-img'
+    }
+</script>
 
+<style>
+    #blog-img {
+        max-width: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    #post-body {
+        overflow:scroll;
+    }
+</style>
 
 {% endblock dashboardPage %}

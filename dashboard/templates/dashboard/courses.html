@@ -27,9 +27,10 @@ Courses Offered !
                 <!-- Dropdown Card Example -->
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
-                    <div id="formFooter" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <div id="formFooter" class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
                         <div class="col-12 align-items-center center">
-                            <h6 class="m-0 font-weight-bold">[[ item.header ]]</h6>
+                            <h6 class="m-0 font-weight-bold">[[ item.title ]]</h6>
+                            <h7 class="m-0"> Author: [[ item.author ]] </h7>
                         </div>
 
                         <div class="dropdown no-arrow">
@@ -47,21 +48,21 @@ Courses Offered !
                         </div>
                     </div>
                     <!-- Card Body -->
-                    <div class="card-body center">
-                        <div class="row">
+                    <div class="card-body">
+                        <!-- <div class="row">
                             <div class="col-12 center-cropped">
                                 <img id="course-image" :src=item.image class="img-fluid" alt="Responsive image" >
                             </div>
                         </div>
-                        <hr/>
+                        <hr/> -->
                         <div class="row">
-                            <div class="col-12">
-                                [[ item.body ]]
+                            <div class="col-12 center">
+                                [[ item.preview ]]
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 center">
-                                <a class="btn btn-dark" :href=item.link role="button" target="tab">Link</a>
+                                <a class="btn btn-dark" :href=item.relative_url role="button" target="tab">Read More >>></a>
                             </div>
                         </div>
                     </div>
@@ -69,7 +70,6 @@ Courses Offered !
             </div>
         </div>
     </div>
-
 </div>
 
 <!-- End of Main Content -->
@@ -121,6 +121,22 @@ Courses Offered !
                 ],
 				errors: [
 				],
+            }
+        },
+        created() {
+            this.getCoursesList()
+        },
+        methods: {
+            getCoursesList() {
+                axios.get(`{% url 'api-blog-posts' %}`)
+				.then(response => {
+                    console.log(response)
+                    this.count = this.coursesList.length;
+					this.coursesList = response.data;
+				})
+				.catch(e => {
+					this.errors.push(e)
+				})
             }
         },
         computed: {

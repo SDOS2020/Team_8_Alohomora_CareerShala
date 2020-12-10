@@ -9251,7 +9251,13 @@
   @media (min-width: 768px) {
     .sidebar {
       width: 14rem !important;
+      transition: all 0.15s ease;
     }
+
+    .sidebar.active {
+      margin-left: 0;
+    }
+
     .sidebar .nav-item .collapse {
       position: relative;
       left: 0;
