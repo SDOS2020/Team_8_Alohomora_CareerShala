@@ -44,3 +44,10 @@ class Post(models.Model):
     @property
     def preview(self):
         return f'{self.body[:200]}...'
+
+    @property
+    def absolute_uri(self):
+        return reverse('blog-post',
+                       kwargs={
+                           'slug': self.slug
+                       })
