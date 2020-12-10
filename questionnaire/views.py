@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from questionnaire.models import QuestionnaireResponse, Questionnaire
-from questionnaire.permissions import IsStudent
+from users.permissions import IsStudent
 from questionnaire.serializers import QuestionnaireSerializer, QuestionnaireResponseSerializer
 from users.models import CustomUser, StudentProfile
 
