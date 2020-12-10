@@ -14,6 +14,7 @@ from blog.models import Post
 import users.permissions as user_permissions
 from blog.paginations import CustomPageNumberPagination
 from blog.serializers import PostSerializer, PostMiniSerializer
+from errors.views import error
 from questionnaire.models import QuestionnaireResponse, Option
 import tagulous.models
 
@@ -36,8 +37,11 @@ def view_all_posts(request):
 @user_verification_required
 @profile_completion_required
 def view_post(request, slug):
-    post = Post.objects.get(slug=slug)
-    return render(request, 'blog/posts.html', {'post': post})
+    try:
+        post = Post.objects.get(slug=slug)
+        return render(request, 'blog/posts.html', {'post': post})
+    except ObjectDoesNotExist:
+        return error(request, error_dict={'title': "Requested post doesn't exist", 'body': ""})
 
 
 @api_view(['GET', ])
