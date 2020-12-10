@@ -8,13 +8,14 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from questionnaire.models import QuestionnaireResponse, Questionnaire
-from questionnaire.permissions import IsStudent
+import users.permissions as user_permissions
 from questionnaire.serializers import QuestionnaireSerializer, QuestionnaireResponseSerializer
 from users.models import CustomUser, StudentProfile
 
 
 @api_view(['GET', ])
-@permission_classes([permissions.IsAuthenticated, IsStudent])
+@permission_classes([permissions.IsAuthenticated, user_permissions.IsStudent, user_permissions.EmailVerified,
+                     user_permissions.ProfileCompleted])
 def next_questionnaire(request):
     """
     Returns the next questionnaire that needs to be answered by the requested student.
@@ -32,7 +33,8 @@ def next_questionnaire(request):
 
 
 @api_view(['POST', ])
-@permission_classes([permissions.IsAuthenticated, IsStudent])
+@permission_classes([permissions.IsAuthenticated, user_permissions.IsStudent, user_permissions.EmailVerified,
+                     user_permissions.ProfileCompleted])
 def submit_questionnaire_response(request):
     # why I need to send request in context explicitly? Because it is sent automatically in some
     # other class based view: https://stackoverflow.com/a/33550228/5394180
@@ -57,7 +59,8 @@ def submit_questionnaire_response(request):
 
 
 @api_view(['POST', ])
-@permission_classes([permissions.IsAuthenticated, IsStudent])
+@permission_classes([permissions.IsAuthenticated, user_permissions.IsStudent, user_permissions.EmailVerified,
+                     user_permissions.ProfileCompleted])
 def reset_questionnaire_responses(request):
     student_profile: StudentProfile = request.user.student_profile
     student_profile.student_profile_responses.all().delete()

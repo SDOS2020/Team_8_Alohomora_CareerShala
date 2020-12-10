@@ -40,16 +40,17 @@ INSTALLED_APPS = [
     'errors.apps.ErrorsConfig',
     'api.apps.ApiConfig',
     'blog.apps.BlogConfig',
+    'tag.apps.TagConfig',
 
     # third party
     'crispy_forms',
     'grappelli',
     'rest_framework',
-    'taggit',
     'django_extensions',
     'ckeditor',
     'django_comments_xtd',
     'django_comments',
+    'tagulous',
 
     # default
     'django.contrib.admin',
@@ -235,6 +236,14 @@ COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 1
 COMMENTS_XTD_CONFIRM_EMAIL = True
 # TODO add email settings if required
+
+# django-tagulous
+SERIALIZATION_MODULES = {
+    'xml': 'tagulous.serializers.xml_serializer',
+    'json': 'tagulous.serializers.json',
+    'python': 'tagulous.serializers.python',
+    'yaml': 'tagulous.serializers.pyyaml',
+}
 
 # PRODUCTION
 PRODUCTION_SERVER = False

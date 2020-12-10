@@ -1,11 +1,11 @@
 import uuid
 
+import tagulous.models
 from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
-from taggit.managers import TaggableManager
-
+from tag.models import Tag
 from users.models import CustomUser
 
 
@@ -75,7 +75,7 @@ class Option(models.Model):
     continuation_questionnaire = models.ForeignKey('Questionnaire', related_name='from_options', null=True,
                                                    blank=True,
                                                    on_delete=models.SET_NULL)
-    tags = TaggableManager(blank=True)
+    tags = tagulous.models.TagField(related_name='options', to=Tag)
 
     def clean(self):
         if self.continuation_questionnaire == self.question.questionnaire:
