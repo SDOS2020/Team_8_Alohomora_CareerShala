@@ -20,18 +20,18 @@
                     <!-- Card Header - Dropdown -->
                     <div id="formFooter" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <div class="col-12 align-items-center center">
-                            <h6 class="m-0 font-weight-bold">{{post.title}}</h6>
+                            <h6 class="m-0 font-weight-bold">{{ post.title }}</h6>
                         </div>
                     </div>
                     
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="row center">
+                        <div class="row">
                             <div class="col-12">
                                 {{ post.body|safe }}
                             </div>
                         </div>
-                        <div class="row center">
+                        <div class="row">
                             <div class="col-12">
                                 <a class="btn btn-dark text-warning" :href=item.link role="button" target="tab">Go to Website</a>
                             </div>
