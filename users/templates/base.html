@@ -63,11 +63,11 @@
 		var bodyContent = document.getElementById("body-content");
 		var footerElement = document.getElementById("footer");
 		
-		console.log(bodyContent.offsetHeight)
-		console.log(globalThis.innerHeight - footerElement.offsetHeight)
+		// console.log(bodyContent.offsetHeight)
+		// console.log(globalThis.innerHeight - footerElement.offsetHeight)
 
 		hasVerticalScrollbar = bodyContent.offsetHeight > globalThis.innerHeight;
-		console.log(hasVerticalScrollbar);
+		// console.log(hasVerticalScrollbar);
 		if (hasVerticalScrollbar) {
 			footer.style.position = "relative";
 		}
@@ -77,10 +77,17 @@
 
 
 		var sidebarElement = document.getElementById("accordionSidebar");
-		if (globalThis.outerWidth > 575) {
-			// sidebarElement['aria-expanded'] = true;
+		if (globalThis.innerWidth > 575 && sidebarElement != null) {
 			sidebarElement.classList.add('show');
-			console.log('show');
+		}
+
+		var elementExists = document.getElementById("page-top");
+
+		if(elementExists == null) {
+			buttonToggler = document.getElementById("sidebar-toggler");
+			
+			if(buttonToggler != null)
+				buttonToggler.remove();
 		}
 	}
 </script>
