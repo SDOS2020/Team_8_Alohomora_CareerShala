@@ -43,7 +43,7 @@ class Post(models.Model):
         return self.likes.count()
 
     @property
-    def absolute_uri(self):
+    def absolute_url(self):
         return reverse('blog-post',
                        kwargs={
                            'slug': self.slug
