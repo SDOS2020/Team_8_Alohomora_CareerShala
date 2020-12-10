@@ -38,3 +38,7 @@ class Post(models.Model):
     @property
     def likes_count(self):
         return self.likes.count()
+
+    @property
+    def preview(self):
+        return f'{self.body[:200]}...'
