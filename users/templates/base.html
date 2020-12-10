@@ -74,6 +74,14 @@
 		else {
 			footer.style.position = "fixed";
 		}
+
+
+		var sidebarElement = document.getElementById("accordionSidebar");
+		if (globalThis.outerWidth > 575) {
+			// sidebarElement['aria-expanded'] = true;
+			sidebarElement.classList.add('show');
+			console.log('show');
+		}
 	}
 </script>
 
