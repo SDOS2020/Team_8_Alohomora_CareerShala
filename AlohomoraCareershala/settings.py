@@ -33,6 +33,15 @@ ALLOWED_HOSTS = ['alohomoracareershala.herokuapp.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    # project-related apps
+    'users.apps.UsersConfig',
+    'dashboard.apps.DashboardConfig',
+    'questionnaire.apps.QuestionnaireConfig',
+    'errors.apps.ErrorsConfig',
+    'api.apps.ApiConfig',
+    'blog.apps.BlogConfig',
+    'tag.apps.TagConfig',
+
     # third party
     'crispy_forms',
     'grappelli',
@@ -42,15 +51,6 @@ INSTALLED_APPS = [
     'django_comments_xtd',
     'django_comments',
     'tagulous',
-
-    # project-related apps
-    'users.apps.UsersConfig',
-    'dashboard.apps.DashboardConfig',
-    'questionnaire.apps.QuestionnaireConfig',
-    'errors.apps.ErrorsConfig',
-    'api.apps.ApiConfig',
-    'blog.apps.BlogConfig',
-    'tag.apps.TagConfig',
 
     # default
     'django.contrib.admin',

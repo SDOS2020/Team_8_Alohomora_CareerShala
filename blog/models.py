@@ -2,6 +2,8 @@ import uuid
 
 import tagulous.models
 from ckeditor.fields import RichTextField
+from django.conf import settings
+from django.contrib.sites.models import Site
 from django.db import models
 
 # Create your models here.
@@ -30,6 +32,7 @@ class Post(models.Model):
     preview = models.CharField(max_length=300, help_text='A short preview of this post that is shown in list of posts.')
 
     likes = models.ManyToManyField('users.CustomUser', blank=True)
+    allow_comments = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(f'{self.title} {self.identifier}', allow_unicode=True)
@@ -48,3 +51,9 @@ class Post(models.Model):
                        kwargs={
                            'slug': self.slug
                        })
+
+    def get_absolute_url(self):
+        domain = Site.objects.get_current().domain
+        protocol = "https" if settings.PRODUCTION_SERVER else "http"
+        absolute_url = f'{protocol}://{domain}{self.relative_url}'
+        return absolute_url
