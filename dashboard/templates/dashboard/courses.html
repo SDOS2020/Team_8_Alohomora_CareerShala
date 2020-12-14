@@ -76,7 +76,8 @@ Courses Offered !
 
 <script>
     new Vue({
-		delimiters: ["[[", "]]"],
+        delimiters: ["[[", "]]"],
+        router,
 		data() {
 			return {
                 cols: 2,
@@ -137,7 +138,7 @@ Courses Offered !
 				.catch(e => {
 					this.errors.push(e)
 				})
-            }
+            },
         },
         computed: {
             columns () {
