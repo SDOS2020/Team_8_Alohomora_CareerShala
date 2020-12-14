@@ -29,3 +29,25 @@ def profile_completion_required(function):
         return function(request, *args, **kwargs)
 
     return check
+
+
+def expert_only(function):
+    @wraps(function)
+    def check(request, *args, **kwargs):
+        if not request.user.is_expert:
+            messages.error(request, "You are not allowed to access this page.")
+            return redirect('dashboard-home')
+        return function(request, *args, **kwargs)
+
+    return check
+
+
+def student_only(function):
+    @wraps(function)
+    def check(request, *args, **kwargs):
+        if request.user.is_expert:
+            messages.error(request, "You are not allowed to access this page.")
+            return redirect('dashboard-home')
+        return function(request, *args, **kwargs)
+
+    return check

@@ -84,7 +84,7 @@ def reset():
         print(f"Created student with \nemail   : {student_email2}\npassword: {student_password2}")
 
         expert_email = "reeshabh17086@iiitd.ac.in"
-        expert_password = "reesh@123"
+        expert_password = "reeshabh@123"
         expert_first_name = "Reeshabh"
         expert_last_name = "Ranjan"
         expert_dob = date(1998, 12, 4)
@@ -109,6 +109,8 @@ def reset():
 
         expert.verified = True
         expert.save()
+        expert.expert_profile.verified = True
+        expert.expert_profile.save()
 
         print("Verified all the accounts.")
 

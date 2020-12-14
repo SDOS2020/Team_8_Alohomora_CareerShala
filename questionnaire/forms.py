@@ -35,9 +35,10 @@ class QuestionnaireCreationForm(forms.ModelForm):
             if last_question.multiselect:
                 options_queryset = Option.objects.filter(question=last_question,
                                                          continuation_questionnaire__isnull=False)
-                raise ValidationError(
-                    "If the last question is multiselect, it's options cannot lead to continuation questionnaire. "
-                    "You can reorder the queryset accordingly.")
+                if options_queryset.exists():
+                    raise ValidationError(
+                        "If the last question is multiselect, it's options cannot lead to any continuation "
+                        "questionnaire. You can reorder the questions accordingly.")
         return cleaned_data
 
 
