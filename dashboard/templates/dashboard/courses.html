@@ -62,7 +62,7 @@ Courses Offered !
                         </div>
                         <div class="row">
                             <div class="col-12 center">
-                                <a class="btn btn-dark" :href=item.relative_url role="button" target="tab">Read More >>></a>
+                                <a class="btn btn-dark" :href=item.relative_url role="button" target="tab">Read More</a>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,8 @@ Courses Offered !
 
 <script>
     new Vue({
-		delimiters: ["[[", "]]"],
+        delimiters: ["[[", "]]"],
+        router,
 		data() {
 			return {
                 cols: 2,
@@ -137,7 +138,7 @@ Courses Offered !
 				.catch(e => {
 					this.errors.push(e)
 				})
-            }
+            },
         },
         computed: {
             columns () {
