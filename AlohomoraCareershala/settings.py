@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_comments_xtd',
     'django_comments',
     'tagulous',
+    'django_bleach',
 
     # default
     'django.contrib.admin',
