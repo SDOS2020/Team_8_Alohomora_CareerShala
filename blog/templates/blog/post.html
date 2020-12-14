@@ -48,12 +48,19 @@
                         </div>
                         <div class="row">
                             {% if comment_count %}
-                            <hr/>
-                            <div class="comments">
-                            {% render_comment_list for post %}
+                            <!-- <hr/> -->
+                            <div class="col-12">
+                                <!-- <div class="card shadow">
+                                    <div class="card-body"> -->
+                                        <div class="comments">
+                                        {% render_comment_list for post %}
+                                        </div>
+                                    <!-- </div> -->
+                                <!-- </div> -->
                             </div>
                             {% endif %}
                         </div>
+                        <hr/>
 
                         <div class="row">
                             <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
