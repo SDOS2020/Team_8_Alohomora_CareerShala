@@ -1,0 +1,51 @@
+{% load i18n %}
+{% load comments %}
+{% load comments_xtd %}
+
+<div id="comments" class="media-list">
+	{% for comment in comment_list %}
+	<div class="media pb-2">
+		<a name="c{{ comment.id }}"></a>
+		<div class="media-body">
+			<div class="comment pb-3">
+				<div class="content">
+					{% if comment.is_removed %}
+					<p class="text-muted">{% trans "This comment has been removed." %}</p>
+					{% else %}
+					<div class="content">
+						{% if comment.allow_thread %}
+							<div class="card shadow">
+								<div class="card-body">
+									<h6 class="mb-1 small d-flex">
+										<div class="mr-auto">{{ comment.submit_date }}&nbsp;-&nbsp;{% if comment.url and not comment.is_removed %}<a href="{{ comment.url }}" target="_new">{% endif %}{{ comment.name }}{% if comment.url %}</a>{% endif %}&nbsp;&nbsp;</div>
+									</h6>
+									{{ comment.comment }}
+									
+									{% if not comment.is_removed %}
+									<div>
+										<a class="small mutedlink" href="{{ comment.get_reply_url }}">
+											{% trans "Reply" %}
+										</a>
+									</div>
+									{% endif %}
+								</div>
+							</div>
+						{% else %}
+							<div class="card shadow ml-5">
+								<div class="card-body">
+									<h6 class="mb-1 small d-flex">
+										<div class="mr-auto">{{ comment.submit_date }}&nbsp;-&nbsp;{% if comment.url and not comment.is_removed %}<a href="{{ comment.url }}" target="_new">{% endif %}{{ comment.name }}{% if comment.url %}</a>{% endif %}&nbsp;&nbsp;</div>
+									</h6>
+									{{ comment.comment }}
+								</div>
+							</div>
+						{% endif %}
+					</div>
+					{% endif %}
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
