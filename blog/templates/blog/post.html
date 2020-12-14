@@ -2,6 +2,7 @@
 {% load static %}
 {% load comments %}
 
+
 {% block title %}
 {{ post.title }}
 {% endblock title %}
@@ -27,12 +28,12 @@
                     
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
+                        <div class="row align-items-center">
+                            <div class="col-12 center" id="post-body">
                                 {{ post.body|safe }}
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row center">
                             <div class="col-12">
                                 <a class="btn btn-dark text-warning" :href=item.link role="button" target="tab">Go to Website</a>
                             </div>
@@ -45,7 +46,27 @@
                             ha{{ comment_count|pluralize:"s,ve" }} been posted.
                             </div>
                         </div>
+                        <div class="row">
+                            {% if comment_count %}
+                            <hr/>
+                            <div class="comments">
+                            {% render_comment_list for post %}
+                            </div>
+                            {% endif %}
+                        </div>
 
+                        <div class="row">
+                            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                                <div class="card shadow">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-center pb-3">Post your comment</h4>
+                                        {% render_comment_form for post %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% if object.allow_comments %}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,6 +87,13 @@
     #blog-img {
         max-width: 100%;
         display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    #post-body {
+        overflow:scroll;
     }
 </style>
 
