@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_comments_xtd',
     'django_comments',
     'tagulous',
+    'django_bleach',
 
     # default
     'django.contrib.admin',
@@ -245,6 +246,64 @@ SERIALIZATION_MODULES = {
     'json': 'tagulous.serializers.json',
     'python': 'tagulous.serializers.python',
     'yaml': 'tagulous.serializers.pyyaml',
+}
+
+# Bleach
+# https://django-bleach.readthedocs.io/en/latest/settings.html#configuring-bleach
+BLEACH_ALLOWED_TAGS = ['p', 'b', 'i', 'u', 'em', 'strong', 'a', 'img', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li',
+                       'blockquote', 'table', 'tr', 'th', 'td', 'strike', ]
+BLEACH_ALLOWED_ATTRIBUTES = ['href', 'title', 'style']
+BLEACH_ALLOWED_STYLES = ['font-family', 'font-weight', 'text-decoration', 'font-variant']
+BLEACH_STRIP_TAGS = True
+BLEACH_STRIP_COMMENTS = True
+BLEACH_DEFAULT_WIDGET = 'ckeditor.widgets.CKEditorWidget'
+
+# Ckeditor
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        # 'skin': 'office2013',
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_CustomToolbarConfig': [
+            {'name': 'document', 'items': ['Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'insert',
+             'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize']},
+        ],
+        'toolbar': 'CustomToolbarConfig',  # put selected toolbar config here
+        'width': 'auto',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage',  # the upload image feature
+            # your extra plugins here
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+    }
 }
 
 # PRODUCTION

@@ -1,11 +1,12 @@
 from ckeditor.widgets import CKEditorWidget
 from django import forms
+from django_bleach.forms import BleachField
 
 from blog.models import Post
 
 
 class PostCreationForm(forms.ModelForm):
-    body = forms.CharField(widget=CKEditorWidget())
+    body = BleachField()
 
     class Meta:
         model = Post
