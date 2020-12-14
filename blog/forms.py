@@ -9,4 +9,4 @@ class PostCreationForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title', 'author', 'body', 'preview', 'type', 'tags')
+        fields = ('title', 'author', 'body', 'preview', 'type', 'tags', 'allow_comments')
