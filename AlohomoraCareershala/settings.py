@@ -33,15 +33,6 @@ ALLOWED_HOSTS = ['alohomoracareershala.herokuapp.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    # project-related apps
-    'users.apps.UsersConfig',
-    'dashboard.apps.DashboardConfig',
-    'questionnaire.apps.QuestionnaireConfig',
-    'errors.apps.ErrorsConfig',
-    'api.apps.ApiConfig',
-    'blog.apps.BlogConfig',
-    'tag.apps.TagConfig',
-
     # third party
     'crispy_forms',
     'grappelli',
@@ -51,6 +42,15 @@ INSTALLED_APPS = [
     'django_comments_xtd',
     'django_comments',
     'tagulous',
+
+    # project-related apps
+    'users.apps.UsersConfig',
+    'dashboard.apps.DashboardConfig',
+    'questionnaire.apps.QuestionnaireConfig',
+    'errors.apps.ErrorsConfig',
+    'api.apps.ApiConfig',
+    'blog.apps.BlogConfig',
+    'tag.apps.TagConfig',
 
     # default
     'django.contrib.admin',
@@ -150,13 +150,15 @@ STATICFILES_DIRS = (
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # Email backend
-SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 # For SMTP support: https://sendgrid.com/docs/for-developers/sending-email/django/
+
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey'  # this is exactly the value 'apikey'
+EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Auth-related settings
 LOGIN_URL = '/users/login/'
@@ -234,7 +236,7 @@ LOGGING = {
 SITE_ID = 1
 COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 1
-COMMENTS_XTD_CONFIRM_EMAIL = True
+COMMENTS_XTD_CONFIRM_EMAIL = True  # TODO disable unauthenticated users from submitting comments
 # TODO add email settings if required
 
 # django-tagulous

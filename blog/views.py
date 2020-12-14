@@ -39,7 +39,7 @@ def view_all_posts(request):
 def view_post(request, slug):
     try:
         post = Post.objects.get(slug=slug)
-        return render(request, 'blog/posts.html', {'post': post})
+        return render(request, 'blog/post.html', {'post': post})
     except ObjectDoesNotExist:
         return error(request, error_dict={'title': "Requested post doesn't exist", 'body': ""})
 
