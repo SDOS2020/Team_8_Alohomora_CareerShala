@@ -7,15 +7,19 @@ import json
 import os
 from datetime import date
 from glob import glob
-from urllib.parse import urlparse
 
-import psycopg2
+from django.conf import settings
+from django.contrib.sites.models import Site
 
 from questionnaire.models import Questionnaire, Question, Option
 from users.models import CustomUser, Interest, Specialisation
 
 
 def reset():
+    if settings.PRODUCTION_SERVER:
+        print("This file should not be executed on the production server. Please use migrations/fixtures instead.")
+        print("Exiting...")
+        return
     confirm = input("Are you sure to continue? (y/n).")
     if confirm.lower() == "y":
         for file in glob('*/migrations/000*.py'):
@@ -118,6 +122,11 @@ def reset():
         for specialisation_label in specialisation_labels:
             Specialisation.objects.create(label=specialisation_label, description="")
         print(f"Created specialisations with labels: {specialisation_labels}")
+
+        current_site = Site.objects.get_current()
+        current_site.domain = "127.0.0.1"
+        current_site.name = "127.0.0.1"
+        current_site.save()
 
     else:
         print("Canceling operation")
