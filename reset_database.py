@@ -124,9 +124,10 @@ def reset():
         print(f"Created specialisations with labels: {specialisation_labels}")
 
         current_site = Site.objects.get_current()
-        current_site.domain = "127.0.0.1"
-        current_site.name = "127.0.0.1"
+        current_site.domain = "127.0.0.1:8000"
+        current_site.name = "127.0.0.1:8000"
         current_site.save()
+        print(f"Set the current site as {current_site.domain}")
 
     else:
         print("Canceling operation")
