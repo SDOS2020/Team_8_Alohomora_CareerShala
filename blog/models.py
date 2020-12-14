@@ -30,6 +30,7 @@ class Post(models.Model):
     preview = models.CharField(max_length=300, help_text='A short preview of this post that is shown in list of posts.')
 
     likes = models.ManyToManyField('users.CustomUser', blank=True)
+    allow_comments = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(f'{self.title} {self.identifier}', allow_unicode=True)
