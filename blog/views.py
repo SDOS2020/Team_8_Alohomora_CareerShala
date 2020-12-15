@@ -89,7 +89,11 @@ def view_all_posts(request):
         validate_post_type(post_type)
     except ValidationError:
         return error(request, error_dict={'title': 'Bad Request', 'body': ''})
-    return render(request, 'blog/posts.html', context={'post_type': post_type})
+    for allowed_posts in Post.POST_TYPE:
+        if post_type == allowed_posts[0]:
+            post_category = allowed_posts[1]
+            break
+    return render(request, 'blog/posts.html', context={'post_type': post_type, 'post_category': post_category})
 
 
 @login_required
