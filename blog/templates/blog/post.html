@@ -1,7 +1,7 @@
 {% extends 'dashboard.html' %}
 {% load static %}
 {% load comments %}
-
+{% load bleach_tags %}
 
 {% block title %}
 {{ post.title }}
@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-12 center" id="post-body">
-                                {{ post.body|safe }}
+                                {{ post.body|bleach }}
                             </div>
                         </div>
                         <!-- <div class="row center">
