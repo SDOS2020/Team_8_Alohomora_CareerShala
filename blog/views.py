@@ -89,6 +89,7 @@ def view_all_posts(request):
         validate_post_type(post_type)
     except ValidationError:
         return error(request, error_dict={'title': 'Bad Request', 'body': ''})
+    post_type = int(post_type)
     post_category = ""
     for allowed_posts in Post.POST_TYPE:
         if post_type == allowed_posts[0]:
