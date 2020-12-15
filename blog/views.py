@@ -30,7 +30,6 @@ from users.models import CustomUser
 @permission_classes([permissions.IsAuthenticated, user_permissions.EmailVerified, user_permissions.ProfileCompleted])
 def view_all_posts_api_endpoint(request: Request):
     post_type = request.query_params.get("post_type", None)
-
     if post_type is not None:
         try:
             validate_post_type(post_type)
