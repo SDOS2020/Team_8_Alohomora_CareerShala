@@ -26,9 +26,9 @@
 
                 <div id="collapseCert" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="py-2 collapse-inner rounded">
-                        <a class="collapse-item mb-2" href="{% url 'dashboard-courses' %}">Create a Course</a>
-                        <a class="collapse-item mb-2" href="#">My Course</a>
-                        <a class="collapse-item" href="#">All Course</a>
+                        <a class="collapse-item mb-2" href="{% url 'blog-add-post' %}?type=1">Add an Article</a>
+                        <a class="collapse-item mb-2" href="#">My Articles</a>
+                        <a class="collapse-item" href="{% url 'dashboard-opportunities' %}?type=1">All Articles</a>
                     </div>
                 </div>
             </li>
@@ -42,9 +42,9 @@
 
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="py-2 collapse-inner rounded">
-                        <a class="collapse-item mb-2" href="{% url 'dashboard-courses' %}">Create an Article</a>
-                        <a class="collapse-item mb-2" href="#">My Articles</a>
-                        <a class="collapse-item" href="#">All Articles</a>
+                        <a class="collapse-item mb-2" href="{% url 'blog-add-post' %}?type=2">Add a Course</a>
+                        <a class="collapse-item mb-2" href="#">My Courses</a>
+                        <a class="collapse-item" href="{% url 'dashboard-opportunities' %}?type=2">All Courses</a>
                     </div>
                 </div>
             </li>
@@ -58,9 +58,9 @@
 
                 <div id="collapseProject" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="py-2 collapse-inner rounded">
-                        <a class="collapse-item mb-2" href="{% url 'dashboard-courses' %}">Create a Project</a>
-                        <a class="collapse-item mb-2" href="#">My Projects</a>
-                        <a class="collapse-item" href="#">All Projects</a>
+                        <a class="collapse-item mb-2" href="{% url 'blog-add-post' %}?type=3">Add a Job</a>
+                        <a class="collapse-item mb-2" href="#">My Jobs</a>
+                        <a class="collapse-item" href="{% url 'dashboard-opportunities' %}?type=3">All Jobs</a>
                     </div>
                 </div>
             </li>
@@ -74,9 +74,9 @@
 
                 <div id="collapseJob" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="py-2 collapse-inner rounded">
-                        <a class="collapse-item mb-2" href="{% url 'dashboard-courses' %}">Create Job</a>
-                        <a class="collapse-item mb-2" href="#">My Jobs</a>
-                        <a class="collapse-item" href="#">All Jobs</a>
+                        <a class="collapse-item mb-2" href="{% url 'blog-add-post' %}?type=4">Create an Project</a>
+                        <a class="collapse-item mb-2" href="#">My Projects</a>
+                        <a class="collapse-item" href="{% url 'dashboard-opportunities' %}?type=4">All Projects</a>
                     </div>
                 </div>
             </li>            
@@ -91,8 +91,10 @@
                 
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="py-2 collapse-inner rounded">
-                        <a class="collapse-item mb-2" href="{% url 'dashboard-courses' %}">Courses Offered</a>
-                        <a class="collapse-item" href="#">Articles</a>
+                        <a class="collapse-item mb-2" href="{% url 'dashboard-opportunities' %}?type=1">Articles</a>
+                        <a class="collapse-item mb-2" href="{% url 'dashboard-opportunities' %}?type=2">Courses Offered</a>
+                        <a class="collapse-item mb-2" href="{% url 'dashboard-opportunities' %}?type=3">Jobs Offered</a>
+                        <a class="collapse-item mb-2" href="{% url 'dashboard-opportunities' %}?type=4">Projects</a>
                     </div>
                 </div>
             </li>

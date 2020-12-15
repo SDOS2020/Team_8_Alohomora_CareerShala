@@ -168,7 +168,7 @@ a:hover {
   padding: 1rem;
 }
 
-.btn-dark:hover .btn-dark:focus .btn-dark:active {
+.btn-dark:hover {
   color: gold;
   background-color: #030303;
   border: 2px solid gold;
