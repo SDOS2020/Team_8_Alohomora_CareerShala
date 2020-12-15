@@ -49,12 +49,6 @@ Courses Offered !
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
-						<!-- <div class="row">
-							<div class="col-12 center-cropped">
-								<img id="course-image" :src=item.image class="img-fluid" alt="Responsive image" >
-							</div>
-						</div>
-						<hr/> -->
 						<div class="row">
 							<div class="col-12 center">
 								[[ item.preview ]]
@@ -78,10 +72,8 @@ Courses Offered !
 
 <script>
 	new Vue({
-		props: {
-			type: 0,
-		},
 		delimiters: ["[[", "]]"],
+		is_expert: "{{ is_expert }}",
 		data() {
 			return {
 				cols: 2,
@@ -133,17 +125,29 @@ Courses Offered !
 		},
 		methods: {
 			getCoursesList() {
-				axios.get(`{% url 'api-blog-posts' %}`, {
-					type: "{{ type }}"
-				})
-				.then(response => {
-					console.log(response)
-					this.count = this.coursesList.length;
-					this.coursesList = response.data;
-				})
-				.catch(e => {
-					this.errors.push(e)
-				})
+				if (this.is_expert) {
+					axios.get(`{% url 'api-blog-posts' %}`)
+					.then(response => {
+						console.log(response)
+						this.count = this.coursesList.length;
+						this.coursesList = response.data;
+					})
+					.catch(e => {
+						this.errors.push(e)
+					})
+				} else {
+					axios.get(`{% url 'api-blog-posts' %}`, {
+						type: "{{ type }}"
+					})
+					.then(response => {
+						console.log(response)
+						this.count = this.coursesList.length;
+						this.coursesList = response.data;
+					})
+					.catch(e => {
+						this.errors.push(e)
+					})
+				}
 			},
 		},
 		computed: {
