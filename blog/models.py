@@ -17,8 +17,8 @@ from tag.models import Tag
 class Post(models.Model):
     POST_TYPE = (
         (1, 'Article'),
-        (2, 'Job'),
-        (3, 'Course'),
+        (2, 'Course'),
+        (3, 'Job'),
         (4, 'Project'),
     )
 

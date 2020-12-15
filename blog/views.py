@@ -73,6 +73,12 @@ def add_post(request):
             messages.success(request, 'Post has been added successfully!')
             form = PostCreationForm()
     else:
-        form = PostCreationForm()
-
+        post_type = request.GET.get('post_type', None)
+        try:
+            post_type = int(post_type)
+            if not any(post_type == allowed_post_type[0] for allowed_post_type in Post.POST_TYPE):
+                raise ValueError
+        except ValueError:
+            return error(request, error_dict={'title': 'Bad Request', 'body': ''})
+        form = PostCreationForm(initial={'type': post_type})
     return render(request, 'blog/add_post.html', context={'form': form})
