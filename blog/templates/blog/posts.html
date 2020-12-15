@@ -1,10 +1,160 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'dashboard.html' %}
 
-</body>
-</html>
+{% load static %}
+
+{% block title %} 
+Courses Offered !
+{% endblock title %}
+
+{% block pagecss %} 
+<link rel="stylesheet" href="{% static 'css/home/style.css' %}">
+{% endblock pagecss %}
+
+{% block dashboardPage %}
+<!-- Begin Page Content -->
+
+<div id="postsOffered" class="container">
+
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 font-weight-bold text-gray-800"> Courses Offered </h1>
+	</div>
+
+	<div class="row">
+		<div class="col-6" v-for="column in columns">
+			<div class="item-container" v-for="item in column">
+
+				<!-- Dropdown Card Example -->
+				<div class="card shadow mb-4">
+					<!-- Card Header - Dropdown -->
+					<div id="formFooter" class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
+						<div class="col-12 align-items-center center">
+							<h6 class="m-0 font-weight-bold">[[ item.title ]]</h6>
+							<h7 class="m-0"> Author: [[ item.author ]] </h7>
+						</div>
+
+						<div class="dropdown no-arrow">
+							<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+								<i class="fa fa-ellipsis-v fa-sm fa-fw"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+								aria-labelledby="dropdownMenuLink">
+								<a class="dropdown-item" href="#">Action</a>
+								<a class="dropdown-item" href="#">Another action</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Something else here</a>
+							</div>
+						</div>
+					</div>
+					<!-- Card Body -->
+					<div class="card-body">
+						<div class="row">
+							<div class="col-12 center">
+								[[ item.preview ]]
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12 center">
+								<a class="btn btn-dark" :href=item.relative_url role="button" target="tab">Read More</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- End of Main Content -->
+
+<script>
+	new Vue({
+		delimiters: ["[[", "]]"],
+		is_expert: "{{ is_expert }}",
+		data() {
+			return {
+				cols: 2,
+				count: 5,
+				PostsList: [
+					{
+						header: "Jet King1",
+						short_body: "",
+						body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
+						image: "https://www.coursecrown.com/blog/wp-content/uploads/2017/05/Jetking-courses-fees-1.jpg",
+						link: "https://www.jetking.com/",
+						readMore: ""
+					},
+					{
+						header: "Navgurukul2",
+						body: "Founded by IITians, Navgurukul enables software development learning for students from low income communities who have keen interest in this field. They provide rigorous training for 1 year in which a student becomes strongly capable to understsand the world of programming and has skills as good as a engineer after 4 years of degree course.",
+						image: "https://navgurukul.org/assets/img/logo.png",
+						link: "https://navgurukul.org/",
+						readMore: ""
+					},
+					{
+						header: "Jet King3",
+						body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
+						image: "https://www.coursecrown.com/blog/wp-content/uploads/2017/05/Jetking-courses-fees-1.jpg",
+						link: "https://www.jetking.com/",
+						readMore: ""
+					},
+					{
+						header: "Navgurukul4",
+						body: "Founded by IITians, Navgurukul enables software development learning for students from low income communities who have keen interest in this field. They provide rigorous training for 1 year in which a student becomes strongly capable to understsand the world of programming and has skills as good as a engineer after 4 years of degree course.",
+						image: "https://navgurukul.org/assets/img/logo.png",
+						link: "https://navgurukul.org/",
+						readMore: ""
+					},
+					{
+						header: "Jet King5",
+						body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
+						image: "https://www.coursecrown.com/blog/wp-content/uploads/2017/05/Jetking-courses-fees-1.jpg",
+						link: "https://www.jetking.com/",
+						readMore: ""
+					}
+				],
+				errors: [
+				],
+			}
+		},
+		created() {
+			this.getPostsList()
+		},
+		methods: {
+			getPostsList() {
+				axios.get(`{% url 'api-blog-posts' %}`, {
+					post_type: "{{ post_type }}"
+				})
+				.then(response => {
+					this.count = this.PostsList.length;
+					this.PostsList = response.data;
+				})
+				.catch(e => {
+					this.errors.push(e)
+				})
+			}
+		},
+		computed: {
+			columns () {
+				let columns = [];
+				let mid = Math.ceil(this.PostsList.length / this.cols);
+				for (let col = 0; col < this.cols; col++) {
+					columns.push(this.PostsList.slice(col * mid, col * mid + mid));
+				}
+				return columns;
+			}
+		}
+	}).$mount('#postsOffered');
+
+</script>
+
+<style scoped>
+	#courses-image {
+		display: block;
+		width: 100%;
+	}
+
+</style>
+
+{% endblock dashboardPage %}

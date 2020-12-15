@@ -168,20 +168,16 @@ a:hover {
   padding: 1rem;
 }
 
-.btn-dark:hover  {
-	background-color: #030303;
+.btn-dark:hover {
+  color: gold;
+  background-color: #030303;
+  border: 2px solid gold;
 }
 
 .btn-dark {
   background-color: #262626;
 	border: 2px solid #ffc038;
 	color: #ffc038;
-}
-
-.btn-dark:hover {
-  color: gold;
-  border: 2px solid gold;
-	background-color: #1d1d1d;
 }
 
 .dashboardButton {
