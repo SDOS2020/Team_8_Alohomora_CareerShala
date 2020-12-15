@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %} 
-Courses Offered !
+{{post_category}}
 {% endblock title %}
 
 {% block pagecss %} 
@@ -17,7 +17,7 @@ Courses Offered !
 
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 font-weight-bold text-gray-800"> Courses Offered </h1>
+		<h1 class="h3 mb-0 font-weight-bold text-gray-800"> {{ post_category }} </h1>
 	</div>
 
 	<div class="row">
@@ -123,9 +123,7 @@ Courses Offered !
 		},
 		methods: {
 			getPostsList() {
-				axios.get(`{% url 'api-blog-posts' %}`, {
-					post_type: "{{ post_type }}"
-				})
+				axios.get(`{% url 'api-blog-posts' %}?post_type={{post_type}}`)
 				.then(response => {
 					this.count = this.PostsList.length;
 					this.PostsList = response.data;
