@@ -10,4 +10,8 @@ if __name__ == '__main__':
         os.system('git push heroku release-heroku:master --force')
         os.system('git rm --cached */migrations/*.py')
         os.system('git reset --hard HEAD~1')
+        confirm = input("Reset Heroku database? (y/n).")
+        if confirm.lower() == "y":
+            os.system("heroku pg:reset DATABASE")
+        os.system("heroku run python manage.py migrate")
         print("Done!")
