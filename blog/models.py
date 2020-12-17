@@ -23,7 +23,7 @@ class Post(models.Model):
     )
 
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    slug = models.SlugField(unique=True, null=True, blank=True)
+    slug = models.SlugField(unique=True, null=True, blank=True, max_length=512)
     type = models.PositiveSmallIntegerField(choices=POST_TYPE, default=1)
     tags = tagulous.models.TagField(related_name='posts', to=Tag)
 
