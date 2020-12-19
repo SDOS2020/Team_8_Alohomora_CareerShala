@@ -20,17 +20,11 @@ def reset():
         print("This file should not be executed on the production server. Please use migrations/fixtures instead.")
         print("Exiting...")
         return
-    confirm = input("Are you sure to continue? (y/n).")
-    if confirm.lower() == "y":
-        for file in glob('*/migrations/000*.py'):
-            print("removing", str(file))
-            os.remove(file)
 
+    confirm = input("Do you want to clear the existing database? This operation will fail on Heroku. (y/n).")
+    if confirm.lower() == "y":
         print("Resetting database...")
-        confirm = input("Do you want to clear the existing database? This operation will fail on Heroku. (y/n).")
-        if confirm.lower() == "y":
-            os.system("python manage.py reset_db --noinput")
-        os.system("python manage.py makemigrations")
+        os.system("python manage.py reset_db --noinput")
         os.system("python manage.py migrate")
 
         questionnaires_json_file_name = 'questionnaires.json'
