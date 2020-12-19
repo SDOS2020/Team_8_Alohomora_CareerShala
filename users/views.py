@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.http import is_safe_url
+from rest_framework import status
 
 from errors.views import error
 from users.decorators import user_verification_required
@@ -55,10 +56,11 @@ def register(request):
         if user_creation_form_filled.is_valid():
             user_creation_form_filled.save()
             messages.success(request, "Registration successful, check your email inbox to verify your email.")
-            return redirect('users-register')
+            return render(request, 'registration/signup.html', context={'form': CustomUserCreationForm()})
         else:
             return render(request, 'registration/signup.html',
-                          {'form': user_creation_form_filled})  # should contain errors
+                          {'form': user_creation_form_filled},
+                          status=status.HTTP_422_UNPROCESSABLE_ENTITY)  # should contain errors
     else:
         user_creation_form_empty = CustomUserCreationForm()
         return render(request, 'registration/signup.html', {'form': user_creation_form_empty})
