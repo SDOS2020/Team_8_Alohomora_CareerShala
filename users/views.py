@@ -56,7 +56,8 @@ def register(request):
         if user_creation_form_filled.is_valid():
             user_creation_form_filled.save()
             messages.success(request, "Registration successful, check your email inbox to verify your email.")
-            return render(request, 'registration/signup.html', context={'form': CustomUserCreationForm()})
+            return render(request, 'registration/signup.html', context={'form': CustomUserCreationForm()},
+                          status=status.HTTP_201_CREATED)
         else:
             return render(request, 'registration/signup.html',
                           {'form': user_creation_form_filled},
