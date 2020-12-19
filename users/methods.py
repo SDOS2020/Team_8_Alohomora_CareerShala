@@ -3,8 +3,10 @@ import threading
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.messages import get_messages
 from django.core.mail import send_mail
 from django.shortcuts import render
+from django.test import TestCase
 from django.utils.crypto import get_random_string
 
 # from users.forms import CustomUserCreationForm  # do not import this! https://stackoverflow.com/a/16975976/5394180
@@ -27,3 +29,9 @@ def send_mail_async(sender: str, receivers, subject, dynamic_template_data: dict
     t = threading.Thread(target=sg.send, args=(message,), name=f'email to {receivers}')
     t.setDaemon(True)
     t.start()
+
+
+def check_response_message(testcase: TestCase, response, expected_message):
+    response_messages = list(get_messages(response.wsgi_request))
+    testcase.assertEqual(len(1))
+    testcase.assertEqual(str(response_messages[0]), expected_message)
