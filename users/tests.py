@@ -7,7 +7,7 @@ from django.test import TestCase
 from rest_framework import status
 
 from AlohomoraCareershala.tests import TestCaseWithRegisteredUsers
-from users.data import VALID_STUDENT_REGISTRATION_FORM_DATA, VALID_EXPERT_REGISTRATION_FORM_DATA
+from users.data import VALID_STUDENT_REGISTRATION_FORM_DATA, VALID_EXPERT_REGISTRATION_FORM_DATA, EMAILS
 from users.models import CustomUser
 from users.signals import send_verification_email
 
@@ -75,7 +75,7 @@ class LoginTestCase(TestCaseWithRegisteredUsers):
 
     def test_verified_student_login(self):
         data = {
-            'email': 'verified_student@iiitd.ac.in',
+            'email': EMAILS['student_verified_profile_incomplete'],
             'password': VALID_STUDENT_REGISTRATION_FORM_DATA['password']
         }
         response = self.client.post('/users/login/', data=data, follow=True)
@@ -83,7 +83,7 @@ class LoginTestCase(TestCaseWithRegisteredUsers):
 
     def test_unverified_student_login(self):
         data = {
-            'email': 'unverified_student@iiitd.ac.in',
+            'email': EMAILS['student_unverified'],
             'password': VALID_STUDENT_REGISTRATION_FORM_DATA['password']
         }
         response = self.client.post('/users/login/', data=data, follow=True)
@@ -91,7 +91,7 @@ class LoginTestCase(TestCaseWithRegisteredUsers):
 
     def test_verified_expert_login(self):
         data = {
-            'email': 'verified_expert@iiitd.ac.in',
+            'email': EMAILS['expert_verified_profile_incomplete'],
             'password': VALID_EXPERT_REGISTRATION_FORM_DATA['password']
         }
         response = self.client.post('/users/login/', data=data, follow=True)
@@ -99,7 +99,7 @@ class LoginTestCase(TestCaseWithRegisteredUsers):
 
     def test_unverified_expert_login(self):
         data = {
-            'email': 'unverified_expert@iiitd.ac.in',
+            'email': EMAILS['expert_unverified'],
             'password': VALID_EXPERT_REGISTRATION_FORM_DATA['password']
         }
         response = self.client.post('/users/login/', data=data, follow=True)
@@ -107,7 +107,7 @@ class LoginTestCase(TestCaseWithRegisteredUsers):
 
     def test_invalid_credentials(self):
         data = {
-            'email': 'unverified_expert@iiitd.ac.in',
+            'email': EMAILS['student_verified_profile_incomplete'],
             'password': 'b@d p@$$w0rd'
         }
         response = self.client.post('/users/login/', data=data, follow=True)
