@@ -87,7 +87,7 @@ def view_all_posts(request):
     try:
         validate_post_type(post_type)
     except ValidationError:
-        return error(request, error_dict={'title': 'Bad Request', 'body': ''})
+        return error(request, error_dict={'title': 'Bad Request', 'body': ''})  # TODO replace with error 404
     post_type = int(post_type)
     post_category = ""
     for allowed_posts in Post.POST_TYPE:

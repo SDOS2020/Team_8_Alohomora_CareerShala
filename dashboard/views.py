@@ -14,6 +14,7 @@ def home(request):
         return render(request, 'dashboard/home_expert.html')
 
 
+# TODO remove this
 @login_required
 @user_verification_required
 @profile_completion_required
