@@ -9,7 +9,7 @@ EMAILS = {
 
 VALID_STUDENT_REGISTRATION_FORM_DATA = {
     'email': EMAILS['student_unverified'],
-    'password': 'p@$$w0rd-',
+    'password': 'p@$$w0rdHEHEHEHE',
     'first_name': 'Student',
     'last_name': 'Student',
     'date_of_birth': '1998-12-04',
