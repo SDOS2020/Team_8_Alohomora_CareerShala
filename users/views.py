@@ -99,9 +99,10 @@ def login(request):
 
 @login_required
 def logout(request):
+    request_user = str(request.user)
     builtin_logout(request)
     logger = logging.getLogger('app.accounts.logout')
-    logger.info(f'{request.user} has logged out from the site')
+    logger.info(f'{request_user} has logged out from the site')
     return redirect('homepage')
 
 
