@@ -20,7 +20,6 @@ class LoginForm(forms.Form):
         cleaned_data = super(LoginForm, self).clean()
         if authenticate(email=cleaned_data.get("email"),
                         password=cleaned_data.get("password")) is None:
-            print("invalid credentials")
             raise ValidationError("Incorrect credentials")
         return cleaned_data
 
