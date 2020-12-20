@@ -27,13 +27,6 @@ def reset():
         os.system("python manage.py reset_db --noinput")
         os.system("python manage.py migrate")
 
-        questionnaires_json_file_name = 'questionnaires.json'
-        with open(questionnaires_json_file_name, encoding='utf-8') as f:
-            root_questionnaire_json = json.load(f)
-            load_questionnaire_from_json(root_questionnaire_json, None)
-
-        print(f"Created questionnaires from file {questionnaires_json_file_name}")
-
         superuser_email = "reeshabhkumarranjan@gmail.com"
         superuser_password = "reeshabh@123"
         superuser_first_name = "Reeshabh"
@@ -127,28 +120,3 @@ def reset():
 
     else:
         print("Canceling operation")
-
-
-def load_option_from_json(option_json, from_question):
-    option = Option.objects.create(body=option_json["body"], question=from_question)
-    option.save()
-    if option_json["continuation_questionnaire"] is not None:
-        questionnaire_json = option_json["continuation_questionnaire"]
-        load_questionnaire_from_json(questionnaire_json, option)
-
-
-def load_question_from_json(question_json, from_questionnaire: Questionnaire):
-    question = Question.objects.create(body=question_json["body"], multiselect=question_json["multiselect"],
-                                       questionnaire=from_questionnaire)
-    question.save()
-    for option_json in question_json["option"]:
-        load_option_from_json(option_json, question)
-
-
-def load_questionnaire_from_json(questionnaire_json, from_option: Option):
-    questionnaire = Questionnaire.objects.create(name=questionnaire_json["name"], root=questionnaire_json["root"])
-    if from_option is not None:
-        from_option.continuation_questionnaire = questionnaire
-        from_option.save()
-    for question_json in questionnaire_json["question"]:
-        load_question_from_json(question_json, questionnaire)
