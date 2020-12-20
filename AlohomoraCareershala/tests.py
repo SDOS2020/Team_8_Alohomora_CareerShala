@@ -22,12 +22,13 @@ class TestCaseWithRegisteredUsers(TestCase):
         super().setUpClass()
         signals.post_save.disconnect(receiver=send_verification_email, sender=CustomUser)
 
-        verified_incomplete_profile_student_registration_data = VALID_STUDENT_REGISTRATION_FORM_DATA.copy()
-        verified_incomplete_profile_expert_registration_data = VALID_EXPERT_REGISTRATION_FORM_DATA.copy()
-        verified_complete_profile_student_registration_data = VALID_STUDENT_REGISTRATION_FORM_DATA.copy()
-        verified_complete_profile_expert_registration_data = VALID_EXPERT_REGISTRATION_FORM_DATA.copy()
         unverified_student_registration_data = VALID_STUDENT_REGISTRATION_FORM_DATA.copy()
+        verified_incomplete_profile_student_registration_data = VALID_STUDENT_REGISTRATION_FORM_DATA.copy()
+        verified_complete_profile_student_registration_data = VALID_STUDENT_REGISTRATION_FORM_DATA.copy()
+
         unverified_expert_registration_data = VALID_EXPERT_REGISTRATION_FORM_DATA.copy()
+        verified_incomplete_profile_expert_registration_data = VALID_EXPERT_REGISTRATION_FORM_DATA.copy()
+        verified_complete_profile_expert_registration_data = VALID_EXPERT_REGISTRATION_FORM_DATA.copy()
 
         verified_incomplete_profile_student_registration_data['email'] = EMAILS['student_verified_profile_incomplete']
         verified_complete_profile_student_registration_data['email'] = EMAILS['student_verified_profile_complete']
@@ -61,6 +62,11 @@ class TestCaseWithRegisteredUsers(TestCase):
 
         cls.registered_expert_verified_profile_incomplete.verified = True
         cls.registered_expert_verified_profile_incomplete.save()
+
+        cls.registered_expert_verified_profile_incomplete.expert_profile.verified = True
+        cls.registered_expert_verified_profile_complete.expert_profile.verified = True
+        cls.registered_expert_verified_profile_incomplete.expert_profile.save()
+        cls.registered_expert_verified_profile_complete.expert_profile.save()
 
     @classmethod
     def tearDownClass(cls):
