@@ -75,7 +75,7 @@
 		data() {
 			return {
 				cols: 2,
-				count: 5,
+				count: 1,
 				PostsList: [
 					{
 						header: "Jet King1",
@@ -85,34 +85,34 @@
 						link: "https://www.jetking.com/",
 						readMore: ""
 					},
-					{
-						header: "Navgurukul2",
-						body: "Founded by IITians, Navgurukul enables software development learning for students from low income communities who have keen interest in this field. They provide rigorous training for 1 year in which a student becomes strongly capable to understsand the world of programming and has skills as good as a engineer after 4 years of degree course.",
-						image: "https://navgurukul.org/assets/img/logo.png",
-						link: "https://navgurukul.org/",
-						readMore: ""
-					},
-					{
-						header: "Jet King3",
-						body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
-						image: "https://www.coursecrown.com/blog/wp-content/uploads/2017/05/Jetking-courses-fees-1.jpg",
-						link: "https://www.jetking.com/",
-						readMore: ""
-					},
-					{
-						header: "Navgurukul4",
-						body: "Founded by IITians, Navgurukul enables software development learning for students from low income communities who have keen interest in this field. They provide rigorous training for 1 year in which a student becomes strongly capable to understsand the world of programming and has skills as good as a engineer after 4 years of degree course.",
-						image: "https://navgurukul.org/assets/img/logo.png",
-						link: "https://navgurukul.org/",
-						readMore: ""
-					},
-					{
-						header: "Jet King5",
-						body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
-						image: "https://www.coursecrown.com/blog/wp-content/uploads/2017/05/Jetking-courses-fees-1.jpg",
-						link: "https://www.jetking.com/",
-						readMore: ""
-					}
+					// {
+					// 	header: "Navgurukul2",
+					// 	body: "Founded by IITians, Navgurukul enables software development learning for students from low income communities who have keen interest in this field. They provide rigorous training for 1 year in which a student becomes strongly capable to understsand the world of programming and has skills as good as a engineer after 4 years of degree course.",
+					// 	image: "https://navgurukul.org/assets/img/logo.png",
+					// 	link: "https://navgurukul.org/",
+					// 	readMore: ""
+					// },
+					// {
+					// 	header: "Jet King3",
+					// 	body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
+					// 	image: "https://www.coursecrown.com/blog/wp-content/uploads/2017/05/Jetking-courses-fees-1.jpg",
+					// 	link: "https://www.jetking.com/",
+					// 	readMore: ""
+					// },
+					// {
+					// 	header: "Navgurukul4",
+					// 	body: "Founded by IITians, Navgurukul enables software development learning for students from low income communities who have keen interest in this field. They provide rigorous training for 1 year in which a student becomes strongly capable to understsand the world of programming and has skills as good as a engineer after 4 years of degree course.",
+					// 	image: "https://navgurukul.org/assets/img/logo.png",
+					// 	link: "https://navgurukul.org/",
+					// 	readMore: ""
+					// },
+					// {
+					// 	header: "Jet King5",
+					// 	body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
+					// 	image: "https://www.coursecrown.com/blog/wp-content/uploads/2017/05/Jetking-courses-fees-1.jpg",
+					// 	link: "https://www.jetking.com/",
+					// 	readMore: ""
+					// }
 				],
 				errors: [
 				],
@@ -123,14 +123,27 @@
 		},
 		methods: {
 			getPostsList() {
-				axios.get(`{% url 'api-blog-posts' %}?post_type={{post_type}}`)
-				.then(response => {
-					this.count = this.PostsList.length;
-					this.PostsList = response.data;
-				})
-				.catch(e => {
-					this.errors.push(e)
-				})
+
+				if (" {{ user.is_expert }} ") {	
+					axios.get(`{% url 'api-blog-posts' %}?post_type={{post_type}}`)
+					.then(response => {
+						this.count = this.PostsList.length;
+						this.PostsList = response.data;
+					})
+					.catch(e => {
+						this.errors.push(e)
+					})
+				}
+				else {
+					axios.get(`{% url 'api-blog-tagged-posts' %}?post_type={{post_type}}`)
+					.then(response => {
+						this.count = this.PostsList.length;
+						this.PostsList = response.data;
+					})
+					.catch(e => {
+						this.errors.push(e)
+					})
+				}
 			}
 		},
 		computed: {
