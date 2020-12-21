@@ -61,7 +61,7 @@ class Post(models.Model):
 
 
 class Submission(models.Model):
-    student_profile = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE,
+    student_profile = models.ForeignKey('users.StudentProfile', on_delete=models.CASCADE,
                                         related_name='student_submissions')
     uploaded_file = models.FileField(upload_to='student_uploads/')
     uploaded_time = models.DateTimeField(auto_now_add=True)
