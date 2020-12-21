@@ -7,4 +7,5 @@ urlpatterns = [
     path('tagged_posts/', views.view_tagged_posts, name='api-blog-tagged-posts'),
     path('add_post/', views.add_post, name='blog-add-post'),
     path('posts/', views.view_all_posts, name='blog-posts'),
+    path('upload_submission/', views.upload_submission, name='blog-posts')
 ]
