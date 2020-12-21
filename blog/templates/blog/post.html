@@ -35,11 +35,25 @@
                                 {{ post.body|bleach }}
                             </div>
                         </div>
-                        <!-- <div class="row center">
-                            <div class="col-12">
-                                <a class="btn btn-dark text-warning" :href=item.link role="button" target="tab">Go to Website</a>
+
+                        <!-- <hr/> -->
+
+                        {% if not user.is_expert %}
+                        <div class="row">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form method="POST" action="{% url 'blog-upload-submission' %}" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <label for="input-file">Upload Your Submission</label> <br>
+                                        <input type="hidden" name="post_identifier" value="{{ post.identifier }}">
+                                        <input type="file" id="input-file" class="btn btn-dark" name="uploaded_file">
+                                        
+                                        <button type="submit" class="btn btn-dark" style="padding: 8px;">Upload</button>
+                                    </form>
+                                </div>
                             </div>
-                        </div> -->
+                        </div>
+                        {% endif %}
 
                         <hr/>
 
@@ -51,6 +65,8 @@
                             ha{{ comment_count|pluralize:"s,ve" }} been posted.
                             </div>
                         </div>
+
+                        
 
                         <div class="row">
                             {% if post.allow_comments %}
@@ -73,9 +89,9 @@
                             <div class="col-12">
                                 <!-- <div class="card shadow">
                                     <div class="card-body"> -->
-                                        <div class="comments">
+                                    <div class="comments">
                                         {% render_comment_list for post %}
-                                        </div>
+                                    </div>
                             </div>
                             {% endif %}
                         </div>
@@ -113,6 +129,10 @@
     #post-body {
         overflow:auto;
     }
+
+    /* .btn {
+        max-width: 75%;
+    } */
 </style>
 
 {% endblock dashboardPage %}

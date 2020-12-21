@@ -50,7 +50,7 @@
 						</div>
 					</div>
 					<div class="card-header py-6 alert-success" v-else>
-						Yay!! You have completed the questionnaire. Now, check out your <a href="{% url 'dashboard-opportunities' %}"> Opportunities </a>
+						Yay!! You have completed the questionnaire. Now, check out your <a href="{% url 'blog-posts' %}?post_type=1"> Articles </a> | <a href="{% url 'blog-posts' %}?post_type=2"> Courses </a> | <a href="{% url 'blog-posts' %}?post_type=3"> Jobs </a> | <a href="{% url 'blog-posts' %}?post_type=4"> Projects </a> 
 						<br>
 					</div>
 					<div class="card-header alert-warning">
@@ -68,13 +68,7 @@
     </div>
 </div>
 
-<style>
-	a:link {
-		color: red;
-	}
-</style>
-
-<script>
+<script type="application/javascript">
 
 	function getCookie(name) {
 		let cookieValue = null;
@@ -135,12 +129,12 @@
 							{
 								body: "option2",
 								identifier: "q2o2",
-
+	
 							},
 							{
 								body: "option3",
 								identifier: "q2o3",
-
+	
 							}
 						],
 						multiselect: false
@@ -182,7 +176,7 @@
 					this.qindex = 0;
 					this.name = response.data.name;
 					this.phase = response.data.phase;
-
+	
 					if (this.phase == null) {
 						this.questionnaireCompleted = true;
 						this.questions = []
@@ -213,22 +207,22 @@
 				.then(response => {
 					this.getNextQuestionnaire();
 					this.selected = []
-				    this.tempResponses = [];
+					this.tempResponses = [];
 				})
 				.catch(e => {
 					this.errors.push(e);
 					this.selected = []
-				    this.tempResponses = [];
+					this.tempResponses = [];
 				})
 			},
 			onNext(evt) {
 				console.log("Next ...")
 				this.errors = [];
-
+	
 				if(this.selected.length != 0) {
 					// append selected in response
 					this.tempResponses.push(this.selected)
-
+	
 					this.qindex++;
 					this.selected = [];
 				}
@@ -238,30 +232,30 @@
 			},
 			onPrev(evt) {
 				console.log("Prev ...")
-
+	
 				this.qindex--;
 				this.errors = [];
 				this.selected = this.tempResponses[this.qindex];
-
+	
 				this.tempResponses.pop();
 			},
 			onSubmit(evt) {
 				console.log("Submitting ...")
-
+	
 				if (this.selected.length == 0) {
 					this.errors.push("Select atleast one option");
 					return;
 				}
-
+	
 				this.tempResponses.push(this.selected)
-
+	
 				var responses = {
 					questionnaire: this.identifier,
 					answers: []
 				};
-
+	
 				for (let i = 0; i < this.tempResponses.length; i++) {
-
+	
 					if (Array.isArray(this.tempResponses[i])) {
 						for (let j = 0; j < this.tempResponses[i].length; j++) {
 							answer = {
@@ -278,7 +272,7 @@
 						responses.answers.push(answer);
 					}
 				}
-
+	
 				axios.post(`{% url 'api-questionnaire-submit-questionnaire-response' %}`, responses, {
 					headers: {
 						'X-CSRFTOKEN': getCookie('csrftoken')
@@ -287,16 +281,16 @@
 				.then(response => {
 					this.getNextQuestionnaire();
 					this.selected = []
-				    this.tempResponses = [];
+					this.tempResponses = [];
 				})
 				.catch(e => {
 					this.errors.push(e);
 					this.selected = []
-				    this.tempResponses.pop();
+					this.tempResponses.pop();
 				})
-
-
-
+	
+	
+	
 			},
 		},
 		computed: {
@@ -320,7 +314,6 @@
 			}
 		}
 	}).$mount('#questionnaire');
-
 
 </script>
 
