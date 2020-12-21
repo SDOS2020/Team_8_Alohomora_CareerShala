@@ -21,16 +21,15 @@
 	</div>
 
 	<div class="row">
-		<div class="col-6" v-for="column in columns">
+		<div :class="[cols == 1 ? 'col-12' : 'col-6']" v-for="column in columns">
 			<div class="item-container" v-for="item in column">
-
 				<!-- Dropdown Card Example -->
 				<div class="card shadow mb-4">
 					<!-- Card Header - Dropdown -->
 					<div id="formFooter" class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
 						<div class="col-12 align-items-center center">
-							<h6 class="m-0 font-weight-bold">[[ item.title ]]</h6>
-							<h7 class="m-0"> Author: [[ item.author ]] </h7>
+							<h6 class="m-0 font-weight-bold" name="post-title">[[ item.title ]]</h6>
+							<h7 class="m-0" name="post-author"> Author: [[ item.author ]] </h7>
 						</div>
 
 						<div class="dropdown no-arrow">
@@ -74,7 +73,7 @@
 		is_expert: "{{ is_expert }}",
 		data() {
 			return {
-				cols: 2,
+				cols: 1,
 				count: 1,
 				PostsList: [
 					{
@@ -85,45 +84,16 @@
 						link: "https://www.jetking.com/",
 						readMore: ""
 					},
-					// {
-					// 	header: "Navgurukul2",
-					// 	body: "Founded by IITians, Navgurukul enables software development learning for students from low income communities who have keen interest in this field. They provide rigorous training for 1 year in which a student becomes strongly capable to understsand the world of programming and has skills as good as a engineer after 4 years of degree course.",
-					// 	image: "https://navgurukul.org/assets/img/logo.png",
-					// 	link: "https://navgurukul.org/",
-					// 	readMore: ""
-					// },
-					// {
-					// 	header: "Jet King3",
-					// 	body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
-					// 	image: "https://www.coursecrown.com/blog/wp-content/uploads/2017/05/Jetking-courses-fees-1.jpg",
-					// 	link: "https://www.jetking.com/",
-					// 	readMore: ""
-					// },
-					// {
-					// 	header: "Navgurukul4",
-					// 	body: "Founded by IITians, Navgurukul enables software development learning for students from low income communities who have keen interest in this field. They provide rigorous training for 1 year in which a student becomes strongly capable to understsand the world of programming and has skills as good as a engineer after 4 years of degree course.",
-					// 	image: "https://navgurukul.org/assets/img/logo.png",
-					// 	link: "https://navgurukul.org/",
-					// 	readMore: ""
-					// },
-					// {
-					// 	header: "Jet King5",
-					// 	body: "This institute is a leader in the field of IT & Networking training. They have many training centers across Delhi & Gurgaon.",
-					// 	image: "https://www.coursecrown.com/blog/wp-content/uploads/2017/05/Jetking-courses-fees-1.jpg",
-					// 	link: "https://www.jetking.com/",
-					// 	readMore: ""
-					// }
 				],
 				errors: [
 				],
 			}
 		},
-		created() {
+		created() {			
 			this.getPostsList()
 		},
 		methods: {
 			getPostsList() {
-
 				if (" {{ user.is_expert }} ") {	
 					axios.get(`{% url 'api-blog-posts' %}?post_type={{post_type}}`)
 					.then(response => {
@@ -147,7 +117,13 @@
 			}
 		},
 		computed: {
-			columns () {
+			columns() {
+				// console.log(globalThis.innerWidth)
+				if (globalThis.innerWidth <= 768)
+					this.cols = 1;
+				else
+					this.cols = 2;
+
 				let columns = [];
 				let mid = Math.ceil(this.PostsList.length / this.cols);
 				for (let col = 0; col < this.cols; col++) {
@@ -160,7 +136,7 @@
 
 </script>
 
-<style scoped>
+<style>
 	#courses-image {
 		display: block;
 		width: 100%;

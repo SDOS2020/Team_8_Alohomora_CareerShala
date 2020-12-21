@@ -1,18 +1,27 @@
 {% load static %}
 {% block navBar %}
 
-<div class="col-12 remove-pad">
+<div id="navbar" class="col-12 remove-pad">
   <nav class="navbar navbar-expand-sm navbar-light fixed-top navbar-background">
 
-    <button id="sidebar-toggler" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#accordionSidebar" aria-controls="accordionSidebar" aria-expanded="true" aria-label="Toggle sidebar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <!-- <div class="row"> -->
 
-    <img id="alohomora-logo" src="{% static 'images/Alohomora.jpg' %}" class="d-inline-block align-top" alt="Alohomora">
-    
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <!-- <div class="col-2"> -->
+        <button id="sidebar-toggler" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#accordionSidebar" aria-controls="accordionSidebar" aria-expanded="false" aria-label="Toggle sidebar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      <!-- </div> -->
+
+      <!-- <div class="col-8"> -->
+        <img id="alohomora-logo" src="{% static 'images/Alohomora.jpg' %}" class="d-inline-block align-top" alt="Alohomora">
+      <!-- </div> -->
+      
+      <!-- <div class="col-2"> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      <!-- </div> -->
+    <!-- </div> -->
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
@@ -57,10 +66,6 @@
     </div>
   </nav>
 </div>
-
-<script>
-
-</script>
 
 <style>
   .navbar-background {

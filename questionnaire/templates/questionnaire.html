@@ -76,7 +76,7 @@
 			const cookies = document.cookie.split(';');
 			for (let i = 0; i < cookies.length; i++) {
 				const cookie = cookies[i].trim();
-				// Does this cookie string begin with the name we want?
+				
 				if (cookie.substring(0, name.length + 1) === (name + '=')) {
 					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
 					break;
@@ -118,46 +118,6 @@
 						],
 						multiselect: true
 					},
-					{
-						identifier: "q2",
-						body: "This is Ques 2",
-						option: [
-							{
-								body: "option1",
-								identifier: "q2o1",
-							},
-							{
-								body: "option2",
-								identifier: "q2o2",
-	
-							},
-							{
-								body: "option3",
-								identifier: "q2o3",
-	
-							}
-						],
-						multiselect: false
-					},
-					{
-						identifier: "q3",
-						body: "This is Ques 3",
-						option: [
-							{
-								body: "option1",
-								identifier: "q3o1",
-							},
-							{
-								body: "option2",
-								identifier: "q3o2",
-							},
-							{
-								body: "option3",
-								identifier: "q3o3",
-							}
-						],
-						multiselect: true
-					}
 				],
 				progressBarWidth: {
 					width: this.getProgressBarWidth + "%",
@@ -176,7 +136,7 @@
 					this.qindex = 0;
 					this.name = response.data.name;
 					this.phase = response.data.phase;
-	
+					
 					if (this.phase == null) {
 						this.questionnaireCompleted = true;
 						this.questions = []
@@ -185,12 +145,17 @@
 					else {		
 						this.questionnaireCompleted = false;
 						this.identifier = response.data.identifier;
-						if (response.data.question == undefined || response.data.question.length == 0) 
+						if (response.data.question == undefined || response.data.question.length == 0) {
 							this.questions = [];
-						else
+						}
+						else {
 							this.questions = response.data.question;
+						}
 						
 						this.tempResponses = [];
+						this.selected = []
+						this.errors = []
+						
 					}
 				})
 				.catch(e => {
@@ -295,20 +260,25 @@
 		},
 		computed: {
 			updateError() {
-				if (this.selected.length !== 0)
+				if (this.selected != undefined && this.selected.length !== 0)
 					this.errors = [];
 			},
 			getCurrentQuestion() {
-				if (this.questions.length > 0 && this.qindex < this.questions.length) {
-					if (this.questions[this.qindex].multiselect)
+				if (this.questions != undefined && this.questions.length > 0 && this.qindex < this.questions.length) {
+					if (this.questions[this.qindex].multiselect) {
 						this.questions[this.qindex].type = "checkbox";
-					else  
+					}
+					else {
 						this.questions[this.qindex].type = "radio";
+					}
 					return this.questions[this.qindex];
 				}
 			},
 			getProgressBarWidth() {
-				var val = ((this.qindex+1)/this.questions.length)*100;
+				var val = 0;
+				if (this.questions != undefined && this.questions.length > 0 && this.qindex < this.questions.length) {
+					val = ((this.qindex+1)/this.questions.length)*100;
+				}
 				this.progressBarWidth.width = val.toString() + "%";
 				return val;
 			}
