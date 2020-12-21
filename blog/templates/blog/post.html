@@ -52,6 +52,9 @@
                                     </form>
                                 </div>
                             </div>
+                            {% if last_uploaded_url %}
+                                <p>File uploaded at: <a href="{{ last_uploaded_url }}"> Current Submission </a></p>
+                            {% endif %}
                         </div>
                         {% endif %}
 

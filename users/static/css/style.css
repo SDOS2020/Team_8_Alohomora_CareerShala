@@ -46,6 +46,10 @@ a {
   color: #262626;
 }
 
+.alert {
+  margin-bottom: 0;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
