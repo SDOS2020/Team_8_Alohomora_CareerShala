@@ -14,7 +14,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from blog.forms import PostCreationForm, SubmissionForm
-from blog.models import Post
+from blog.models import Post, Submission
 import users.permissions as user_permissions
 from blog.paginations import CustomPageNumberPagination
 from blog.serializers import PostSerializer, PostMiniSerializer
@@ -76,7 +76,12 @@ def view_tagged_posts(request: Request):
 def view_post(request, slug):
     try:
         post = Post.objects.get(slug=slug)
-        return render(request, 'blog/post.html', {'post': post})
+        context = {'post': post}
+        if not request.user.is_expert:
+            if Submission.objects.filter(student_profile=request.user.student_profile, post=post).exists():
+                last_uploaded_url = Submission.objects.get(student_profile=request.user.student_profile, post=post).uploaded_file.url
+                context['last_uploaded_url'] = last_uploaded_url
+        return render(request, 'blog/post.html', context=context)
     except ObjectDoesNotExist:
         return error(request, error_dict={'title': "Requested post doesn't exist", 'body': ""})
 
@@ -131,12 +136,16 @@ def upload_submission(request):
     if request.method == 'POST':
         form = SubmissionForm(request.POST, request.FILES)
         if form.is_valid():
-            submission = form.save(commit=False)
-            submission.student_profile = request.user.student_profile
             post = Post.objects.get(identifier=form.cleaned_data.get('post_identifier'))
-            submission.post = post
-            form.save()
-            messages.success(request, 'Submission uploaded')
+            if Submission.objects.filter(student_profile=request.user.student_profile, post=post).exists():
+                form = SubmissionForm(request.POST, request.FILES, instance=Submission.objects.get(student_profile=request.user.student_profile, post=post))
+                messages.success(request, 'Submission updated')
+            else:
+                submission = form.save(commit=False)
+                submission.student_profile = request.user.student_profile
+                submission.post = post
+                messages.success(request, 'Submission uploaded')
+            submission = form.save()
             return HttpResponseRedirect(reverse('blog-post',  # TODO check if this is standard practice or not
                                                 kwargs={
                                                     'slug': submission.post.slug
