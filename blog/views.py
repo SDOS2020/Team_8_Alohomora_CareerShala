@@ -129,7 +129,7 @@ def add_post(request):
 @student_only
 def upload_submission(request):
     if request.method == 'POST':
-        form = SubmissionForm(request.POST)
+        form = SubmissionForm(request.POST, request.FILES)
         if form.is_valid():
             submission = form.save(commit=False)
             submission.student_profile = request.user.student_profile
@@ -142,5 +142,5 @@ def upload_submission(request):
                                                     'slug': submission.post.slug
                                                 }))
         else:
-            messages.success(request, 'Cannot submit, please try again later.')
-            return redirect(request.path_info)
+            messages.error(request, 'Cannot submit, please try again later.')
+            return redirect('dashboard-home')  # TODO redirect to the same page
