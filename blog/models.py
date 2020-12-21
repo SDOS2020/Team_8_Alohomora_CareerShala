@@ -58,3 +58,12 @@ class Post(models.Model):
         protocol = "https" if settings.PRODUCTION_SERVER else "http"
         absolute_url = f'{protocol}://{domain}{self.relative_url}'
         return absolute_url
+
+
+class Submission(models.Model):
+    student_profile = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE,
+                                        related_name='student_submissions')
+    uploaded_file = models.FileField(upload_to='student_uploads/')
+    uploaded_time = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey('blog.Post', to_field='identifier', on_delete=models.CASCADE,
+                             related_name='post_submissions')

@@ -2,16 +2,18 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db.models import Model, Q
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 
 # Create your views here.
+from django.urls import reverse
 from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ParseError, NotFound
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from blog.forms import PostCreationForm
+from blog.forms import PostCreationForm, SubmissionForm
 from blog.models import Post
 import users.permissions as user_permissions
 from blog.paginations import CustomPageNumberPagination
@@ -22,7 +24,7 @@ from questionnaire.models import QuestionnaireResponse, Option
 import tagulous.models
 
 from tag.models import Tag
-from users.decorators import user_verification_required, profile_completion_required, expert_only
+from users.decorators import user_verification_required, profile_completion_required, expert_only, student_only
 from users.models import CustomUser
 
 
@@ -119,3 +121,24 @@ def add_post(request):
             return error(request, error_dict={'title': 'Bad Request', 'body': ''})
         form = PostCreationForm(initial={'type': post_type})
     return render(request, 'blog/add_post.html', context={'form': form})
+
+
+@login_required
+@user_verification_required
+@profile_completion_required
+@student_only
+def upload_submission(request):
+    if request.method == 'POST':
+        form = SubmissionForm(request.POST)
+        if form.is_valid():
+            submission = form.save(commit=False)
+            submission.student_profile = request.user.student_profile
+            form.save()
+            messages.success(request, 'Submission uploaded')
+            return HttpResponseRedirect(reverse('blog-post',  # TODO check if this is standard practice or not
+                                                kwargs={
+                                                    'slug': submission.post.slug
+                                                }))
+        else:
+            messages.success(request, 'Cannot submit, please try again later.')
+            return redirect(request.path_info)
