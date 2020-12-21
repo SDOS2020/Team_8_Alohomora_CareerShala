@@ -20,7 +20,14 @@
 		<h1 class="h3 mb-0 font-weight-bold text-gray-800"> {{ post_category }} </h1>
 	</div>
 
-	<div class="row">
+	<div v-if="!questionnaireStarted" class="alert alert-warning p-3" role="alert">
+		<!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button> -->
+		Either You have not started the <a href="{% url 'dashboard-home' %}#questionnaireRow" >Questionnaire </a>. or there are no {{post_category}} posted yet that matches your questionnaire responses.
+	</div>
+
+	<div class="row" v-else>
 		<div :class="[cols == 1 ? 'col-12' : 'col-6']" v-for="column in columns">
 			<div class="item-container" v-for="item in column">
 				<!-- Dropdown Card Example -->
@@ -75,6 +82,8 @@
 			return {
 				cols: 1,
 				count: 1,
+				questionnaireStarted: false,
+				message: 'You have not started the questionnaire. ',
 				PostsList: [
 					{
 						header: "Jet King1",
@@ -93,9 +102,8 @@
 			this.getPostsList()
 		},
 		methods: {
-			getPostsList() {
-				if (" {{ user.is_expert }} ") {	
-					axios.get(`{% url 'api-blog-posts' %}?post_type={{post_type}}`)
+			getAllPosts() {
+				axios.get(`{% url 'api-blog-posts' %}?post_type={{post_type}}`)
 					.then(response => {
 						this.count = this.PostsList.length;
 						this.PostsList = response.data;
@@ -103,16 +111,30 @@
 					.catch(e => {
 						this.errors.push(e)
 					})
+			},
+			getPostsList() {
+				console.log("{{ user.is_expert }}")
+				if ("{{ user.is_expert }}" == "True") {	
+					console.log("Expert")
+					this.getAllPosts()
 				}
 				else {
+					console.log("Student")
 					axios.get(`{% url 'api-blog-tagged-posts' %}?post_type={{post_type}}`)
-					.then(response => {
-						this.count = this.PostsList.length;
-						this.PostsList = response.data;
-					})
-					.catch(e => {
-						this.errors.push(e)
-					})
+						.then(response => {
+							this.count = this.PostsList.length;
+							this.PostsList = response.data;
+							if (this.PostsList == undefined || this.PostsList.length == 0) {
+								this.questionnaireStarted = false
+								// this.getAllPosts()
+							}
+							else {
+								this.questionnaireStarted = true
+							}
+						})
+						.catch(e => {
+							this.errors.push(e)
+						})
 				}
 			}
 		},
