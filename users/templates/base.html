@@ -22,8 +22,8 @@
 	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.4.9/vue-router.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
 	
 	{% block pagecss %} {% endblock pagecss %}
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -54,18 +54,14 @@
 
 {% include 'common/footer.html' %}
 	
-<script>
+<script type="application/javascript">
 
 	window.addEventListener("load", checkScrollbar, false);
 	window.addEventListener("resize", checkScrollbar, false);
-	// this.checkScrollbar()
 
 	function checkScrollbar(params) {
 		var bodyContent = document.getElementById("body-content");
 		var footerElement = document.getElementById("footer");
-		
-		// console.log(bodyContent.offsetHeight)
-		// console.log(globalThis.innerHeight - footerElement.offsetHeight)
 
 		hasVerticalScrollbar = bodyContent.offsetHeight > globalThis.innerHeight;
 		// console.log(hasVerticalScrollbar);
