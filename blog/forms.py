@@ -15,11 +15,11 @@ class PostCreationForm(forms.ModelForm):
 
 
 class SubmissionForm(forms.ModelForm):
-    post = forms.UUIDField(widget=forms.HiddenInput())
+    post_identifier = forms.UUIDField()
 
     class Meta:
         model = Submission
-        fields = ('uploaded_file', 'post')
+        fields = ('uploaded_file',)
 
     def clean_post(self):
         post_identifier = self.cleaned_data['post']

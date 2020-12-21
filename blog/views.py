@@ -133,6 +133,8 @@ def upload_submission(request):
         if form.is_valid():
             submission = form.save(commit=False)
             submission.student_profile = request.user.student_profile
+            post = Post.objects.get(identifier=form.cleaned_data.get('post_identifier'))
+            submission.post = post
             form.save()
             messages.success(request, 'Submission uploaded')
             return HttpResponseRedirect(reverse('blog-post',  # TODO check if this is standard practice or not
