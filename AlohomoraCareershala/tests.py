@@ -183,5 +183,5 @@ class SystemTestCase(TestCase):
         self.assertEqual(response.context['post'], project_post)
 
         # logout student
-        self.client.post('/users/logout/')
+        response = self.client.post('/users/logout/', follow=True)
         self.assertFalse(response.context['user'].is_authenticated)
