@@ -109,6 +109,7 @@ def view_all_posts(request):
 @profile_completion_required
 @expert_only
 def add_post(request):
+    status_code = status.HTTP_200_OK
     if request.method == 'POST':
         form = PostCreationForm(request.POST)
         if form.is_valid():
@@ -118,6 +119,9 @@ def add_post(request):
             form.save_m2m()
             messages.success(request, 'Post has been added successfully!')
             form = PostCreationForm()
+            status_code = status.HTTP_201_CREATED
+        else:
+            status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
     else:
         post_type = request.GET.get('post_type', None)
         try:
@@ -125,7 +129,7 @@ def add_post(request):
         except ValidationError:
             return error(request, error_dict={'title': 'Bad Request', 'body': ''})
         form = PostCreationForm(initial={'type': post_type})
-    return render(request, 'blog/add_post.html', context={'form': form})
+    return render(request, 'blog/add_post.html', context={'form': form}, status=status_code)
 
 
 @login_required
