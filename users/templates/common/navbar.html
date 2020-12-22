@@ -4,24 +4,26 @@
 <div class="col-12 remove-pad">
   <nav id="navbar" class="navbar navbar-expand-sm navbar-light fixed-top navbar-background">
 
-    <!-- <div class="row"> -->
-
-      <!-- <div class="col-2"> -->
-        <button id="sidebar-toggler" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#accordionSidebar" aria-controls="accordionSidebar" aria-expanded="false" aria-label="Toggle sidebar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      <!-- </div> -->
-
-      <!-- <div class="col-8"> -->
-        <img id="alohomora-logo" src="{% static 'images/Alohomora.jpg' %}" class="d-inline-block align-top" alt="Alohomora">
-      <!-- </div> -->
-      
-      <!-- <div class="col-2"> -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      <!-- </div> -->
-    <!-- </div> -->
+    <div class="container align-items-center m-2">
+      <div class="row" style="width:100%">
+        <div class="col-12" style="padding-right:0px">
+        <!-- <div class="col-2"> -->
+          <button id="sidebar-toggler" class="navbar-toggler col-2" type="button" data-toggle="collapse" data-target="#accordionSidebar" aria-controls="accordionSidebar" aria-expanded="false" aria-label="Toggle sidebar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        <!-- </div> -->
+        
+        <!-- <div class="col-9"> -->
+          <img id="alohomora-logo" src="{% static 'images/Alohomora.jpg' %}" class="align-top" alt="Alohomora">
+        <!-- </div> -->
+        
+        <!-- <div class="col-2"> -->
+          <button class="navbar-toggler col-2" style="float: right;" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
@@ -79,12 +81,22 @@
 
   #alohomora-logo {
     max-width: 100%;
-    max-height: 80px;
-    display: block;
+    max-height: 65px;
+    /* display: block; */
     border: 5px solid #ffc038;
     border-radius: 10px;
-    margin: 5px;
   }
+
+  @media (max-width: 340px) { 
+    #alohomora-logo { max-width: 60%;}  
+  }
+
+  @media (max-width: 275px) { 
+    #alohomora-logo { display: none;}  
+  }
+
+ 
+
 
 </style>
 
