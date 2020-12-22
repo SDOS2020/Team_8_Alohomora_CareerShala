@@ -20,7 +20,7 @@
 		<h1 class="h3 mb-0 font-weight-bold text-gray-800"> {{ post_category }} </h1>
 	</div>
 
-	<div v-if="!questionnaireStarted" class="alert alert-warning p-3" role="alert">
+	<div v-if="!is_expert && !questionnaireStarted" class="alert alert-warning p-3" role="alert">
 		<!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button> -->
@@ -77,9 +77,9 @@
 <script type="application/javascript">
 	new Vue({
 		delimiters: ["[[", "]]"],
-		is_expert: "{{ is_expert }}",
 		data() {
 			return {
+				is_expert: ("{{ user.is_expert }}" == "True"),
 				cols: 1,
 				count: 1,
 				questionnaireStarted: false,
@@ -113,8 +113,8 @@
 					})
 			},
 			getPostsList() {
-				console.log("{{ user.is_expert }}")
-				if ("{{ user.is_expert }}" == "True") {	
+				console.log(this.is_expert)
+				if (this.is_expert) {	
 					console.log("Expert")
 					this.getAllPosts()
 				}
@@ -126,7 +126,7 @@
 							this.PostsList = response.data;
 							if (this.PostsList == undefined || this.PostsList.length == 0) {
 								this.questionnaireStarted = false
-								// this.getAllPosts()
+								this.getAllPosts()
 							}
 							else {
 								this.questionnaireStarted = true

@@ -58,9 +58,9 @@ Student Registration
 						id="input-first-name"
 						name="first_name"
 						required>
-					<small class="red">
+					<small style="color: red;">
 				        {% for error in form.first_name.errors %}
-				            <div class="alert-danger">
+				            <div class="alert-danger" style="margin-left: 5px;">
 				                <strong>{{ error }}</strong>
 				            </div>
 				        {% endfor %}
@@ -76,9 +76,9 @@ Student Registration
 						id="input-last-name" 
 						name="last_name"
 						required>
-					<small class="red">
+					<small style="color: red;">
 				        {% for error in form.last_name.errors %}
-				            <div class="alert-danger">
+				            <div class="alert-danger" style="margin-left: 5px;">
 				                <strong>{{ error }}</strong>
 				            </div>
 				        {% endfor %}
@@ -95,9 +95,9 @@ Student Registration
 						aria-describedby="emailHelp"
 						name="email">
 
-					<small class="red">
+					<small style="color: red;">
 				        {% for error in form.email.errors %}
-				            <div class="alert-danger">
+				            <div class="alert-danger" style="margin-left: 5px;">
 				                <strong>{{ error }}</strong>
 				            </div>
 				        {% endfor %}
@@ -119,9 +119,9 @@ Student Registration
 							id="input-password" 
 							name="password"
 							required>
-						<small class="red">
+							<small style="color: red;">
 					        {% for error in form.password.errors %}
-					            <div class="alert-danger">
+					            <div class="alert-danger" style="margin-left: 5px;">
 					                <strong>{{ error }}</strong>
 					            </div>
 					        {% endfor %}
@@ -146,9 +146,9 @@ Student Registration
 							{% if form.date_of_birth.value != None %}value="{{ form.date_of_birth.value|stringformat:'s' }}"{% endif %}
 							id="input-date-of-birth"
 							name="date_of_birth" >
-						<small class="red">
+						<small style="color: red;">
 					        {% for error in form.date_of_birth.errors %}
-					            <div class="alert-danger">
+					            <div class="alert-danger" style="margin-left: 5px;">
 					                <strong>{{ error }}</strong>
 					            </div>
 					        {% endfor %}
@@ -158,7 +158,7 @@ Student Registration
 					<input name="signup" type="submit" :disabled="matchPassword === false" value="Register" class="fadeIn third btn"/> &nbsp;
 					{% if error_message %}
 					<br>
-					<small class="red">{{ error_message }}</small> 	
+					<small style="color:red">{{ error_message }}</small> 	
 					{% endif %}
 				</div>
 		  	</form>
@@ -168,20 +168,24 @@ Student Registration
 
 
 <script type="application/javascript">
-		new Vue({
-			delimiters: ["[[", "]]"],
-			data() {
-				return {
-					password: '',
-					confirmPassword: '',
-				}
-			},
-			computed: {
-				matchPassword() {
-					return this.password==this.confirmPassword;
-				},
+	new Vue({
+		delimiters: ["[[", "]]"],
+		data() {
+			return {
+				password: '',
+				confirmPassword: '',
 			}
-		}).$mount('#passwordChecking');
+		},
+		computed: {
+			matchPassword() {
+				return this.password==this.confirmPassword;
+			},
+		}
+	}).$mount('#passwordChecking');
 </script>
+
+<style>
+	
+</style>
 
 {% endblock content %}

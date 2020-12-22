@@ -34,19 +34,21 @@ Login
 					id="email" 
 					class="fadeIn second" 
 					name="email" 
-					placeholder="email" 
+                    placeholder="email" 
+                    style="border: 2px solid #ffc038;"
 					required>
 			  <input 
 					type="password" 
 					id="password" 
 					class="fadeIn third" 
 					name="password" 
-					placeholder="password"
+                    placeholder="password"
+                    style="border: 2px solid #ffc038;"
 					required>
 			  <input name="login" type="submit" value="Login" class="fadeIn third btn btn-success"/> &nbsp;
-			  	<small class="red">
+			  	<small style="color:red">
 					{% for error in form.non_field_errors %}
-						<div class="alert-danger">
+						<div class="alert-danger" style="margin-left:5px;">
 							<strong>{{ error }}</strong>
                         </div>
                     {% endfor %}

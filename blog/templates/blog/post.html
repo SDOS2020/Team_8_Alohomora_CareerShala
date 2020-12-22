@@ -40,6 +40,7 @@
 
                         {% if not user.is_expert %}
                         <div class="row">
+                            <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
                                     <form method="POST" action="{% url 'blog-upload-submission' %}" enctype="multipart/form-data">
@@ -50,11 +51,13 @@
                                         
                                         <button type="submit" class="btn btn-dark" style="padding: 8px;">Upload</button>
                                     </form>
+                                    {% if last_uploaded_url %}
+                                        <p style="margin-bottom:0px;margin-top: 7px;">File uploaded at: <a href="{{ last_uploaded_url }}"> Current Submission </a></p>
+                                    {% endif %}
+
                                 </div>
                             </div>
-                            {% if last_uploaded_url %}
-                                <p>File uploaded at: <a href="{{ last_uploaded_url }}"> Current Submission </a></p>
-                            {% endif %}
+                            </div>
                         </div>
                         {% endif %}
 
