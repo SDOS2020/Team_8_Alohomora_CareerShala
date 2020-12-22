@@ -85,6 +85,7 @@ class SystemTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        logging.disable(logging.CRITICAL)
         signals.post_save.disconnect(receiver=send_verification_email, sender=CustomUser)
 
         interest_labels = ["Medicine", "Engineering", "Law", "Art", "Science"]
@@ -99,6 +100,7 @@ class SystemTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()
+        logging.disable(logging.NOTSET)
         signals.post_save.connect(receiver=send_verification_email, sender=CustomUser)
 
     def test_expert_student_interaction_via_posts(self):
