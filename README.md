@@ -1,3 +1,5 @@
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/SDOS2020/Team_8_Alohomora_CareerShala/Django%20CI/master?label=build%20on%20master) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/SDOS2020/Team_8_Alohomora_CareerShala/CodeQL/master?label=python%20code%20security%20analysis)
+
 **SDOS Group-8**
 
 Gaurav Agarwal (2017288)

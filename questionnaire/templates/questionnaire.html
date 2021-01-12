@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="padding-left: 0px;padding-right: 0px;">
 
 			<form>
 				<div class="card mb-3" style="border: none;" >
@@ -59,8 +59,8 @@
 					
 				</div>		
 			</form>
-			<small class="red">
-				<div v-if="errors.length !== 0" class="alert-danger" v-for="error in errors">
+			<small style="color:red">
+				<div v-if="errors.length !== 0" class="alert-danger" v-for="error in errors" style="margin-left:5px">
 					<li>[[error]]</li>
 				</div>
 			</small>
