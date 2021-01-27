@@ -27,3 +27,7 @@ def opportunities(request):
 @profile_completion_required
 def courses(request):
     return render(request, 'dashboard/courses.html')
+
+
+def home_admin(request):
+    return render(request, 'dashboard/home_admin.html')
