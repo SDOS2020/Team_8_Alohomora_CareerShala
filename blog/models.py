@@ -25,7 +25,7 @@ class Post(models.Model):
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     slug = models.SlugField(unique=True, null=True, blank=True, max_length=512)
     type = models.PositiveSmallIntegerField(choices=POST_TYPE, default=1)
-    tags = tagulous.models.TagField(related_name='posts', to=Tag)
+    tags = tagulous.models.TagField(related_name='posts', to=Tag, blank=True)
 
     author = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, related_name='blogs')
     title = models.CharField(max_length=255)

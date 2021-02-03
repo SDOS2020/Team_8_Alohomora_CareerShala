@@ -1,3 +1,5 @@
+import csv
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
@@ -8,7 +10,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from django.urls import reverse
 from rest_framework import permissions, status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.exceptions import ParseError, NotFound
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -79,7 +81,8 @@ def view_post(request, slug):
         context = {'post': post}
         if not request.user.is_expert:
             if Submission.objects.filter(student_profile=request.user.student_profile, post=post).exists():
-                last_uploaded_url = Submission.objects.get(student_profile=request.user.student_profile, post=post).uploaded_file.url
+                last_uploaded_url = Submission.objects.get(student_profile=request.user.student_profile,
+                                                           post=post).uploaded_file.url
                 context['last_uploaded_url'] = last_uploaded_url
         return render(request, 'blog/post.html', context=context)
     except ObjectDoesNotExist:
@@ -142,7 +145,9 @@ def upload_submission(request):
         if form.is_valid():
             post = Post.objects.get(identifier=form.cleaned_data.get('post_identifier'))
             if Submission.objects.filter(student_profile=request.user.student_profile, post=post).exists():
-                form = SubmissionForm(request.POST, request.FILES, instance=Submission.objects.get(student_profile=request.user.student_profile, post=post))
+                form = SubmissionForm(request.POST, request.FILES,
+                                      instance=Submission.objects.get(student_profile=request.user.student_profile,
+                                                                      post=post))
                 messages.success(request, 'Submission updated')
             else:
                 submission = form.save(commit=False)
@@ -157,3 +162,37 @@ def upload_submission(request):
         else:
             messages.error(request, 'Cannot submit, please try again later.')
             return redirect('dashboard-home')  # TODO redirect to the same page
+
+
+@api_view(['POST', ])
+@permission_classes([permissions.IsAuthenticated, user_permissions.IsAdmin])
+def import_posts(request):
+    if 'csvfile' not in request.FILES:
+        return Response(data={'detail': 'CSV file not uploaded.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    try:
+        reader = csv.DictReader(chunk.decode() for chunk in request.FILES['csvfile'])
+        required_headers = ['title', 'tags', 'body', 'preview', 'allow_comments']
+        if any(required_header not in reader.fieldnames for required_header in required_headers):
+            return Response(data={'detail': 'CSV file misses certain headers. Download a new template for reference.'},
+                            status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        post_forms = []
+        for row_number, row in enumerate(reader, start=2):
+            form_data = row.copy()
+            if '\ufefftype' in form_data:
+                form_data['type'] = form_data['\ufefftype']
+                del form_data['\ufefftype']
+            print(form_data)
+            form = PostCreationForm(data=form_data)
+            if not (form.is_valid()):
+                return Response(data={'detail': f'Invalid entry in row number {row_number} of the CSV file.'},
+                                status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+            post_forms.append((form, form_data))
+        for form, form_data in post_forms:
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            form.save_m2m()
+        return Response(status=status.HTTP_200_OK)
+
+    except UnicodeDecodeError:
+        return Response(data={'detail': 'Invalid CSV.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
