@@ -28,6 +28,7 @@ urlpatterns = [
     path('', views.homepage, name='homepage'),
     path('comments/', include('django_comments_xtd.urls')),  # TODO move it to blog app
     path('blog/', include('blog.urls')),
+    path('dummy/', views.dummy, name='dummy'),
 ]
 
 if settings.DEBUG:
