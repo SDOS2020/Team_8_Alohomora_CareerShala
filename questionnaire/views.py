@@ -9,7 +9,8 @@ from rest_framework.response import Response
 
 from questionnaire.models import QuestionnaireResponse, Questionnaire
 import users.permissions as user_permissions
-from questionnaire.serializers import QuestionnaireSerializer, QuestionnaireResponseSerializer
+from questionnaire.serializers import QuestionnaireSerializer, QuestionnaireResponseSerializer, \
+    QuestionnaireSerializer
 from users.models import CustomUser, StudentProfile
 
 
@@ -69,3 +70,13 @@ def reset_questionnaire_responses(request):
     logger = logging.getLogger('app.questionnaire.reset_questionnaire_response')
     logger.info(f'{request.user} has reset their responses')
     return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['GET', ])
+@permission_classes([permissions.IsAuthenticated, user_permissions.IsAdmin])
+def get_all_questionnaires(request):
+    questionnaires = Questionnaire.objects.all()
+    serializer = QuestionnaireSerializer(questionnaires, many=True)
+    logger = logging.getLogger('app.questionnaire.get_all_questionnaires')
+    logger.info(f'Admin: {request.user.email} requested the list of all questionnaires.')
+    return Response(serializer.data)

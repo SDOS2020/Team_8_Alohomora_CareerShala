@@ -6,25 +6,32 @@ from users.models import StudentProfile
 
 
 class OptionSerializer(serializers.ModelSerializer):
+    continuation_questionnaire = serializers.SlugRelatedField(slug_field='identifier',
+                                                              queryset=Questionnaire.objects.all(),
+                                                              read_only=False)
+
     class Meta:
         model = Option
-        fields = ['body', 'identifier', ]
+        fields = ['body', 'identifier', 'continuation_questionnaire']
+        read_only_fields = ['identifier']
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    option = OptionSerializer(many=True, read_only=True)
+    option = OptionSerializer(many=True, read_only=False)
 
     class Meta:
         model = Question
-        fields = ['body', 'multiselect', 'option', 'identifier', ]
+        fields = ['body', 'multiselect', 'option', 'identifier', 'position']
+        read_only_fields = ['identifier']
 
 
 class QuestionnaireSerializer(serializers.ModelSerializer):
-    question = QuestionSerializer(many=True, read_only=True)
+    question = QuestionSerializer(many=True, read_only=False)
 
     class Meta:
         model = Questionnaire
         fields = ['name', 'phase', 'question', 'identifier']
+        read_only_fields = ['identifier']
 
 
 class AnswerSerializer(serializers.ModelSerializer):
