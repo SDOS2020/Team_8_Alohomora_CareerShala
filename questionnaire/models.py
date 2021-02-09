@@ -75,7 +75,7 @@ class Option(models.Model):
     continuation_questionnaire = models.ForeignKey('Questionnaire', related_name='from_options', null=True,
                                                    blank=True,
                                                    on_delete=models.SET_NULL)
-    tags = tagulous.models.TagField(related_name='options', to=Tag)
+    tags = tagulous.models.TagField(related_name='options', to=Tag, blank=True)
 
     def clean(self):
         if self.continuation_questionnaire == self.question.questionnaire:
