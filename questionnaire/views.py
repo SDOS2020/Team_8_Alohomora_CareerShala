@@ -1,3 +1,4 @@
+import io
 import logging
 
 from django.shortcuts import render
@@ -5,6 +6,7 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
 from questionnaire.models import QuestionnaireResponse, Questionnaire
@@ -80,3 +82,17 @@ def get_all_questionnaires(request):
     logger = logging.getLogger('app.questionnaire.get_all_questionnaires')
     logger.info(f'Admin: {request.user.email} requested the list of all questionnaires.')
     return Response(serializer.data)
+
+
+@api_view(['POST', ])
+@permission_classes([permissions.IsAuthenticated, user_permissions.IsAdmin])
+def update_questionnaire(request):
+    serializer = QuestionnaireSerializer(data=request.data)
+    questionnaire_identifier = request.GET['identifier']
+    if serializer.is_valid():
+        if not Questionnaire.objects.filter(identifier=questionnaire_identifier).exists():
+            return Response(data={'detail': 'Questionnaire does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        questionnaire = Questionnaire.objects.get(identifier=questionnaire_identifier)
+        serializer.update(questionnaire, serializer.validated_data)
+        return Response(status=status.HTTP_200_OK)
+    return Response(data={'detail': 'Invalid request'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)

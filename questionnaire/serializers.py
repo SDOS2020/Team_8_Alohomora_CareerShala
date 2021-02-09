@@ -8,7 +8,9 @@ from users.models import StudentProfile
 class OptionSerializer(serializers.ModelSerializer):
     continuation_questionnaire = serializers.SlugRelatedField(slug_field='identifier',
                                                               queryset=Questionnaire.objects.all(),
-                                                              read_only=False)
+                                                              read_only=False,
+                                                              required=False,
+                                                              allow_null=True)
 
     class Meta:
         model = Option
@@ -17,7 +19,7 @@ class OptionSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    option = OptionSerializer(many=True, read_only=False)
+    option = OptionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question
@@ -26,7 +28,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class QuestionnaireSerializer(serializers.ModelSerializer):
-    question = QuestionSerializer(many=True, read_only=False)
+    question = QuestionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Questionnaire
