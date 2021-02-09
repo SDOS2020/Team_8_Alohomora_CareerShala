@@ -65,7 +65,7 @@ class OptionCreationForm(forms.ModelForm):
 class QuestionCreationForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ('body', 'questionnaire')
+        fields = ('body', 'questionnaire', 'multiselect')
 
     def clean(self):
         cleaned_data = super().clean()
