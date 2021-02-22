@@ -33,8 +33,12 @@
 							<div class="col-12 align-items-center center">
 								<h6 class="m-0 font-weight-bold">
 									[[ viewQuestionnaire.name ]]
-									<button class="btn btn-dark float-right" v-on:click="addQuestion(viewQuestionnaire, viewQuestionnaire.question.length)" title="Add a question at the end">
+									<button class="btn btn-dark float-right ml-3" v-on:click="addQuestion(viewQuestionnaire, viewQuestionnaire.question.length)" title="Add a question at the end">
 										<i class="fa fa-plus" aria-hidden="true"></i>
+									</button>
+									
+									<button href="#renameQuestionnaireModal" class="btn btn-dark trigger-btn float-right" data-toggle="modal" title="Edit Name">
+										<i class="fas fa-edit" style="color: #ffc038;"></i>
 									</button>
 								</h6>
 							</div>
@@ -138,8 +142,8 @@
 							<!-- Card Header - Dropdown -->
 							<div id="formFooter" class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
 								<div class="col-12 align-items-center center">
-									<h6 class="m-0 font-weight-bold"> Questionnares List
-										<button class="btn btn-dark float-right" v-on:click="addQuestionnaire()" title="Add a question at the end">
+									<h6 class="m-0 font-weight-bold"> Questionnaires List
+										<button class="btn btn-dark float-right" href="#addQuestionnaireModal" data-toggle="modal" title="Add a question at the end">
 											<i class="fa fa-plus" aria-hidden="true"></i>
 										</button>
 									</h6>
@@ -161,20 +165,6 @@
 								
 							</div>
 
-							<div class="card shadow mb-4">
-								<!-- Card Header - Dropdown -->
-								
-								<!-- Card Body -->
-								<div class="card-body" style="padding-top: 0px; padding-bottom: 0px;">
-									<div class="row">
-										<div class="col-12 center" style="background-color: #fff2bf;">
-											<button class="btn btn-dark" v-on:click="submitQuestionnaire()">
-												SAVE
-											</button>
-										</div>
-									</div>
-							</div>
-
 						</div>
 					<!-- </div> -->
 				</div>
@@ -183,7 +173,7 @@
 		</div>
 		<!-- End of Main Content -->
 		
-		<!-- Modal HTML -->
+		<!-- Delete Question Modal HTML -->
 		<div id="deleteQuestionModal" class="modal fade">
 			<div class="modal-dialog modal-confirm">
 				<div class="modal-content">
@@ -206,7 +196,7 @@
 			</div>
 		</div>
 
-		<!-- Modal HTML -->
+		<!-- Delete Questionnaire Modal HTML -->
 		<div id="deleteQuestionnaireModal" class="modal fade">
 			<div class="modal-dialog modal-confirm">
 				<div class="modal-content">
@@ -228,6 +218,87 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Rename Questionnaire Modal HTML -->
+		<div id="renameQuestionnaireModal" class="modal fade" v-if="viewQuestionnaire">
+			<div class="modal-dialog modal-confirm">
+				<div class="modal-content container">
+					<div class="modal-header flex-column">
+						<div class="icon-box" >
+							<i class="fas fa-trash-alt"></i>
+						</div>						
+						<h4 class="modal-title w-100">Enter the new title for the questionnaire titled, "[[ viewQuestionnaire.name ]]" :</h4>	
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<form class="col-12">
+						<div class="modal-body">
+							<div class="form-group custom-control">
+								<div class="row justify-content-center">
+									<input 
+									required
+									id="renameQuestionnaireNameID"
+									type="text"
+									v-model="newQuestionnaireName"
+									placeholder="e.g. New Questionnaire">
+								</div>
+							</div>							
+						</div>
+						<div class="modal-footer justify-content-center">
+							<button type="button" class="btn btn-primary" v-on:click="renameQuestionnaire()" style="background-color:#ffc038;">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Add Questionnaire Modal HTML -->
+		<div id="addQuestionnaireModal" class="modal fade">
+			<div class="modal-dialog modal-confirm">
+				<div class="modal-content container">
+					<div class="modal-header flex-column">
+						<div class="icon-box">
+							<i class="fas fa-plus" style="color: #ffc038;"></i>
+						</div>						
+						<h4 class="modal-title w-100">Enter the name of the new questionnaire:</h4>	
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<form class="col-12">
+						<div class="modal-body">
+							<div class="form-group custom-control">
+								<div class="row justify-content-center">
+									<input 
+										required
+										id="newQuestionnaireNameID"
+										type="text"
+										v-model="newQuestionnaireName"
+										placeholder="e.g. Questionnaire 1">
+									
+								</div>
+								<div class="row justify-content-center mt-2">
+									<label for="newQuestionnairePhase" class="mr-2 mb-0" style="color:#858796;">Select Phase: </label>
+									<select
+										required
+										id="newQuestionnairePhase"
+										type="Number"
+										v-model="newQuestionnairePhase"
+										placeholder="1">
+
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+
+									</select>
+								</div>
+							</div>							
+						</div>
+						<div class="modal-footer justify-content-center">
+							<button type="button" class="btn btn-primary" v-on:click="addQuestionnaire()" style="background-color:#ffc038;">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<style>
@@ -235,12 +306,31 @@
 	</style>
 
 	<script>
+
+		function getCookie(name) {
+			let cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				const cookies = document.cookie.split(';');
+				for (let i = 0; i < cookies.length; i++) {
+					const cookie = cookies[i].trim();
+					
+					if (cookie.substring(0, name.length + 1) === (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+
 		new Vue({
 			delimiters: ["[[", "]]"],
 			data() {
 				return {
 					temp: true,
 					message: "HAAAAAAAAA",
+					newQuestionnaireName: null,
+					newQuestionnairePhase: null,
 					viewQuestionnaire: null,
 					deleteQuestionId: null,
 					deleteQuestionnaireId: null,
@@ -254,12 +344,15 @@
 			},
 			methods: {
 				getQuestionnaireAdmin(evt) {
+					this.questionnairesList = []
 					axios.get(`{% url 'api-questionnaire-get-all-questionnaires' %}`)
 					.then( response => {
 						const data = response.data;
 
 						data.forEach(element => {
 							let questionnaire = {
+								identifier: element.identifier,
+								root: element.root,
 								name: element.name,
 								editMode: false,
 								phase: element.phase,
@@ -311,33 +404,85 @@
 					console.log("Save question:", question)
 				},
 
-				addQuestionnaire() {
-					console.log(this.questionnairesList)
-					questionnaire_count = this.questionnairesList.length;
-					new_questionnaire = {
-									name: "Questionnaire ".concat(questionnaire_count.toString()),
-									root: false,
-									phase: questionnaire_count,
-									question: []
-								}
+				renameQuestionnaire() {
+					if (this.newQuestionnaireName === "") {
+						alert('Please enter the new name!')
+					} else {
 
-					this.questionnairesList.push(new_questionnaire);
+						var body = {
+							name: this.newQuestionnaireName,
+							phase: this.viewQuestionnaire.phase,
+						};
+
+						console.log(this.viewQuestionnaire)
+						
+						var questionnaireID = this.viewQuestionnaire.identifier;
+						axios.post(`{% url 'api-questionnaire-update-questionnaire' %}?identifier=` + questionnaireID.toString(), body, {
+							headers: {
+								'X-CSRFTOKEN': getCookie('csrftoken')
+							},
+						})
+						.then(response => {
+							$('#renameQuestionnaireModal').modal('toggle');
+							this.viewQuestionnaire.name = this.newQuestionnaireName;
+						})
+						.catch(e => {
+							this.errors.push(e);
+							this.selected = []
+							this.tempResponses.pop();
+						})
+						
+					}
+				},
+
+				addQuestionnaire() {
+					console.log(this.questionnairesList, this.newQuestionnaireName)
+
+					if (this.newQuestionnaireName == null || this.newQuestionnairePhase == null) {
+						alert('Please fill the details!')
+					} else {
+						
+						questionnaire_count = this.questionnairesList.length;
+						new_questionnaire = {
+							name: this.newQuestionnaireName,
+							phase: this.newQuestionnairePhase,
+							root: false,
+						}
+
+						axios.post(`{% url 'api-questionnaire-add-questionnaire' %}`, new_questionnaire, {
+							headers: {
+								'X-CSRFTOKEN': getCookie('csrftoken')
+							},
+						})
+						.then(response => {
+							$('#addQuestionnaireModal').modal('toggle');
+							this.newQuestionnairePhase = null;
+							this.newQuestionnaireName = null;
+							
+							this.getQuestionnaireAdmin();
+						})
+						.catch(e => {
+							this.errors.push(e);
+							this.selected = []
+							this.tempResponses.pop();
+						})						
+					}
 					return; 
 				},
 
 				addQuestion(questionnaire, questionPos) {
 					console.log("Adding new question at pos: ", questionPos)
 					new_question = {
-									editMode: false,
-									body: "Enter question title here ...",
-									type: "checkbox",
-									selected: [],
-									option: [
-										{
-											body: "Edit option ..."
-										}
-									]
-								}
+						editMode: false,
+						body: "Enter question title here ...",
+						type: "checkbox",
+						selected: [],
+						option: [
+							{
+								body: "Edit option ..."
+							}
+						]
+					}
 
 					if (questionPos == questionnaire.question.length) {
 						questionnaire.question.push(new_question);
@@ -361,9 +506,24 @@
 				},
 
 				deleteQuestion() {
-					this.viewQuestionnaire.question.splice(Number(this.deleteQuestionId), 1)
-					this.deleteQuestionId = null;
-					this.deleteQuestionTitle = null;
+					var questionID = this.viewQuestionnaire.question[this.deleteQuestionId].identifier;
+					axios.post(`{% url 'api-question-delete-question' %}?identifier=` + questionID.toString(), null , {
+						headers: {
+							'X-CSRFTOKEN': getCookie('csrftoken')
+						},
+					})
+					.then(response => {
+						$('#deleteQuestionnaireModal').modal('toggle');
+						this.viewQuestionnaire.question.splice(Number(this.deleteQuestionId), 1)
+						this.deleteQuestionId = null;
+						this.deleteQuestionTitle = null;
+					})
+					.catch(e => {
+						this.errors.push(e);
+						this.selected = []
+						this.tempResponses.pop();
+					})
+					
 				},
 
 				removeOption(question, opt_index) {
@@ -376,8 +536,23 @@
 				},
 				
 				deleteQuestionnaire() {
-					this.questionnairesList.splice(Number(this.deleteQuestionnaireId), 1);
-					this.deleteQuestionnaireId = null;
+					var questionnaireID = this.questionnairesList[this.deleteQuestionnaireId].identifier;
+					axios.post(`{% url 'api-questionnaire-delete-questionnaire' %}?identifier=` + questionnaireID.toString(), null , {
+						headers: {
+							'X-CSRFTOKEN': getCookie('csrftoken')
+						},
+					})
+					.then(response => {
+						$('#deleteQuestionnaireModal').modal('toggle');
+						this.questionnairesList.splice(Number(this.deleteQuestionnaireId), 1);
+						this.deleteQuestionnaireId = null;
+					})
+					.catch(e => {
+						this.errors.push(e);
+						this.selected = []
+						this.tempResponses.pop();
+					})
+
 				},
 
 				addOption(question) {
