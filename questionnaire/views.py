@@ -96,3 +96,24 @@ def update_questionnaire(request):
         serializer.update(questionnaire, serializer.validated_data)
         return Response(status=status.HTTP_200_OK)
     return Response(data={'detail': 'Invalid request'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+
+@api_view(['POST', ])
+@permission_classes([permissions.IsAuthenticated, user_permissions.IsAdmin])
+def add_questionnaire(request):
+    serializer = QuestionnaireSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.create(serializer.validated_data)
+        return Response(status=status.HTTP_200_OK)
+    return Response(data=serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY) # TODO is it safe to send serializer.errors field?
+
+
+@api_view(['POST', ])
+@permission_classes([permissions.IsAuthenticated, user_permissions.IsAdmin])
+def delete_questionnaire(request):
+    identifier = request.GET['identifier']
+    if not Questionnaire.objects.filter(identifier=identifier).exists():
+        return Response(data={'detail': 'Questionnaire does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    questionnaire = Questionnaire.objects.get(identifier=identifier)
+    questionnaire.delete()
+    return Response(status=status.HTTP_200_OK)
