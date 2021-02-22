@@ -11,4 +11,8 @@ urlpatterns = [
          name='api-questionnaire-get-all-questionnaires'),
     path('update_questionnaire/', views.update_questionnaire,
          name='api-questionnaire-update-questionnaire'),
+    path('add_questionnaire/', views.add_questionnaire,
+         name='api-questionnaire-add-questionnaire'),
+    path('delete_questionnaire/', views.delete_questionnaire,
+         name='api-questionnaire-delete-questionnaire'),
 ]
