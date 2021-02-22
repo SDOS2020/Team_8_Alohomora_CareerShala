@@ -49,37 +49,41 @@
 										<div class="card mb-3" style="border: none;" v-for="(question, q_idx) in viewQuestionnaire.question" :key="q_idx">
 											<div class="card-header py-6" style="background-color: #fff2bf;">
 												<div class="float-right">
-													<button v-if="!question.editMode" class="btn btn-dark" v-on:click="editQuestion(question)" title="Edit the question below">
-														<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-													</button>
-													<div v-if="question.editMode">
-														<button class="btn btn-dark" v-if="question.editMode" v-on:click="saveQuestion(question)" title="Edit the question below">
-															Save Question
-														</button>
-														[[ temp ]]
-														<div class="form-group custom-control">
-															<input 
-																type="checkbox" 
-																class="toggle-input"
-																data-toggle="toggle" 
-																data-on="Expert" 
-																data-off="Student"
-																v-model="temp"
-																data-onstyle="warning" 
-																data-offstyle="warning">
+													<div class="row">
+
+														<div v-if="!question.editMode">
+															<button class="btn btn-dark" v-on:click="editQuestion(question)" title="Edit the question below">
+																<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+															</button>
+															<button class="btn btn-dark" v-on:click="addQuestion(viewQuestionnaire, q_idx+1)" title="Add a question below">
+																<i class="fa fa-plus" aria-hidden="true"></i>
+															</button>
+
+															<button href="#deleteQuestionModal" class="btn btn-dark trigger-btn" data-toggle="modal" v-on:click="deleteQuestionWarning(q_idx)" title="Delete this question">
+																<i class="fas fa-trash-alt" aria-hidden="true"></i>
+															</button>
+														</div>
+														<div v-if="question.editMode">
+															<button class="btn btn-dark" v-if="question.editMode" v-on:click="saveQuestion(question)" title="Edit the question below">
+																Save Question
+															</button>
+															
+															<!-- <div class="form-group custom-control">
+																<input 
+																	type="checkbox" 
+																	class="toggle-input"
+																	data-toggle="toggle" 
+																	data-on="Expert" 
+																	data-off="Student"
+																	v-model="temp"
+																	data-onstyle="warning" 
+																	data-offstyle="warning">
+															</div> -->
+															<button class="btn btn-dark" v-on:click="addOption(question)" title="Add an option below">
+																Add option
+															</button>
 														</div>
 													</div>
-													<button v-if="question.editMode" class="btn btn-dark" v-on:click="addOption(question)" title="Add an option below">
-														Add option
-													</button>
-													
-													<button class="btn btn-dark" v-on:click="addQuestion(viewQuestionnaire, q_idx+1)" title="Add a question below">
-														<i class="fa fa-plus" aria-hidden="true"></i>
-													</button>
-
-													<button href="#deleteQuestionModal" class="btn btn-dark trigger-btn" data-toggle="modal" v-on:click="deleteQuestionWarning(q_idx)" title="Delete this question">
-														<i class="fa fa-minus" aria-hidden="true"></i>
-													</button>
 												</div>
 											</div>
 											
@@ -87,7 +91,7 @@
 												<div class="card-header py-6" style="background-color: white;">
 													<h5><b> 
 														<div v-if="question.editMode">
-															<input type="text" :value="question.body" v-model="question.body">
+															<input type="text" :value="question.body" v-model="question.body" style="width: 100%;">
 														</div>
 														<div v-else>
 															<i class="fa fa-bars" aria-hidden="true"></i> 
@@ -101,15 +105,18 @@
 													<div class="form-check mt-1" style="padding-top:0px">
 														
 														<div v-if="question.editMode">
-															<!-- <draggable v-model="question.option" group="option" @start="drag=true" @end="drag=false"> -->
-																<div class="container" v-for="(opt, opt_index) in question.option" :key="opt_index"> 
-																	<!-- <i class="fa fa-bars" aria-hidden="true"></i>  -->
-																	<input type="text" :value="opt.body" v-model="opt.body">
-																	<a class="btn btn-dark" title="Remove Option" v-on:click="removeOption(question, opt_index)">
-																		<i class="fa fa-minus" aria-hidden="true"></i>
-																	</a>
+															<div class="container" v-for="(opt, opt_index) in question.option" :key="opt_index"> 
+																<div class="row">
+																	<div class="col-10">
+																		<input type="text" :value="opt.body" v-model="opt.body" style="width: 100%;">
+																	</div>
+																	<div class="col-2">
+																		<a class="btn btn-dark" title="Remove Option" v-on:click="removeOption(question, opt_index)">
+																			<i class="fas fa-trash-alt" aria-hidden="true" style="color: #ffc038;"></i>
+																		</a>
+																	</div>
 																</div>
-															<!-- </draggable> -->
+															</div>
 														</div>
 														<ul v-else v-for="opt in question.option">
 															<li> [[ opt.body ]] </li>
@@ -131,7 +138,7 @@
 							<!-- Card Header - Dropdown -->
 							<div id="formFooter" class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
 								<div class="col-12 align-items-center center">
-									<h6 class="m-0 font-weight-bold"> Questionares List
+									<h6 class="m-0 font-weight-bold"> Questionnares List
 										<button class="btn btn-dark float-right" v-on:click="addQuestionnaire()" title="Add a question at the end">
 											<i class="fa fa-plus" aria-hidden="true"></i>
 										</button>
@@ -140,26 +147,34 @@
 							</div>
 							<!-- Card Body -->
 							<div class="card-body">
-								<div class="row">
+
+								<div class="row" v-for="(questionnaire, index) in questionnairesList" :key="index">
 									<div class="col-12 center">
-										<button v-if="rootQuestionnaire" class="btn btn-dark" v-on:click="showQuestionnaire(rootQuestionnaire)">
-											[[ rootQuestionnaire.name ]]
+										<button class="btn btn-dark" v-on:click="showQuestionnaire(questionnaire)">
+											[[ questionnaire.name ]]
+										</button>
+										<button href="#deleteQuestionnaireModal" v-if='index!=0' class="btn btn-dark trigger-btn" data-toggle="modal" title="Remove this Questionnaire" v-on:click="deleteQuestionnaireWarning(index)">
+											<i class="fas fa-trash-alt" style="color: red;"></i>
 										</button>
 									</div>
 								</div>
+								
+							</div>
 
-								<draggable v-model="questionnairesList" group="questionnaire" @start="drag=true" @end="drag=false">
-									<div class="row" v-for="(questionnaire, index) in questionnairesList" :key="index" v-if="index >= 1">
-										<div class="col-12 center">
-											<i class="fa fa-bars" aria-hidden="true"></i> 
-											<button class="btn btn-dark" v-on:click="showQuestionnaire(questionnaire)">
-												[[ questionnaire.name ]]
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								
+								<!-- Card Body -->
+								<div class="card-body" style="padding-top: 0px; padding-bottom: 0px;">
+									<div class="row">
+										<div class="col-12 center" style="background-color: #fff2bf;">
+											<button class="btn btn-dark" v-on:click="submitQuestionnaire()">
+												SAVE
 											</button>
 										</div>
 									</div>
-								</draggable>
-								
 							</div>
+
 						</div>
 					<!-- </div> -->
 				</div>
@@ -174,8 +189,8 @@
 				<div class="modal-content">
 					
 					<div class="modal-header flex-column">
-						<div class="icon-box">
-							<i class="fas fa-trash"></i>
+						<div class="icon-box" >
+							<i class="fas fa-trash-alt"></i>
 						</div>						
 						<h4 class="modal-title w-100">Are you sure?</h4>	
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -184,8 +199,31 @@
 						<p>Do you really want to delete the question titled, " [[ deleteQuestionTitle ]] "? This process cannot be undone.</p>
 					</div>
 					<div class="modal-footer justify-content-center">
-						<button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-danger" v-on:click="deleteQuestion()" data-dismiss="modal">Delete</button>
+						<button type="button" class="btn btn-dark" data-dismiss="modal" style="background-color:#262626;">Cancel</button>
+						<button type="button" class="btn btn-danger" v-on:click="deleteQuestion()" data-dismiss="modal" style="background-color:#ffc038;"> Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal HTML -->
+		<div id="deleteQuestionnaireModal" class="modal fade">
+			<div class="modal-dialog modal-confirm">
+				<div class="modal-content">
+					
+					<div class="modal-header flex-column">
+						<div class="icon-box" >
+							<i class="fas fa-trash-alt"></i>
+						</div>						
+						<h4 class="modal-title w-100">Are you sure?</h4>	
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<p>Do you really want to delete the questionnaire no, [[ deleteQuestionnaireId + 1 ]]? This process cannot be undone.</p>
+					</div>
+					<div class="modal-footer justify-content-center">
+						<button type="button" class="btn btn-dark" data-dismiss="modal" style="background-color:#262626;">Cancel</button>
+						<button type="button" class="btn btn-danger" v-on:click="deleteQuestionnaire()" data-dismiss="modal" style="background-color:#ffc038;"> Delete</button>
 					</div>
 				</div>
 			</div>
@@ -205,9 +243,155 @@
 					message: "HAAAAAAAAA",
 					viewQuestionnaire: null,
 					deleteQuestionId: null,
+					deleteQuestionnaireId: null,
 					deleteQuestionTitle: null,
 					rootQuestionnaire: null,
-					questionnairesList: [
+					questionnairesList: [],
+				}
+			},
+			created() {
+				this.getQuestionnaireAdmin();
+			},
+			methods: {
+				getQuestionnaireAdmin(evt) {
+					axios.get(`{% url 'api-questionnaire-get-all-questionnaires' %}`)
+					.then( response => {
+						const data = response.data;
+
+						data.forEach(element => {
+							let questionnaire = {
+								name: element.name,
+								editMode: false,
+								phase: element.phase,
+								question: []
+							}
+
+							element.question.forEach(ques => {
+								let question = {
+									editMode: false,
+									body: ques.body,
+									multiselect: ques.multiselect,
+									type: "radio",
+									selected: [],
+									option: []
+								}
+								
+								ques.option.forEach(opt => {
+									let newOption = {
+											body: opt.body,
+											continuation_questionnaire: opt.continuation_questionnaire,
+										}
+									question.option.push(newOption);
+								})
+
+								questionnaire.question.push(question);
+							})
+
+							this.questionnairesList.push(questionnaire);
+						});
+						console.log(this.questionnairesList)
+						
+					})
+					.catch(e => {
+						console.log(e)
+					})
+				},
+				
+				showQuestionnaire(questionnaire) {
+					this.viewQuestionnaire =  questionnaire
+				},
+				
+				editQuestion(question) {
+					question.editMode = true;
+					console.log("Edit question:", question)
+				},
+
+				saveQuestion(question) {
+					question.editMode = false;
+					console.log("Save question:", question)
+				},
+
+				addQuestionnaire() {
+					console.log(this.questionnairesList)
+					questionnaire_count = this.questionnairesList.length;
+					new_questionnaire = {
+									name: "Questionnaire ".concat(questionnaire_count.toString()),
+									root: false,
+									phase: questionnaire_count,
+									question: []
+								}
+
+					this.questionnairesList.push(new_questionnaire);
+					return; 
+				},
+
+				addQuestion(questionnaire, questionPos) {
+					console.log("Adding new question at pos: ", questionPos)
+					new_question = {
+									editMode: false,
+									body: "Enter question title here ...",
+									type: "checkbox",
+									selected: [],
+									option: [
+										{
+											body: "Edit option ..."
+										}
+									]
+								}
+
+					if (questionPos == questionnaire.question.length) {
+						questionnaire.question.push(new_question);
+						return;
+					}
+					new_questionsList = []
+					for (let i = 0; i < questionnaire.question.length; i++) {
+						const element = questionnaire.question[i];
+						if (questionPos == i) {
+							new_questionsList.push(new_question);
+						}
+						new_questionsList.push(element);
+					}
+
+					questionnaire.question = new_questionsList;
+				},
+
+				deleteQuestionWarning(questionPos) {
+					this.deleteQuestionId = questionPos;
+					this.deleteQuestionTitle = this.viewQuestionnaire.question[questionPos].body;
+				},
+
+				deleteQuestion() {
+					this.viewQuestionnaire.question.splice(Number(this.deleteQuestionId), 1)
+					this.deleteQuestionId = null;
+					this.deleteQuestionTitle = null;
+				},
+
+				removeOption(question, opt_index) {
+					question.option.splice(Number(opt_index), 1);
+				},
+
+				deleteQuestionnaireWarning(index) {
+					this.deleteQuestionnaireId = index;
+					console.log("Warning ", index)
+				},
+				
+				deleteQuestionnaire() {
+					this.questionnairesList.splice(Number(this.deleteQuestionnaireId), 1);
+					this.deleteQuestionnaireId = null;
+				},
+
+				addOption(question) {
+					question.option.push({ body: "", continuation_questionnaire: null });
+				}
+
+			},
+		}).$mount('#admin-dashboard');
+
+	</script>
+
+{% endblock dashboardPage %}
+
+<!-- questionnairesList: [
 						{
 							name: "Questionnaire 0",
 							root: false,
@@ -397,114 +581,4 @@
 								}
 							]
 						}
-					],
-				}
-			},
-			created() {
-				this.getQuestionnaireAdmin();
-				this.rootQuestionnaire = this.questionnairesList[0];
-			},
-			methods: {
-				getQuestionnaireAdmin(evt) {
-					axios.get(`{% url 'api-questionnaire-next-questionnaire' %}`)
-					.then( response => {
-						this.questionnairesList[0].question = response.data.question;
-
-						for (let i = 0; i < this.questionnairesList[0].question.length; ++i) {
-							if (this.questionnairesList[0].question.multiselect)
-								this.questionnairesList[0].question.type = "checkbox";
-							else
-								this.questionnairesList[0].question.type = "radio";
-
-						}
-
-					})
-					.catch(e => {
-						console.log(e)
-					})
-				},
-				
-				showQuestionnaire(questionnaire) {
-					this.viewQuestionnaire =  questionnaire
-				},
-				
-				editQuestion(question) {
-					console.log("Edit question:", question)
-					question.editMode = true;
-				},
-
-				saveQuestion(question) {
-					console.log("Save question:", question)
-					question.editMode = false;
-				},
-
-				addQuestionnaire() {
-					// !!!!!!! IMPORTANT
-					console.log(this.questionnairesList)
-					questionnaire_count = this.questionnairesList.length;
-					new_questionnaire = {
-									name: "Questionnaire ".concat(questionnaire_count.toString()),
-									root: false,
-									phase: questionnaire_count,
-									question: []
-								}
-
-					this.questionnairesList.push(new_questionnaire);
-					return; 
-				},
-
-				addQuestion(questionnaire, questionPos) {
-					console.log("Adding new question at pos: ", questionPos)
-					new_question = {
-									editMode: false,
-									body: "Enter question title here ...",
-									type: "checkbox",
-									selected: [],
-									option: [
-										{
-											body: "Edit option ..."
-										}
-									]
-								}
-
-					if (questionPos == questionnaire.question.length) {
-						questionnaire.question.push(new_question);
-						return;
-					}
-					new_questionsList = []
-					for (let i = 0; i < questionnaire.question.length; i++) {
-						const element = questionnaire.question[i];
-						if (questionPos == i) {
-							new_questionsList.push(new_question);
-						}
-						new_questionsList.push(element);
-					}
-
-					questionnaire.question = new_questionsList;
-				},
-
-				deleteQuestionWarning(questionPos) {
-					this.deleteQuestionId = questionPos;
-					this.deleteQuestionTitle = this.viewQuestionnaire.question[questionPos].body;
-					console.log(this.deleteQuestionTitle)
-				},
-
-				deleteQuestion() {
-					console.log("deleting question id:", this.deleteQuestionId)
-					this.viewQuestionnaire.question.splice(Number(this.deleteQuestionId), 1)
-				},
-
-				removeOption(question, opt_index) {
-					question.option.splice(Number(opt_index), 1);
-				},
-
-				addOption(question) {
-					question.option.push({ body: "", continuation_questionnaire: null });
-				}
-
-			},
-		}).$mount('#admin-dashboard');
-
-	</script>
-
-{% endblock dashboardPage %}
+					], -->
