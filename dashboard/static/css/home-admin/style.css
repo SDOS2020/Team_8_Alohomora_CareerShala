@@ -43,10 +43,10 @@ modal-confirm {
 	border-radius: 50%;
 	z-index: 9;
 	text-align: center;
-	border: 3px solid #f15e5e;
+	border: 3px solid #ffc038;
 }
 .modal-confirm .icon-box i {
-	color: #f15e5e;
+	color: #ffc038;
 	font-size: 46px;
 	display: inline-block;
 	margin-top: 13px;
