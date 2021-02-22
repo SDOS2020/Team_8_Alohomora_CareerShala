@@ -32,8 +32,8 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Questionnaire
-        fields = ['name', 'phase', 'question', 'identifier']
-        read_only_fields = ['identifier']
+        fields = ['name', 'phase', 'question', 'identifier', 'root']
+        read_only_fields = ['identifier', 'root']
 
 
 class AnswerSerializer(serializers.ModelSerializer):
