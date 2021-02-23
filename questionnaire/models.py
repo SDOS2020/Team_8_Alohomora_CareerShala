@@ -57,7 +57,7 @@ class Questionnaire(models.Model):
 class Question(models.Model):
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     body = models.CharField(max_length=1000)
-    questionnaire = models.ForeignKey('Questionnaire', related_name='question', on_delete=models.CASCADE)
+    questionnaire = models.ForeignKey('Questionnaire', related_name='question', on_delete=models.CASCADE, to_field='identifier')
     multiselect = models.BooleanField(default=False)
     position = models.PositiveSmallIntegerField("position", null=True)
 
@@ -71,7 +71,7 @@ class Question(models.Model):
 class Option(models.Model):
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     body = models.CharField(max_length=1000)
-    question = models.ForeignKey('Question', related_name='option', on_delete=models.CASCADE)
+    question = models.ForeignKey('Question', related_name='option', on_delete=models.CASCADE, to_field='identifier')
     continuation_questionnaire = models.ForeignKey('Questionnaire', related_name='from_options', null=True,
                                                    blank=True,
                                                    on_delete=models.SET_NULL)
