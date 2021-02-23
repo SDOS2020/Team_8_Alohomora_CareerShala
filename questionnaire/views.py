@@ -95,7 +95,8 @@ def update_questionnaire(request):
                             status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         questionnaire = Questionnaire.objects.get(identifier=questionnaire_identifier)
         serializer.update(questionnaire, serializer.validated_data)
-        return Response(status=status.HTTP_200_OK)
+        return_dict = {'identifier': questionnaire.identifier, 'phase': questionnaire.phase, 'name': questionnaire.name}
+        return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data={'detail': 'Invalid request'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
@@ -104,8 +105,9 @@ def update_questionnaire(request):
 def add_questionnaire(request):
     serializer = QuestionnaireSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.create(serializer.validated_data)
-        return Response(status=status.HTTP_200_OK)
+        questionnaire = serializer.create(serializer.validated_data)
+        return_dict = {'identifier': questionnaire.identifier, 'phase': questionnaire.phase, 'name': questionnaire.name}
+        return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data=serializer.errors,
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)  # TODO is it safe to send serializer.errors field?
 
@@ -131,7 +133,8 @@ def update_question(request):
             return Response(data={'detail': 'Question does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         question = Question.objects.get(identifier=question_identifier)
         serializer.update(question, serializer.validated_data)
-        return Response(status=status.HTTP_200_OK)
+        return_dict = {'identifier': question.identifier, 'name': question.name}
+        return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data={'detail': 'Invalid request'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
@@ -140,8 +143,9 @@ def update_question(request):
 def add_question(request):
     serializer = QuestionSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.create(serializer.validated_data)
-        return Response(status=status.HTTP_200_OK)
+        question = serializer.create(serializer.validated_data)
+        return_dict = {'identifier': question.identifier, 'name': question.name}
+        return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data=serializer.errors,
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)  # TODO is it safe to send serializer.errors field?
 
@@ -167,7 +171,8 @@ def update_option(request):
             return Response(data={'detail': 'Option does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         option = Option.objects.get(identifier=option_identifier)
         serializer.update(option, serializer.validated_data)
-        return Response(status=status.HTTP_200_OK)
+        return_dict = {'identifier': option.identifier, 'name': option.name}
+        return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data={'detail': 'Invalid request'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
@@ -176,8 +181,9 @@ def update_option(request):
 def add_option(request):
     serializer = OptionSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.create(serializer.validated_data)
-        return Response(status=status.HTTP_200_OK)
+        option = serializer.create(serializer.validated_data)
+        return_dict = {'identifier': option.identifier, 'name': option.name}
+        return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data=serializer.errors,
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)  # TODO is it safe to send serializer.errors field?
 
