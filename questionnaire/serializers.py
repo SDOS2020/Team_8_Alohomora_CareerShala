@@ -15,7 +15,7 @@ class OptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Option
-        fields = ['body', 'identifier', 'continuation_questionnaire']
+        fields = ['body', 'identifier', 'continuation_questionnaire', 'question']
         read_only_fields = ['identifier']
 
 
@@ -25,7 +25,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['body', 'multiselect', 'option', 'identifier', 'position']
+        fields = ['body', 'multiselect', 'option', 'identifier', 'position', 'questionnaire']
         read_only_fields = ['identifier']
 
 
