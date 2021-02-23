@@ -1,6 +1,7 @@
 import io
 import logging
 
+from django.db.models import Q, F
 from django.shortcuts import render
 
 # Create your views here.
@@ -144,6 +145,9 @@ def add_question(request):
     serializer = QuestionSerializer(data=request.data)
     if serializer.is_valid():
         question = serializer.create(serializer.validated_data)
+        position = question.position
+        questions_below = Question.objects.filter(Q(position__gte=position) & ~Q(identifier=question.identifier))
+        questions_below.update(position=F('position')+1)
         return_dict = {'identifier': question.identifier, 'body': question.body}
         return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data=serializer.errors,
@@ -157,7 +161,10 @@ def delete_question(request):
     if not Question.objects.filter(identifier=identifier).exists():
         return Response(data={'detail': 'Question does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     question = Question.objects.get(identifier=identifier)
+    position = question.position
     question.delete()
+    questions_below = Question.objects.filter(position__gt=position)
+    questions_below.update(position=F('position')-1)
     return Response(status=status.HTTP_200_OK)
 
 
