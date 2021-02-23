@@ -14,131 +14,131 @@
 {% block dashboardPage %}
 
 <div class="container" id="post">
-    <div class="row">
-        <div class="col-12">
-            <div class="item-container">
-                <!-- Dropdown Card Example -->
-                <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
+	<div class="row">
+		<div class="col-12">
+			<div class="item-container">
+				<!-- Dropdown Card Example -->
+				<div class="card shadow mb-4">
+					<!-- Card Header - Dropdown -->
 
-                    
-                    <div id="formFooter" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <div class="col-12 align-items-center center">
-                            <h6 class="m-0 font-weight-bold">{{ post.title }}</h6>
-                        </div>
-                    </div>
-                    
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-12 center" id="post-body">
-                                {{ post.body|bleach }}
-                            </div>
-                        </div>
+					
+					<div id="formFooter" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<div class="col-12 align-items-center center">
+							<h6 class="m-0 font-weight-bold">{{ post.title }}</h6>
+						</div>
+					</div>
+					
+					<!-- Card Body -->
+					<div class="card-body">
+						<div class="row align-items-center">
+							<div class="col-12 center" id="post-body">
+								{{ post.body|bleach }}
+							</div>
+						</div>
 
-                        <!-- <hr/> -->
+						<!-- <hr/> -->
 
-                        {% if not user.is_expert %}
-                        <div class="row">
-                            <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <form method="POST" action="{% url 'blog-upload-submission' %}" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <label for="input-file">Upload Your Submission</label> <br>
-                                        <input type="hidden" name="post_identifier" value="{{ post.identifier }}">
-                                        <input type="file" id="input-file" class="btn btn-dark" name="uploaded_file">
-                                        
-                                        <button type="submit" class="btn btn-dark" style="padding: 8px;">Upload</button>
-                                    </form>
-                                    {% if last_uploaded_url %}
-                                        <p style="margin-bottom:0px;margin-top: 7px;">File uploaded at: <a href="{{ last_uploaded_url }}"> Current Submission </a></p>
-                                    {% endif %}
+						{% if not user.is_expert %}
+						<div class="row">
+							<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+									<form method="POST" action="{% url 'blog-upload-submission' %}" enctype="multipart/form-data">
+										{% csrf_token %}
+										<label for="input-file">Upload Your Submission</label> <br>
+										<input type="hidden" name="post_identifier" value="{{ post.identifier }}">
+										<input type="file" id="input-file" class="btn btn-dark" name="uploaded_file">
+										
+										<button type="submit" class="btn btn-dark" style="padding: 8px;">Upload</button>
+									</form>
+									{% if last_uploaded_url %}
+										<p style="margin-bottom:0px;margin-top: 7px;">File uploaded at: <a href="{{ last_uploaded_url }}"> Current Submission </a></p>
+									{% endif %}
 
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        {% endif %}
+								</div>
+							</div>
+							</div>
+						</div>
+						{% endif %}
 
-                        <hr/>
+						<hr/>
 
-                        <div class="row">
-                            {% get_comment_count for post as comment_count %}
-                            <div class="py-4 text-center">
-                            &nbsp;&sdot;&nbsp;
-                            {{ comment_count }} comment{{ comment_count|pluralize }}
-                            ha{{ comment_count|pluralize:"s,ve" }} been posted.
-                            </div>
-                        </div>
+						<div class="row">
+							{% get_comment_count for post as comment_count %}
+							<div class="py-4 text-center">
+							&nbsp;&sdot;&nbsp;
+							{{ comment_count }} comment{{ comment_count|pluralize }}
+							ha{{ comment_count|pluralize:"s,ve" }} been posted.
+							</div>
+						</div>
 
-                        
+						
 
-                        <div class="row">
-                            {% if post.allow_comments %}
-                            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-                                <div class="card shadow">
-                                    <div class="card-body">
-                                        <h4 class="card-title text-center pb-3">Post your comment</h4>
-                                        {% render_comment_form for post %}
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
-                        </div>
-                        
-                        <hr/>
+						<div class="row">
+							{% if post.allow_comments %}
+							<div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+								<div class="card shadow">
+									<div class="card-body">
+										<h4 class="card-title text-center pb-3">Post your comment</h4>
+										{% render_comment_form for post %}
+									</div>
+								</div>
+							</div>
+							{% endif %}
+						</div>
+						
+						<hr/>
 
-                        <div class="row">
-                            {% if comment_count %}
-                            <!-- <hr/> -->
-                            <div class="col-12">
-                                <!-- <div class="card shadow">
-                                    <div class="card-body"> -->
-                                    <div class="comments">
-                                        {% render_comment_list for post %}
-                                    </div>
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+						<div class="row">
+							{% if comment_count %}
+							<!-- <hr/> -->
+							<div class="col-12">
+								<!-- <div class="card shadow">
+									<div class="card-body"> -->
+									<div class="comments">
+										{% render_comment_list for post %}
+									</div>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
-    var images = document.images;
+	var images = document.images;
 
-    for (var i = 1; i < images.length; ++i) {
-        var image = images[i];
-        image['id'] = 'blog-img'
-    }
+	for (var i = 1; i < images.length; ++i) {
+		var image = images[i];
+		image['id'] = 'blog-img'
+	}
 
-    function goToCoursesPage() {
-        window.history.back();
-    }
+	function goToCoursesPage() {
+		window.history.back();
+	}
 
 
 </script>
 
 <style>
-    #blog-img {
-        max-width: 100%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 50%;
-    }
+	#blog-img {
+		max-width: 100%;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 50%;
+	}
 
-    #post-body {
-        overflow:auto;
-    }
+	#post-body {
+		overflow:auto;
+	}
 
-    /* .btn {
-        max-width: 75%;
-    } */
+	/* .btn {
+		max-width: 75%;
+	} */
 </style>
 
 {% endblock dashboardPage %}
