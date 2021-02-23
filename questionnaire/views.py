@@ -133,7 +133,7 @@ def update_question(request):
             return Response(data={'detail': 'Question does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         question = Question.objects.get(identifier=question_identifier)
         serializer.update(question, serializer.validated_data)
-        return_dict = {'identifier': question.identifier, 'name': question.name}
+        return_dict = {'identifier': question.identifier, 'body': question.body}
         return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data={'detail': 'Invalid request'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -144,7 +144,7 @@ def add_question(request):
     serializer = QuestionSerializer(data=request.data)
     if serializer.is_valid():
         question = serializer.create(serializer.validated_data)
-        return_dict = {'identifier': question.identifier, 'name': question.name}
+        return_dict = {'identifier': question.identifier, 'body': question.body}
         return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data=serializer.errors,
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)  # TODO is it safe to send serializer.errors field?
@@ -171,7 +171,7 @@ def update_option(request):
             return Response(data={'detail': 'Option does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         option = Option.objects.get(identifier=option_identifier)
         serializer.update(option, serializer.validated_data)
-        return_dict = {'identifier': option.identifier, 'name': option.name}
+        return_dict = {'identifier': option.identifier, 'body': option.body}
         return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data={'detail': 'Invalid request'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -182,7 +182,7 @@ def add_option(request):
     serializer = OptionSerializer(data=request.data)
     if serializer.is_valid():
         option = serializer.create(serializer.validated_data)
-        return_dict = {'identifier': option.identifier, 'name': option.name}
+        return_dict = {'identifier': option.identifier, 'body': option.body}
         return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data=serializer.errors,
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)  # TODO is it safe to send serializer.errors field?
