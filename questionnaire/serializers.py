@@ -11,6 +11,7 @@ class OptionSerializer(serializers.ModelSerializer):
                                                               read_only=False,
                                                               required=False,
                                                               allow_null=True)
+    question = serializers.SlugRelatedField(slug_field='question', queryset=Question.objects.all(), write_only=True)
 
     class Meta:
         model = Option
@@ -20,6 +21,7 @@ class OptionSerializer(serializers.ModelSerializer):
 
 class QuestionSerializer(serializers.ModelSerializer):
     option = OptionSerializer(many=True, read_only=True)
+    questionnaire = serializers.SlugRelatedField(slug_field='questionnaire', queryset=Questionnaire.objects.all(), write_only=True)
 
     class Meta:
         model = Question
