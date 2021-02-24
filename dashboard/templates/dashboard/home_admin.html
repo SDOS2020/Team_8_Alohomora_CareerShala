@@ -67,25 +67,28 @@
 																<i class="fas fa-trash-alt" aria-hidden="true"></i>
 															</button>
 														</div>
-														<div v-if="question.editMode">
-															<button class="btn btn-dark" v-if="question.editMode" v-on:click="saveQuestion(question)" title="Edit the question below">
-																Save Question
-															</button>
-															
-															<!-- <div class="form-group custom-control">
-																<input 
-																	type="checkbox" 
-																	class="toggle-input"
-																	data-toggle="toggle" 
-																	data-on="Expert" 
-																	data-off="Student"
-																	v-model="temp"
-																	data-onstyle="warning" 
-																	data-offstyle="warning">
-															</div> -->
-															<button class="btn btn-dark" v-on:click="addOption(question)" title="Add an option below">
-																Add option
-															</button>
+														<div v-if="question.editMode" class="row center">
+															<div class="col-12 col-md-4 center" style="padding: 0px">
+																<button class="btn btn-dark" v-if="question.editMode" v-on:click="saveQuestion(question)" title="Edit the question below" style="width: 100%;">
+																	Save Question
+																</button>
+															</div>
+
+															<div class="col-12 col-md-4 center" style="padding: 0px">
+																<div class="btn-dark form-group mb-0"  style="padding: 6px 12px" style="width: 100%;">
+																	Multiselect: 
+																	<input 
+																		type="checkbox" 
+																		class="toggle-input"
+																		v-model="question.multiselect">
+																</div>
+															</div>
+
+															<div class="col-12 col-md-4 center" style="padding: 0px">
+																<button class="btn btn-dark" v-on:click="addOption(question)" title="Add an option below" style="width: 100%;">
+																	Add option
+																</button>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -114,11 +117,11 @@
 																	<div class="col-10">
 																		<input type="text" :value="opt.body" v-model="opt.body" style="width: 100%;">
 																	</div>
-																	<div class="col-2">
+																	<!-- <div class="col-2"> -->
 																		<a class="btn btn-dark" title="Remove Option" v-on:click="removeOption(question, opt_index)">
 																			<i class="fas fa-trash-alt" aria-hidden="true" style="color: #ffc038;"></i>
 																		</a>
-																	</div>
+																	<!-- </div> -->
 																</div>
 															</div>
 														</div>
@@ -154,7 +157,7 @@
 
 								<div class="row" v-for="(questionnaire, index) in questionnairesList" :key="index">
 									<div class="col-12 center">
-										<button class="btn btn-dark" v-on:click="showQuestionnaire(questionnaire)">
+										<button class="btn btn-dark" v-on:click="showQuestionnaire(questionnaire, index)">
 											[[ questionnaire.name ]]
 										</button>
 										<button href="#deleteQuestionnaireModal" v-if='index!=0' class="btn btn-dark trigger-btn" data-toggle="modal" title="Remove this Questionnaire" v-on:click="deleteQuestionnaireWarning(index)">
@@ -190,7 +193,7 @@
 					</div>
 					<div class="modal-footer justify-content-center">
 						<button type="button" class="btn btn-dark" data-dismiss="modal" style="background-color:#262626;">Cancel</button>
-						<button type="button" class="btn btn-danger" v-on:click="deleteQuestion()" data-dismiss="modal" style="background-color:#ffc038;"> Delete</button>
+						<button type="button" class="btn btn-danger" v-on:click="deleteQuestion()" style="background-color:#ffc038;"> Delete</button>
 					</div>
 				</div>
 			</div>
@@ -213,7 +216,7 @@
 					</div>
 					<div class="modal-footer justify-content-center">
 						<button type="button" class="btn btn-dark" data-dismiss="modal" style="background-color:#262626;">Cancel</button>
-						<button type="button" class="btn btn-danger" v-on:click="deleteQuestionnaire()" data-dismiss="modal" style="background-color:#ffc038;"> Delete</button>
+						<button type="button" class="btn btn-danger" v-on:click="deleteQuestionnaire()" style="background-color:#ffc038;"> Delete</button>
 					</div>
 				</div>
 			</div>
@@ -225,7 +228,7 @@
 				<div class="modal-content container">
 					<div class="modal-header flex-column">
 						<div class="icon-box" >
-							<i class="fas fa-trash-alt"></i>
+							<i class="fas fa-pencil-square-o"></i>
 						</div>						
 						<h4 class="modal-title w-100">Enter the new title for the questionnaire titled, "[[ viewQuestionnaire.name ]]" :</h4>	
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -329,9 +332,10 @@
 				return {
 					temp: true,
 					message: "HAAAAAAAAA",
+					viewQuestionnaire: null,
+					viewQuestionnaireId: null,
 					newQuestionnaireName: null,
 					newQuestionnairePhase: null,
-					viewQuestionnaire: null,
 					deleteQuestionId: null,
 					deleteQuestionnaireId: null,
 					deleteQuestionTitle: null,
@@ -361,6 +365,7 @@
 
 							element.question.forEach(ques => {
 								let question = {
+									identifier: ques.identifier,
 									editMode: false,
 									body: ques.body,
 									multiselect: ques.multiselect,
@@ -371,6 +376,7 @@
 								
 								ques.option.forEach(opt => {
 									let newOption = {
+											identifier: opt.identifier,
 											body: opt.body,
 											continuation_questionnaire: opt.continuation_questionnaire,
 										}
@@ -386,22 +392,78 @@
 						
 					})
 					.catch(e => {
+						alert("Error");
 						console.log(e)
 					})
 				},
 				
-				showQuestionnaire(questionnaire) {
-					this.viewQuestionnaire =  questionnaire
+				showQuestionnaire(questionnaire, index) {
+					this.viewQuestionnaire =  questionnaire,
+					this.viewQuestionnaireId = index;
 				},
-				
+
+				showQuestionnaireById() {
+					console.log('show questionnaire', this.viewQuestionnaireId)
+					this.viewQuestionnaire = this.questionnairesList[this.viewQuestionnaireId];
+				},
+
 				editQuestion(question) {
 					question.editMode = true;
 					console.log("Edit question:", question)
 				},
 
 				saveQuestion(question) {
-					question.editMode = false;
-					console.log("Save question:", question)
+
+					const body = {
+						body: question.body,
+					}
+					console.log(body)
+
+					var questionID = question.identifier;
+					question.questionnaire = this.viewQuestionnaire.identifier
+					axios.post(`{% url 'api-question-update-question' %}?identifier=` + questionID.toString(), question, {
+						headers: {
+							'X-CSRFTOKEN': getCookie('csrftoken')
+						},
+					})
+					.then(response => {
+						question.name = response.data.name;	
+						question.editMode = false;
+						console.log("Save question:", question)
+
+						question.option.forEach(opt => {
+							let newOption = {
+								identifier: opt.identifier,
+								body: opt.body,
+								continuation_questionnaire: opt.continuation_questionnaire,
+								question: question.identifier
+							};
+
+							axios.post(`{% url 'api-option-update-option' %}?identifier=` + opt.identifier.toString(), newOption, {
+								headers: {
+									'X-CSRFTOKEN': getCookie('csrftoken')
+								},
+							})
+							.then(response => {
+								
+							})
+							.catch(e => {
+								alert("Error in option update", newOption);
+								this.errors.push(e);
+								this.selected = []
+								this.tempResponses.pop();
+							})
+						})
+						
+
+					})
+					.catch(e => {
+						alert("Error in question update");
+						this.errors.push(e);
+						this.selected = []
+						this.tempResponses.pop();
+					})
+
 				},
 
 				renameQuestionnaire() {
@@ -427,6 +489,7 @@
 							this.viewQuestionnaire.name = this.newQuestionnaireName;
 						})
 						.catch(e => {
+							alert("Error");
 							this.errors.push(e);
 							this.selected = []
 							this.tempResponses.pop();
@@ -462,6 +525,7 @@
 							this.getQuestionnaireAdmin();
 						})
 						.catch(e => {
+							alert("Error");
 							this.errors.push(e);
 							this.selected = []
 							this.tempResponses.pop();
@@ -473,31 +537,45 @@
 				addQuestion(questionnaire, questionPos) {
 					console.log("Adding new question at pos: ", questionPos)
 					new_question = {
-						editMode: false,
-						body: "Enter question title here ...",
-						type: "checkbox",
-						selected: [],
-						option: [
-							{
-								body: "Edit option ..."
-							}
-						]
+						body: "Default Question",
+						multiselect: false,
+						position: questionPos,
+						questionnaire: this.viewQuestionnaire.identifier
 					}
+					axios.post(`{% url 'api-question-add-question' %}`, new_question, {
+						headers: {
+							'X-CSRFTOKEN': getCookie('csrftoken')
+						},
+					})
+					.then(response => {
+						console.log(response)
+						new_question.identifier = response.data.identifier;
+						new_question.body = response.data.body;
+						new_question.selected = [];
+						new_question.editMode = false;
+						new_question.option = []
 
-					if (questionPos == questionnaire.question.length) {
-						questionnaire.question.push(new_question);
-						return;
-					}
-					new_questionsList = []
-					for (let i = 0; i < questionnaire.question.length; i++) {
-						const element = questionnaire.question[i];
-						if (questionPos == i) {
-							new_questionsList.push(new_question);
+						if (questionPos == questionnaire.question.length) {
+							questionnaire.question.push(new_question);
+							return;
 						}
-						new_questionsList.push(element);
-					}
+						new_questionsList = []
+						for (let i = 0; i < questionnaire.question.length; i++) {
+							const element = questionnaire.question[i];
+							if (questionPos == i) {
+								new_questionsList.push(new_question);
+							}
+							new_questionsList.push(element);
+						}
 
-					questionnaire.question = new_questionsList;
+						questionnaire.question = new_questionsList;
+					})
+					.catch(e => {
+						alert("Error");
+						this.errors.push(e);
+						this.selected = []
+						this.tempResponses.pop();
+					})
 				},
 
 				deleteQuestionWarning(questionPos) {
@@ -513,12 +591,13 @@
 						},
 					})
 					.then(response => {
-						$('#deleteQuestionnaireModal').modal('toggle');
+						$('#deleteQuestionModal').modal('toggle');
 						this.viewQuestionnaire.question.splice(Number(this.deleteQuestionId), 1)
 						this.deleteQuestionId = null;
 						this.deleteQuestionTitle = null;
 					})
 					.catch(e => {
+						alert("Error");
 						this.errors.push(e);
 						this.selected = []
 						this.tempResponses.pop();
@@ -527,7 +606,22 @@
 				},
 
 				removeOption(question, opt_index) {
-					question.option.splice(Number(opt_index), 1);
+
+					var optionID = question.option[opt_index].identifier;
+					axios.post(`{% url 'api-option-delete-option' %}?identifier=` + optionID.toString(), null , {
+						headers: {
+							'X-CSRFTOKEN': getCookie('csrftoken')
+						},
+					})
+					.then(response => {
+						question.option.splice(Number(opt_index), 1);
+					})
+					.catch(e => {
+						alert("Error");
+						this.errors.push(e);
+						this.selected = []
+						this.tempResponses.pop();
+					})
 				},
 
 				deleteQuestionnaireWarning(index) {
@@ -546,8 +640,12 @@
 						$('#deleteQuestionnaireModal').modal('toggle');
 						this.questionnairesList.splice(Number(this.deleteQuestionnaireId), 1);
 						this.deleteQuestionnaireId = null;
+						this.viewQuestionnaire = null;
+						this.viewQuestionnaireId = null;
+
 					})
 					.catch(e => {
+						alert("Error");
 						this.errors.push(e);
 						this.selected = []
 						this.tempResponses.pop();
@@ -556,7 +654,31 @@
 				},
 
 				addOption(question) {
-					question.option.push({ body: "", continuation_questionnaire: null });
+
+					console.log("Adding new option")
+					new_option = {
+						body: "Default Option",
+						question: question.identifier,
+						continuation_questionnaire: null
+					}
+					axios.post(`{% url 'api-option-add-option' %}`, new_option, {
+						headers: {
+							'X-CSRFTOKEN': getCookie('csrftoken')
+						},
+					})
+					.then(response => {
+						console.log(response)
+						new_option.identifier = response.data.identifier;
+						new_option.body = response.data.body;
+						
+						question.option.push(new_option);
+					})
+					.catch(e => {
+						alert("Error");
+						this.errors.push(e);
+						this.selected = []
+						this.tempResponses.pop();
+					})
 				}
 
 			},
