@@ -1,7 +1,7 @@
 import io
 import logging
 
-from django.db.models import Q, F
+from django.db.models import Q, F, RestrictedError
 from django.shortcuts import render
 
 # Create your views here.
@@ -120,7 +120,11 @@ def delete_questionnaire(request):
     if not Questionnaire.objects.filter(identifier=identifier).exists():
         return Response(data={'detail': 'Questionnaire does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     questionnaire = Questionnaire.objects.get(identifier=identifier)
-    questionnaire.delete()
+    try:
+        questionnaire.delete()
+    except RestrictedError as e:
+        return Response(data={'detail': 'Deletion restricted'},
+                        status=status.HTTP_409_CONFLICT)
     return Response(status=status.HTTP_200_OK)
 
 
@@ -162,7 +166,11 @@ def delete_question(request):
         return Response(data={'detail': 'Question does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     question = Question.objects.get(identifier=identifier)
     position = question.position
-    question.delete()
+    try:
+        question.delete()
+    except RestrictedError as e:
+        return Response(data={'detail': 'Deletion restricted'},
+                        status=status.HTTP_409_CONFLICT)
     questions_below = Question.objects.filter(position__gt=position)
     questions_below.update(position=F('position')-1)
     return Response(status=status.HTTP_200_OK)
@@ -202,5 +210,9 @@ def delete_option(request):
     if not Option.objects.filter(identifier=identifier).exists():
         return Response(data={'detail': 'Option does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     option = Option.objects.get(identifier=identifier)
-    option.delete()
+    try:
+        option.delete()
+    except RestrictedError as e:
+        return Response(data={'detail': 'Deletion restricted'},
+                        status=status.HTTP_409_CONFLICT)
     return Response(status=status.HTTP_200_OK)
