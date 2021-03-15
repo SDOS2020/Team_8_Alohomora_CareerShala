@@ -185,6 +185,32 @@ def update_option(request):
         if not Option.objects.filter(identifier=option_identifier).exists():
             return Response(data={'detail': 'Option does not exist.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         option = Option.objects.get(identifier=option_identifier)
+
+        # if adding a continuation questionnaire
+        if serializer.validated_data.get('continuation_questionnaire', None) is not None:
+            # continuation questionnaire should only be added to the last question's options
+            if Question.objects.filter(questionnaire=option.question.questionnaire).order_by('-position').first().identifier != option.question.identifier:
+                return Response(data={'detail': 'You can only add continuation questionnaire on the last question of a '
+                                                'questionnaire.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+            # any other question should not have continuation_questionnaire in any of their options
+            other_options = Option.objects.filter(
+                Q(question__questionnaire=option.question.questionnaire) & ~Q(question=option.question)
+                & Q(continuation_questionnaire__isnull=False))
+            if other_options.exists():
+                return Response(data={'detail': 'Another question in this questionnaire has options with continuation'
+                                                'questionnaire.'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+            # if the option corresponds to a multi-select question, then do not allow
+            if option.question.multiselect:
+                return Response(data={'detail': 'You are trying to add continuation-questionnaire to the last question '
+                                                'which is also a multiselect question, which is not allowed.'},
+                                status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+            # check if there exists a valid continuation questionnaire
+            if not Questionnaire.objects.filter(identifier=serializer.validated_data['continuation_questionnaire']).exists():  # TODO check if validated_data['con_qnr'] returns identifier or the actual Questionnaire
+                return Response(data={'detail': 'Invalid continuation questionnaire identifier supplied.'},
+                                status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         serializer.update(option, serializer.validated_data)
         return_dict = {'identifier': option.identifier, 'body': option.body}
         return Response(data=return_dict, status=status.HTTP_200_OK)
@@ -196,7 +222,10 @@ def update_option(request):
 def add_option(request):
     serializer = OptionSerializer(data=request.data)
     if serializer.is_valid():
-        option = serializer.create(serializer.validated_data)
+        validated_data = serializer.validated_data
+        if serializer.validated_data.get('continuation_questionnaire', None) is not None:
+            validated_data = serializer.validated_data.pop('continuation_questionnaire')  # Do not allow entering continuation questionnaire while creating option to to simplify checks
+        option = serializer.create(validated_data)
         return_dict = {'identifier': option.identifier, 'body': option.body}
         return Response(data=return_dict, status=status.HTTP_200_OK)
     return Response(data=serializer.errors,
