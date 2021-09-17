@@ -24,7 +24,7 @@ python-monkey-business==1.0.0
 pytz==2020.4
 sendgrid==6.4.8
 six==1.15.0
-sqlparse==0.4.1
+sqlparse==0.4.2
 starkbank-ecdsa==1.1.0
 webencodings==0.5.1
 whitenoise==5.2.0
